@@ -1,0 +1,41 @@
+//循环函数 用以生成同类样式
+.loop (@className,@i) when (@i >= 0) {
+  .@{className}-@{i} {
+    width: @i+0%;
+  }
+  .loop(@className, @i - 1);
+}
+
+.flex {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-items: center;
+  flex-flow: wrap;
+
+  .loop(item, 100);
+
+  .flex-center {
+    justify-content: center;
+  }
+
+  .flex-column {
+    flex-flow: column;
+  }
+
+  .flex-fixed {
+    position: fixed;
+    left: 0;
+    right: 0;
+
+    &.flex-fixed-top {
+      top: 0;
+    }
+
+    &.flex-fixed-bottom {
+      bottom: 0;
+    }
+  }
+}
