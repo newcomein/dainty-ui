@@ -18,11 +18,13 @@
     "lib": "vue-cli-service build --target lib --name dainty-ui --dest lib src/components/index.js"
   },
   "dependencies": {
-    "core-js": "^2.6.6",
+    "animate.css": "^3.7.0",
+    "feather-icons": "^4.21.0",
     "normalize.css": "^8.0.1",
     "vue": "^2.6.10"
   },
   "devDependencies": {
+    "core-js": "^2.6.6",
     "@vue/cli-plugin-babel": "^3.7.0",
     "@vue/cli-plugin-e2e-nightwatch": "^3.7.0",
     "@vue/cli-plugin-eslint": "^3.7.0",

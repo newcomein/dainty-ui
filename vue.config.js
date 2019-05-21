@@ -3,12 +3,12 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
     productionSourceMap: false,
     configureWebpack: {
-        optimization: {
-            minimizer: [new UglifyJsPlugin({
-                cache: true,
-                parallel: true
-            })]
-        },
-        plugins: [new MinifyPlugin()],
+        // optimization: {
+        //     minimizer: [new UglifyJsPlugin({
+        //         cache: true,
+        //         parallel: true
+        //     })]
+        // },
+        // plugins: [new MinifyPlugin()],
     }
 };

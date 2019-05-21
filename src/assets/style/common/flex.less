@@ -17,24 +17,28 @@
 
   .loop(item, 100);
 
-  .flex-center {
+  .flex-inline, &.flex-inline {
+    display: inline-flex;
+  }
+
+  .flex-center, &.flex-center {
     justify-content: center;
   }
 
-  .flex-column {
+  .flex-column, &.flex-column {
     flex-flow: column;
   }
 
-  .flex-fixed {
+  .flex-fixed, &.flex-fixed {
     position: fixed;
     left: 0;
     right: 0;
 
-    &.flex-fixed-top {
+    .flex-fixed-top, &.flex-fixed-top {
       top: 0;
     }
 
-    &.flex-fixed-bottom {
+    .flex-fixed-bottom, &.flex-fixed-bottom {
       bottom: 0;
     }
   }
