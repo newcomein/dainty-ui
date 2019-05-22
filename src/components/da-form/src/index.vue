@@ -78,6 +78,10 @@
                         flex: 0.25;
                         justify-content: flex-end;
                         font-size: 0.25rem;
+                        transition: all 0.5s;
+                        &:active{
+                            transform: scale(2);
+                        }
                     }
                 }
             }
