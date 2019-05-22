@@ -1,7 +1,9 @@
 <template>
     <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
         <div class="flex flex-inline da-icon" v-if="name&&iconMeta.type" @click="$emit('click')">
-            <svg v-if="iconMeta.svg.contents" v-html="iconMeta.svg.contents" :class="[name,iconMeta.class]"></svg>
+            <svg v-if="iconMeta.svg.contents" v-html="iconMeta.svg.contents" :class="[name,iconMeta.class]"
+                 :viewBox="iconMeta.svg.attrs.viewBox">
+            </svg>
         </div>
     </transition>
 </template>
@@ -67,19 +69,20 @@
 <style lang="less" scoped>
     .da-icon {
         position: relative;
-        width: 1em;
-        height: 1em;
-        font-size: 1em;
-        overflow: hidden;
+        justify-content: center;
+
+        svg {
+            width: 1em;
+            height: 1em;
+            overflow: hidden;
+        }
 
         [class*=feather-] {
-            height: inherit;
             stroke: currentColor;
-            /*stroke-width: 2;*/
-            /*stroke-linecap: round;*/
-            /*stroke-linejoin: round;*/
-            /*fill: none;*/
-            /*position: relative;*/
+            stroke-width: 1;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
         }
     }
 </style>

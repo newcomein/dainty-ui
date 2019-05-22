@@ -5,9 +5,9 @@
                 <label class="flex flex-inline">
                     <span>{{item.label}}</span>
                 </label>
-                <div class="flex flex-inline">
+                <div class="flex flex-inline input-box">
                     <input v-model="item.value">
-                    <da-icon :name="icons.delete"></da-icon>
+                    <da-icon class="da-icon" :name="icons.delete"></da-icon>
                 </div>
             </div>
         </form>
@@ -41,7 +41,7 @@
             return {
                 initForm: [],
                 icons: {
-                    delete: "feather-volume"
+                    delete: "feather-x"
                 },
             }
         },
@@ -53,6 +53,37 @@
 
 <style lang="less" scoped>
     .da-form {
+        form {
+            .line {
+                height: 0.6rem;
+                padding: 0 0.12rem;
+                background-color: white;
 
+                label, .input-box {
+                    height: 100%;
+                }
+
+                label {
+                    flex: 0.6219;
+                }
+
+                .input-box {
+                    flex: auto;
+
+                    input {
+                        flex: auto;
+                    }
+
+                    .da-icon {
+                        flex: 0.25;
+                        justify-content: flex-end;
+                        font-size: 0.25rem;
+                        &:hover{
+                           animation-name: hvr-icon-push;
+                        }
+                    }
+                }
+            }
+        }
     }
 </style>
