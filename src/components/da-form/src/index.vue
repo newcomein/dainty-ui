@@ -78,9 +78,6 @@
                         flex: 0.25;
                         justify-content: flex-end;
                         font-size: 0.25rem;
-                        &:hover{
-                           animation-name: hvr-icon-push;
-                        }
                     }
                 }
             }
