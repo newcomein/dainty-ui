@@ -14,8 +14,9 @@
                 init: [
                     {
                         field: "username",
-                        label: "用户名",
-                        type: "input"
+                        label: "真实姓名",
+                        type: "input",
+                        value: ""
                     }
                 ]
             }

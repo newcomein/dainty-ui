@@ -20,6 +20,8 @@
   "dependencies": {
     "animate.css": "^3.7.0",
     "feather-icons": "^4.21.0",
+    "hover.css": "^2.3.2",
+    "magic.css": "^1.4.1",
     "normalize.css": "^8.0.1",
     "vue": "^2.6.10"
   },
