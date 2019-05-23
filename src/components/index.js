@@ -6,7 +6,7 @@ const components = {DaForm, DaIcon};
 
 const option = {};
 
-const install = function (Vue, option = {}) {
+const install = async function (Vue, option = {}) {
     const keys = Object.keys(components);
     for (const i of keys) {
         const component = components[i];
@@ -14,9 +14,15 @@ const install = function (Vue, option = {}) {
     }
 };
 
-export default {
+const data = {
     version: config.version,
     install,
     ...option,
     ...components
+};
+
+export {
+    DaForm, DaIcon
 }
+
+export default data;

@@ -1,17 +1,16 @@
 <template>
     <div id="app">
-        <DAForm :init="init" :isPass.sync="isPass">
+        <da-form :init="init" :isPass.sync="isPass">
             <div slot="3333">222</div>
-        </DAForm>
+        </da-form>
         <button @click="getInit">获取init</button>
     </div>
 </template>
 
 <script>
-    import DAForm from "./components/da-form"
-
+    import {DaForm} from "@/components"
     export default {
-        components: {DAForm},
+        components: {DaForm},
         data() {
             return {
                 isPass: false,
