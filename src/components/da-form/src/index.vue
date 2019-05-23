@@ -34,6 +34,11 @@
             init: {
                 type: Array,
                 required: true
+            },
+            isPass: {
+                type: Boolean,
+                required: false,
+                default: false
             }
         },
         watch: {
@@ -43,6 +48,7 @@
             async initForm(val) {
                 //筛选重复的字段  如果字段为空则报错
                 await this.filterAllField(val);
+                this.requiredField = await this.filterRequiredField(val);
                 for (let i = 0, len = val.length; i < len; i++) {
                     let item = val[i];
                     item = await this.initAttributes(item);
@@ -57,6 +63,7 @@
                 icons: {
                     delete: "feather-x"
                 },
+                requiredField: {}
             }
         },
         methods: {
@@ -81,7 +88,19 @@
                 this.$watch(async () => item.value, async () => {
                     setTimeout(async () => {
                         const newVal = await item.ruleResult;
-                    }, 30);
+                        if (!newVal.isPass) {
+                            this.$emit("update:isPass", false);
+                        } else {
+                            const requiredField = Object.keys(this.requiredField);
+                            for (let i of requiredField) {
+                                if (!this.requiredField[i].ruleResult.isPass) {
+                                    this.$emit("update:isPass", false);
+                                    break;
+                                }
+                                this.$emit("update:isPass", true);
+                            }
+                        }
+                    }, 50);
                 });
             },
             async checkValue(item) {
@@ -162,6 +181,19 @@
                 }, item.on);
                 return item;
             },
+            async filterRequiredField(val) {
+                const fields = {};
+                for (let i = 0, len = val.length; i < len; i++) {
+                    let item = val[i];
+                    for (let i2 of item.rules) {
+                        if (i2.required) {
+                            fields[item.field] = item;
+                            break;
+                        }
+                    }
+                }
+                return fields;
+            },
             async filterAllField(val = []) {
                 const fields = {};
                 for (let i = 0, len = val.length; i < len; i++) {
@@ -209,6 +241,7 @@
 
                 .input-box {
                     flex: auto;
+                    position: relative;
 
                     input {
                         flex: auto;

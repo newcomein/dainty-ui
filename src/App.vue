@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <DAForm :init="init"></DAForm>
+        <DAForm :init="init" :isPass.sync="isPass"></DAForm>
         <button @click="getInit">获取init</button>
     </div>
 </template>
@@ -12,6 +12,7 @@
         components: {DAForm},
         data() {
             return {
+                isPass: false,
                 init: [
                     {
                         field: "username",
@@ -37,10 +38,15 @@
                         placeholder: "请填写真实姓名2",
                         trim: true,
                         rules: [
-                            {required: true, pattern: /^[1-9a-zA-Z]{1}[0-9a-zA-Z]{1,14}$/, message: '格式错误'},
+                            {required: false, pattern: /^[1-9a-zA-Z]{1}[0-9a-zA-Z]{1,14}$/, message: '格式错误'},
                         ]
                     },
                 ]
+            }
+        },
+        watch: {
+            async isPass(val) {
+                console.log(val)
             }
         },
         methods: {
