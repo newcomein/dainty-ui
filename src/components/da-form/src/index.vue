@@ -41,6 +41,8 @@
                 this.initForm = val;
             },
             async initForm(val) {
+                //筛选重复的字段  如果字段为空则报错
+                await this.filterAllField(val);
                 for (let i = 0, len = val.length; i < len; i++) {
                     let item = val[i];
                     item = await this.initAttributes(item);
@@ -150,13 +152,34 @@
                     async input({newVal, oldVal, source}) {
                         return true
                     },
-                    async click({position}) {
-                        console.log("点击了", position);
+                    async click({position, source}) {
                         return true
                     }
                 }, item.on);
                 return item;
             },
+            async filterAllField(val = []) {
+                const fields = {};
+                for (let i = 0, len = val.length; i < len; i++) {
+                    let item = val[i];
+                    if (!item.field || item.length === 0) {
+                        throw {
+                            message: "field不能为空",
+                            data: item
+                        };
+                    }
+                    if (!fields[item.field]) {
+                        fields[item.field] = 0;
+                    }
+                    fields[item.field]++;
+                    if (fields[item.field] > 1) {
+                        throw {
+                            message: `${item.field}不能重复`,
+                            data: item
+                        };
+                    }
+                }
+            }
         },
         created() {
             this.initForm = this.init;
