@@ -14,7 +14,7 @@
     import {icons} from "feather-icons"
 
     export default {
-        name: "da-icon",
+        name: "DaIcon",
         props: {
             name: {
                 type: String

@@ -35,7 +35,7 @@
     import utils from "@/utils"
 
     export default {
-        name: "da-form",
+        name: "DaForm",
         components: {DaIcon},
         props: {
             init: {
