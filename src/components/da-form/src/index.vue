@@ -3,15 +3,18 @@
         <form class="flex">
 
             <!--普通输入框-->
-            <div class="flex line" :field="[item.field]" v-for="(item,index) of initForm" :key="index"
-                 v-if="item.type==='input'">
+            <div class="flex line" :data-field="[item.field]" v-for="(item,index) of initForm" :key="index"
+                 v-if="item.type==='input'" @click="item.on.click({position:'line',source:item})">
                 <label class="flex flex-inline">
                     <span>{{item.label}}</span>
                 </label>
                 <div class="flex flex-inline input-box">
                     <input v-model="item.value" type="text" :readonly="item.readonly" :autofocus="item.autofocus"
-                           :placeholder="item.placeholder">
-                    <da-icon class="da-icon" :name="icons.delete"></da-icon>
+                           :placeholder="item.placeholder"
+                           @click.stop="item.on.click({position:'input-box',source:item})">
+                    <da-icon class="da-icon delete" :name="icons.delete"
+                             @click="item.on.click({position:'delete',source:item})">
+                    </da-icon>
                 </div>
             </div>
 
@@ -42,6 +45,7 @@
                     let item = val[i];
                     item = await this.initAttributes(item);
                     this.watchValue(item, i);
+                    this.watchRuleResult(item, i);
                 }
             }
         },
@@ -61,26 +65,56 @@
                     if (item.trim) {
                         newVal = newVal.trim();
                     }
-                    if (newVal !== oldVal) {
-                        item.on.input({newVal, oldVal, source: item});
-                        this.checkValue(item);
-                    }
-                })
+                    item.value = newVal;
+                    item.on.input({newVal, oldVal, source: item});
+                    item.ruleResult = await this.checkValue(item);
+                });
+            },
+            async watchRuleResult(item = {}, index = 0) {
+                //不知道啥子原因 无法监听到ruleResult变化  暂时用value替代
+                this.$watch(async () => item.value, async () => {
+                    setTimeout(async () => {
+                        const newVal = await item.ruleResult;
+                    }, 30);
+                });
             },
             async checkValue(item) {
                 let isPass = true;
                 let message = "";
                 for (let i of item.rules) {
+                    //必填
                     if (i.required && item.value.length === 0) {
                         isPass = false;
                     }
-
+                    //正则
                     if (i.pattern && !i.pattern.test(item.value)) {
                         isPass = false;
                     }
-
-                    if (i.pattern && !i.required) {
+                    //非必填且存在正则,输入值为空的情况下,校正isPass结果为true
+                    if (i.pattern && !i.required && item.value.length === 0) {
                         isPass = true;
+                    }
+
+                    //引用源 当前value必须与引用源的value相匹配
+                    if (i.quoteField) {
+                        for (let _item of this.initForm) {
+                            if (_item.field === i.quoteField) {
+                                if (_item.value !== item.value) {
+                                    isPass = false
+                                }
+                            }
+                        }
+                    }
+
+                    //排斥源 当前value必须与排斥源的value不匹配
+                    if (i.excludeField) {
+                        for (let _item of this.initForm) {
+                            if (_item.field === i.excludeField) {
+                                if (_item.value === item.value) {
+                                    isPass = false
+                                }
+                            }
+                        }
                     }
 
                     if (!isPass) {
@@ -88,7 +122,6 @@
                         break;
                     }
                 }
-                console.log(isPass)
                 return {isPass, message};
             },
             async initAttributes(item) {
@@ -105,6 +138,9 @@
                     item.rules = [];
                 }
 
+                //正则判断结果  父组件修改无效
+                item.ruleResult = {isPass: false, message: ""};
+
                 //事件
                 if (utils.getDataType(item.on) === "undefined") {
                     item.on = {};
@@ -114,7 +150,8 @@
                     async input({newVal, oldVal, source}) {
                         return true
                     },
-                    async click() {
+                    async click({position}) {
+                        console.log("点击了", position);
                         return true
                     }
                 }, item.on);
@@ -148,13 +185,15 @@
 
                     input {
                         flex: auto;
+                        height: 100%;
                     }
 
                     .da-icon {
-                        flex: 0.25;
-                        font-size: 0.25rem;
+                        flex: 0.23;
+                        font-size: 0.23rem;
                         justify-content: flex-end;
                         right: -0.05rem;
+                        height: 100%;
                     }
                 }
             }
