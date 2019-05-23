@@ -1,9 +1,9 @@
 {
   "name": "dainty-ui",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "private": false,
   "author": "rockey",
-  "main": "lib/dainty-ui-common.js",
+  "main": "lib/dainty-ui.common.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/newcomein/dainty-ui.git"
