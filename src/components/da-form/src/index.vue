@@ -2,6 +2,7 @@
     <div class="flex da-form">
         <form class="flex">
 
+            <!--普通输入框-->
             <div class="flex line" :field="[item.field]" v-for="(item,index) of initForm" :key="index"
                  v-if="item.type==='input'">
                 <label class="flex flex-inline">
@@ -53,6 +54,43 @@
             }
         },
         methods: {
+            async watchValue(item = {}, index = 0) {
+                this.$watch(async () => item.value, async (newVal, oldVal) => {
+                    newVal = await newVal;
+                    oldVal = await oldVal;
+                    if (item.trim) {
+                        newVal = newVal.trim();
+                    }
+                    if (newVal !== oldVal) {
+                        item.on.input({newVal, oldVal, source: item});
+                        this.checkValue(item);
+                    }
+                })
+            },
+            async checkValue(item) {
+                let isPass = true;
+                let message = "";
+                for (let i of item.rules) {
+                    if (i.required && item.value.length === 0) {
+                        isPass = false;
+                    }
+
+                    if (i.pattern && !i.pattern.test(item.value)) {
+                        isPass = false;
+                    }
+
+                    if (i.pattern && !i.required) {
+                        isPass = true;
+                    }
+
+                    if (!isPass) {
+                        message = i.message || "格式错误";
+                        break;
+                    }
+                }
+                console.log(isPass)
+                return {isPass, message};
+            },
             async initAttributes(item) {
                 if (utils.getDataType(item.autofocus) === "undefined") {
                     item.autofocus = true
@@ -63,35 +101,25 @@
                 if (utils.getDataType(item.trim) === "undefined") {
                     item.trim = true
                 }
+                if (utils.getDataType(item.rules) === "undefined") {
+                    item.rules = [];
+                }
+
                 //事件
                 if (utils.getDataType(item.on) === "undefined") {
-                    item.on = {
-                        async input({newVal, oldVal, source}) {
-                        }
-                    };
+                    item.on = {};
                 }
-                if (utils.getDataType(item.on.input) === "undefined") {
-                    item.on.input = async function ({newVal, oldVal, source}) {
 
+                item.on = Object.assign({
+                    async input({newVal, oldVal, source}) {
+                        return true
+                    },
+                    async click() {
+                        return true
                     }
-                }
+                }, item.on);
                 return item;
             },
-            async watchValue(item = {}, index = 0) {
-                this.$watch(async () => item.value, async (newVal, oldVal) => {
-                    newVal = await newVal;
-                    oldVal = await oldVal;
-                    if (item.trim) {
-                        newVal = newVal.trim();
-                    }
-                    if (newVal !== oldVal) {
-                        item.on.input({newVal, oldVal, source: item})
-                    }
-                })
-            },
-            async checkValue(item) {
-
-            }
         },
         created() {
             this.initForm = this.init;
