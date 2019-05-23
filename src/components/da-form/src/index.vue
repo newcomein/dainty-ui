@@ -12,9 +12,16 @@
                     <input v-model="item.value" type="text" :readonly="item.readonly" :autofocus="item.autofocus"
                            :placeholder="item.placeholder"
                            @click.stop="item.on.click({position:'input-box',source:item})">
-                    <da-icon class="da-icon delete" :name="icons.delete"
-                             @click="isDelete(item)">
-                    </da-icon>
+
+                    <!--delete位置插槽-->
+                    <slot :name="item.positionSlots.delete.name"
+                          v-if="item.positionSlots&&item.positionSlots.delete"></slot>
+                    <slot name="delete" v-else>
+                        <da-icon class="da-icon delete" :name="icons.delete"
+                                 @click="isDelete(item)">
+                        </da-icon>
+                    </slot>
+
                 </div>
             </div>
 
@@ -161,6 +168,12 @@
                 }
                 if (utils.getDataType(item.rules) === "undefined") {
                     item.rules = [];
+                }
+                if (utils.getDataType(item.slots) === "undefined") {
+                    item.slots = [];
+                }
+                if (utils.getDataType(item.positionSlots) === "undefined") {
+                    item.positionSlots = {};
                 }
 
                 //正则判断结果  父组件修改无效

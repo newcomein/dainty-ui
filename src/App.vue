@@ -1,6 +1,8 @@
 <template>
     <div id="app">
-        <DAForm :init="init" :isPass.sync="isPass"></DAForm>
+        <DAForm :init="init" :isPass.sync="isPass">
+            <div slot="3333">222</div>
+        </DAForm>
         <button @click="getInit">获取init</button>
     </div>
 </template>
@@ -39,7 +41,12 @@
                         trim: true,
                         rules: [
                             {required: false, pattern: /^[1-9a-zA-Z]{1}[0-9a-zA-Z]{1,14}$/, message: '格式错误'},
-                        ]
+                        ],
+                        positionSlots: {
+                            delete: {
+                                name: "3333"
+                            }
+                        }
                     },
                 ]
             }
