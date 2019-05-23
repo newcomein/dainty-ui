@@ -31,11 +31,11 @@
 
 <script>
     import "@/assets/style/common/index.less"
-    import DaIcon from "../../da-icon/src/index";
+    import DaIcon from "../../da-icon/src";
     import utils from "@/utils"
 
     export default {
-        name: "DaForm",
+        name: "da-form",
         components: {DaIcon},
         props: {
             init: {

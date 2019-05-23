@@ -1,6 +1,6 @@
 {
   "name": "dainty-ui",
-  "version": "0.1.7",
+  "version": "0.2.2",
   "private": false,
   "author": "rockey",
   "main": "lib/dainty-ui.common.js",

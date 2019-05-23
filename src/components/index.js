@@ -1,11 +1,12 @@
 import config from '../../package.json'
-import DAForm from "./da-form"
+import DaForm from "./da-form"
+import DaIcon from "./da-icon"
 
-const components = {DAForm};
+const components = {DaForm, DaIcon};
 
 const option = {};
 
-const install = async function (Vue, option = {}) {
+const install = function (Vue, option = {}) {
     const keys = Object.keys(components);
     for (const i of keys) {
         const component = components[i];
