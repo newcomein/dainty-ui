@@ -13,7 +13,7 @@
                            :placeholder="item.placeholder"
                            @click.stop="item.on.click({position:'input-box',source:item})">
                     <da-icon class="da-icon delete" :name="icons.delete"
-                             @click="item.on.click({position:'delete',source:item})">
+                             @click="isDelete(item)">
                     </da-icon>
                 </div>
             </div>
@@ -60,6 +60,10 @@
             }
         },
         methods: {
+            async isDelete(item) {
+                item.value = "";
+                item.on.click({position: 'delete', source: item});
+            },
             async watchValue(item = {}, index = 0) {
                 this.$watch(async () => item.value, async (newVal, oldVal) => {
                     newVal = await newVal;
