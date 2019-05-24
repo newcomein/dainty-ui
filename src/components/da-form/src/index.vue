@@ -80,8 +80,8 @@
                         this.focusLineIndex = i;
                     }
 
-                    this.watchValue(item, i);
-                    this.watchRuleResult(item, i);
+                    await this.watchValue(item, i);
+                    await this.watchRuleResult(item, i);
                 }
                 //显示form
                 this.isReady = true;
