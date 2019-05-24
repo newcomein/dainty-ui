@@ -18,41 +18,24 @@
                     {
                         field: "username",
                         label: "真实姓名",
-                        type: "input",
-                        value: "",
-                        autofocus: true,
-                        readonly: false,
-                        placeholder: "请填写真实姓名",
-                        trim: true,
                         rules: [
-                            {excludeField: "username2"},
-                            {required: true, pattern: /^[1-9a-zA-Z]{1}[0-9a-zA-Z]{1,14}$/, message: '格式错误'},
+                            {quoteField: "username2",required:true},
+                            // {required: true, pattern: /^[1-9a-zA-Z]{1}[0-9a-zA-Z]{1,14}$/, message: '格式错误'},
                         ]
                     },
                     {
                         field: "username2",
                         label: "真实姓名2",
-                        type: "input",
-                        value: "",
-                        autofocus: true,
-                        readonly: false,
-                        placeholder: "请填写真实姓名2",
-                        trim: true,
                         rules: [
-                            {required: false, pattern: /^[1-9a-zA-Z]{1}[0-9a-zA-Z]{1,14}$/, message: '格式错误'},
-                        ],
-                        positionSlots: {
-                            delete: {
-                                name: "3333"
-                            }
-                        }
-                    },
+                            // {required: true, pattern: /^[1-9a-zA-Z]{1}[0-9a-zA-Z]{1,14}$/, message: '格式错误'},
+                        ]
+                    }
                 ]
             }
         },
         watch: {
             async isPass(val) {
-                console.log(val)
+                console.log("通过状态:",val)
             }
         },
         methods: {

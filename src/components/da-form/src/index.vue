@@ -63,10 +63,10 @@
                 //重新初始化data
                 this.focusLineIndex = null;
                 this.requiredField = {};
+                const requiredField = {};
 
                 //筛选重复的字段  如果字段为空则报错
                 await this.filterAllField(val);
-                this.requiredField = await this.filterRequiredField(val);
 
                 for (let i = 0, len = val.length; i < len; i++) {
 
@@ -82,7 +82,13 @@
 
                     await this.watchValue(item, i);
                     await this.watchRuleResult(item, i);
+
+                    //筛选必填字段
+                    Object.assign(requiredField, await this.filterRequiredField(item));
                 }
+
+                this.requiredField = requiredField;
+
                 //显示form
                 this.isReady = true;
             }
@@ -111,40 +117,55 @@
                 item.on.click({position: 'delete', source: item});
             },
             async watchValue(item = {}, index = 0) {
-                this.$watch(async () => item.value, async (newVal, oldVal) => {
-                    newVal = await newVal;
-                    oldVal = await oldVal;
-                    if (item.trim) {
-                        newVal = newVal.trim();
-                    }
-                    item.value = newVal;
-                    item.on.input({newVal, oldVal, source: item});
-                    item.ruleResult = await this.checkValue(item);
-                });
+                //避免重复复监听
+                if (!item._isWatchValue) {
+                    item._isWatchValue = true;
+                    this.$watch(async () => item.value, async (newVal, oldVal) => {
+                        newVal = await newVal;
+                        oldVal = await oldVal;
+                        if (item.trim) {
+                            newVal = newVal.trim();
+                        }
+                        item.value = newVal;
+                        item.on.input({newVal, oldVal, source: item});
+                        item.ruleResult = await this.checkValue(item);
+                    });
+                }
             },
             async watchRuleResult(item = {}, index = 0) {
                 //不知道啥子原因 无法监听到ruleResult变化  暂时用value替代
-                this.$watch(async () => item.value, async () => {
-                    setTimeout(async () => {
-                        const newVal = await item.ruleResult;
-                        if (!newVal.isPass) {
-                            this.$emit("update:isPass", false);
-                        } else {
-                            const requiredField = Object.keys(this.requiredField);
-                            for (let i of requiredField) {
-                                if (!this.requiredField[i].ruleResult.isPass) {
-                                    this.$emit("update:isPass", false);
-                                    break;
+                //避免重复复监听
+                if (!item._isWatchRuleResult) {
+                    item._isWatchRuleResult = true;
+                    this.$watch(async () => item.value, async () => {
+                        setTimeout(async () => {
+                            const newVal = await item.ruleResult;
+                            if (!newVal.isPass) {
+                                this.$emit("update:isPass", false);
+                            } else {
+
+                                const requiredField = Object.keys(this.requiredField);
+                                for (let i of requiredField) {
+                                    if (!this.requiredField[i].ruleResult.isPass) {
+                                        this.$emit("update:isPass", false);
+                                        break;
+                                    }
+                                    this.$emit("update:isPass", true);
                                 }
-                                this.$emit("update:isPass", true);
+
+                                //没有必填项 直接通过校验
+                                if (requiredField.length === 0) {
+                                    this.$emit("update:isPass", true);
+                                }
                             }
-                        }
-                    }, 50);
-                });
+                        }, 50);
+                    });
+                }
             },
             async checkValue(item) {
                 let isPass = true;
                 let message = "";
+
                 for (let i of item.rules) {
                     //必填
                     if (i.required && item.value.length === 0) {
@@ -192,6 +213,10 @@
                 if (utils.getDataType(item.type) === "undefined" || item.type.length === 0) {
                     item.type = "input"
                 }
+                if (utils.getDataType(item.value) === "undefined") {
+                    //为value添加数据绑定
+                    this.$set(item, "value", "");
+                }
                 if (utils.getDataType(item.autofocus) === "undefined") {
                     item.autofocus = true
                 }
@@ -212,6 +237,10 @@
                 }
                 if (utils.getDataType(item.options) === "undefined") {
                     item.options = {};
+                }
+                //不可修改  仅做内部数据处理
+                if (utils.getDataType(item._calls) === "undefined") {
+                    item._calls = {};
                 }
 
                 //正则判断结果  父组件修改无效
@@ -241,13 +270,10 @@
             },
             async filterRequiredField(val) {
                 const fields = {};
-                for (let i = 0, len = val.length; i < len; i++) {
-                    let item = val[i];
-                    for (let i2 of item.rules) {
-                        if (i2.required) {
-                            fields[item.field] = item;
-                            break;
-                        }
+                for (let i of val.rules) {
+                    if (i.required) {
+                        fields[val.field] = val;
+                        break;
                     }
                 }
                 return fields;
