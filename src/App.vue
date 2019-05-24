@@ -1,7 +1,6 @@
 <template>
     <div id="app">
         <da-form :init="init" :isPass.sync="isPass">
-            <div slot="3333">222</div>
         </da-form>
         <button @click="getInit">获取init</button>
     </div>

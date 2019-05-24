@@ -189,6 +189,9 @@
                 return {isPass, message};
             },
             async initAttributes(item) {
+                if (utils.getDataType(item.type) === "undefined" || item.type.length === 0) {
+                    item.type = "input"
+                }
                 if (utils.getDataType(item.autofocus) === "undefined") {
                     item.autofocus = true
                 }
