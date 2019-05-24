@@ -1,9 +1,11 @@
 <template>
-    <div class="flex da-form">
+    <div class="flex da-form" v-if="isReady">
+
         <form class="flex">
 
             <!--普通输入框-->
-            <div class="flex line" :data-field="[item.field]" v-for="(item,index) of initForm" :key="index"
+            <div class="flex line" :data-field="[item.field]" v-for="(item,index) of initForm"
+                 :key="item.field+'_'+index"
                  v-if="item.type==='input'" @click="item.on.click({position:'line',source:item})">
                 <label class="flex flex-inline">
                     <span>{{item.label}}</span>
@@ -18,10 +20,10 @@
                     <!--delete位置插槽-->
                     <div class="flex flex-inline slot-delete">
                         <slot :name="item.positionSlots.delete.name"
-                              v-if="item.positionSlots&&item.positionSlots.delete"></slot>
+                              v-if="item.positionSlots.delete"></slot>
                         <slot name="delete" v-else>
                             <da-icon class="da-icon delete" :name="icons.delete"
-                                     @click="isDelete(item)">
+                                     @click="isDelete(item)" v-if="item.options.isShowDelete">
                             </da-icon>
                         </slot>
                     </div>
@@ -29,13 +31,13 @@
                 </div>
             </div>
 
+
         </form>
     </div>
 </template>
 
 <script>
     import "@/assets/style/common/index.less"
-    import "@/assets/style/animations/index.less"
     import DaIcon from "../../da-icon/src";
     import utils from "@/utils"
 
@@ -58,19 +60,37 @@
                 this.initForm = val;
             },
             async initForm(val) {
+                //重新初始化data
+                this.focusLineIndex = null;
+                this.requiredField = {};
+
                 //筛选重复的字段  如果字段为空则报错
                 await this.filterAllField(val);
                 this.requiredField = await this.filterRequiredField(val);
+
                 for (let i = 0, len = val.length; i < len; i++) {
+
                     let item = val[i];
+
+                    //初始化属性
                     item = await this.initAttributes(item);
+
+                    //避免首个autofocus导致placeholder会闪
+                    if (item.autofocus && await utils.getDataType(this.focusLineIndex) === "null") {
+                        this.focusLineIndex = i;
+                    }
+
                     this.watchValue(item, i);
                     this.watchRuleResult(item, i);
                 }
+                //显示form
+                this.isReady = true;
             }
         },
         data() {
             return {
+                //表单初始化为不显示
+                isReady: false,
                 focusLineIndex: null,
                 initForm: [],
                 icons: {
@@ -187,9 +207,19 @@
                 if (utils.getDataType(item.positionSlots) === "undefined") {
                     item.positionSlots = {};
                 }
+                if (utils.getDataType(item.options) === "undefined") {
+                    item.options = {};
+                }
 
                 //正则判断结果  父组件修改无效
                 item.ruleResult = {isPass: false, message: ""};
+
+
+                //选项
+                item.options = Object.assign({
+                    isShowDelete: true
+                }, item.options);
+
 
                 //事件
                 if (utils.getDataType(item.on) === "undefined") {
@@ -308,11 +338,6 @@
                         .da-icon {
                             font-size: 0.23rem;
                             color: @da-icon-color;
-                            transition: transform 0.3s;
-
-                            &:active {
-                                transform: scale(1.5);
-                            }
 
                             &.delete {
                                 right: -0.05rem;

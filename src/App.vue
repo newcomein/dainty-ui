@@ -9,6 +9,7 @@
 
 <script>
     import {DaForm} from "@/components"
+
     export default {
         components: {DaForm},
         data() {
@@ -59,6 +60,8 @@
             async getInit() {
                 console.log("init", this.init)
             }
+        },
+        mounted() {
         }
     }
 </script>
