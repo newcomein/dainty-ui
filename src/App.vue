@@ -19,6 +19,11 @@
                         field: "username",
                         label: "真实姓名",
                         value: "",
+                    },
+                    {
+                        field: "username2",
+                        label: "真实姓名2",
+                        value: "",
                     }
                 ]
             }
