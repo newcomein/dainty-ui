@@ -76,12 +76,13 @@
                     item = await this.initAttributes(item);
 
                     //避免首个autofocus导致placeholder会闪
-                    if (item.autofocus && await utils.getDataType(this.focusLineIndex) === "null") {
+                    if (item.autofocus && utils.getDataType(this.focusLineIndex) === "null") {
                         this.focusLineIndex = i;
                     }
 
-                    await this.watchValue(item, i);
-                    await this.watchRuleResult(item, i);
+                    //监听变化的字段
+                    this.watchValue(item, i);
+                    this.watchRuleResult(item, i);
 
                     //筛选必填字段
                     Object.assign(requiredField, await this.filterRequiredField(item));
@@ -145,7 +146,7 @@
                             } else {
 
                                 const requiredField = Object.keys(this.requiredField);
-                                for (let i of requiredField) {
+                                for (const i of requiredField) {
                                     if (!this.requiredField[i].ruleResult.isPass) {
                                         this.$emit("update:isPass", false);
                                         break;
@@ -182,7 +183,7 @@
 
                     //引用源 当前value必须与引用源的value相匹配
                     if (i.quoteField) {
-                        for (let _item of this.initForm) {
+                        for (const _item of this.initForm) {
                             if (_item.field === i.quoteField) {
                                 if (_item.value !== item.value) {
                                     isPass = false
@@ -193,7 +194,7 @@
 
                     //排斥源 当前value必须与排斥源的value不匹配
                     if (i.excludeField) {
-                        for (let _item of this.initForm) {
+                        for (const _item of this.initForm) {
                             if (_item.field === i.excludeField) {
                                 if (_item.value === item.value) {
                                     isPass = false
@@ -210,36 +211,36 @@
                 return {isPass, message};
             },
             async initAttributes(item) {
-                if (utils.getDataType(item.type) === "undefined" || item.type.length === 0) {
+
+                const itemKeys = Object.keys(item);
+
+                if (!itemKeys.includes("type") || item.type.length === 0) {
                     item.type = "input"
                 }
-                if (utils.getDataType(item.value) === "undefined") {
-                    //为value添加数据绑定
-                    this.$set(item, "value", "");
-                }
-                if (utils.getDataType(item.autofocus) === "undefined") {
+                if (!itemKeys.includes("autofocus")) {
                     item.autofocus = true
                 }
-                if (utils.getDataType(item.readonly) === "undefined") {
+                if (!itemKeys.includes("readonly")) {
                     item.readonly = false
                 }
-                if (utils.getDataType(item.trim) === "undefined") {
+                if (!itemKeys.includes("trim")) {
                     item.trim = true
                 }
-                if (utils.getDataType(item.rules) === "undefined") {
+                if (!itemKeys.includes("rules")) {
                     item.rules = [];
                 }
-                if (utils.getDataType(item.slots) === "undefined") {
+                if (!itemKeys.includes("slots")) {
                     item.slots = [];
                 }
-                if (utils.getDataType(item.positionSlots) === "undefined") {
+                //位置插槽
+                if (!itemKeys.includes("positionSlots")) {
                     item.positionSlots = {};
                 }
-                if (utils.getDataType(item.options) === "undefined") {
+                if (!itemKeys.includes("options")) {
                     item.options = {};
                 }
                 //不可修改  仅做内部数据处理
-                if (utils.getDataType(item._calls) === "undefined") {
+                if (!itemKeys.includes("_calls")) {
                     item._calls = {};
                 }
 
@@ -254,7 +255,7 @@
 
 
                 //事件
-                if (utils.getDataType(item.on) === "undefined") {
+                if (!itemKeys.includes("on")) {
                     item.on = {};
                 }
 
@@ -270,7 +271,7 @@
             },
             async filterRequiredField(val) {
                 const fields = {};
-                for (let i of val.rules) {
+                for (const i of val.rules) {
                     if (i.required) {
                         fields[val.field] = val;
                         break;
@@ -282,15 +283,18 @@
                 const fields = {};
                 for (let i = 0, len = val.length; i < len; i++) {
                     let item = val[i];
-                    if (!item.field || item.length === 0) {
+
+                    if (!Object.keys(item).includes("field") || !Object.keys(item).includes("value")) {
                         throw {
-                            message: "field不能为空",
+                            message: "field,value不能为空",
                             data: item
                         };
                     }
+
                     if (!fields[item.field]) {
                         fields[item.field] = 0;
                     }
+
                     fields[item.field]++;
                     if (fields[item.field] > 1) {
                         throw {
@@ -298,6 +302,7 @@
                             data: item
                         };
                     }
+
                 }
             }
         },

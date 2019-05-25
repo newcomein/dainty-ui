@@ -18,24 +18,14 @@
                     {
                         field: "username",
                         label: "真实姓名",
-                        rules: [
-                            {quoteField: "username2",required:true},
-                            // {required: true, pattern: /^[1-9a-zA-Z]{1}[0-9a-zA-Z]{1,14}$/, message: '格式错误'},
-                        ]
-                    },
-                    {
-                        field: "username2",
-                        label: "真实姓名2",
-                        rules: [
-                            // {required: true, pattern: /^[1-9a-zA-Z]{1}[0-9a-zA-Z]{1,14}$/, message: '格式错误'},
-                        ]
+                        value: "",
                     }
                 ]
             }
         },
         watch: {
             async isPass(val) {
-                console.log("通过状态:",val)
+                console.log("通过状态:", val)
             }
         },
         methods: {
