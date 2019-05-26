@@ -1,23 +1,23 @@
 <template>
-    <div class="flex line" @click="item.on.click({position:'line',source:item})">
+    <div class="flex line" @click="options.on.click({position:'line',source:options})">
         <div class="flex line-box">
             <label class="flex flex-inline">
-                <span>{{item.label}}</span>
+                <span>{{options.label}}</span>
             </label>
             <div class="flex flex-inline input-box">
-                <input v-model="item.value" type="text" @focus="focus(index)" @blur="blur(index)"
-                       :readonly="item.readonly"
-                       :autofocus="item.autofocus"
-                       :placeholder="focusLineIndex===index?'':item.placeholder"
-                       @click.stop="item.on.click({position:'input-box',source:item})">
+                <input v-model="options.value" type="text" @focus="focus(index)" @blur="blur(index)"
+                       :readonly="options.readonly"
+                       :autofocus="options.autofocus"
+                       :placeholder="focusLineIndex===index?'':options.placeholder"
+                       @click.stop="options.on.click({position:'input-box',source:options})">
 
                 <!--delete位置插槽-->
                 <div class="flex flex-inline slot-delete">
-                    <slot :name="item.positionSlots.delete.name"
-                          v-if="item.positionSlots.delete"></slot>
+                    <slot :name="options.positionSlots.delete.name"
+                          v-if="options.positionSlots.delete"></slot>
                     <slot name="delete" v-else>
                         <da-icon class="da-icon delete" :name="icons.delete"
-                                 @click="isDelete(item)" v-if="item.options.isShowDelete">
+                                 @click="isDelete(options)" v-if="options.options.isShowDelete">
                         </da-icon>
                     </slot>
                 </div>
@@ -29,7 +29,20 @@
 
 <script>
     export default {
-        name: "da-input"
+        name: "da-input",
+        data() {
+            return {
+                focusLineIndex: 1
+            }
+        },
+        methods: {
+            async blur(index = null) {
+                this.focusLineIndex = null;
+            },
+            async focus(index = null) {
+                this.focusLineIndex = index;
+            },
+        }
     }
 </script>
 

@@ -53,12 +53,6 @@
             }
         },
         methods: {
-            async blur(index = null) {
-                this.focusLineIndex = null;
-            },
-            async focus(index = null) {
-                this.focusLineIndex = index;
-            },
             async isDelete(item) {
                 item.value = "";
                 item.on.click({position: 'delete', source: item});
