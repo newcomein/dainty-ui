@@ -7,27 +7,29 @@
             <div class="flex line" :data-field="[item.field]" v-for="(item,index) of initForm"
                  :key="item.field+'_'+index"
                  v-if="item.type==='input'" @click="item.on.click({position:'line',source:item})">
-                <label class="flex flex-inline">
-                    <span>{{item.label}}</span>
-                </label>
-                <div class="flex flex-inline input-box">
-                    <input v-model="item.value" type="text" @focus="focus(index)" @blur="blur(index)"
-                           :readonly="item.readonly"
-                           :autofocus="item.autofocus"
-                           :placeholder="focusLineIndex===index?'':item.placeholder"
-                           @click.stop="item.on.click({position:'input-box',source:item})">
+                <div class="flex line-box">
+                    <label class="flex flex-inline">
+                        <span>{{item.label}}</span>
+                    </label>
+                    <div class="flex flex-inline input-box">
+                        <input v-model="item.value" type="text" @focus="focus(index)" @blur="blur(index)"
+                               :readonly="item.readonly"
+                               :autofocus="item.autofocus"
+                               :placeholder="focusLineIndex===index?'':item.placeholder"
+                               @click.stop="item.on.click({position:'input-box',source:item})">
 
-                    <!--delete位置插槽-->
-                    <div class="flex flex-inline slot-delete">
-                        <slot :name="item.positionSlots.delete.name"
-                              v-if="item.positionSlots.delete"></slot>
-                        <slot name="delete" v-else>
-                            <da-icon class="da-icon delete" :name="icons.delete"
-                                     @click="isDelete(item)" v-if="item.options.isShowDelete">
-                            </da-icon>
-                        </slot>
+                        <!--delete位置插槽-->
+                        <div class="flex flex-inline slot-delete">
+                            <slot :name="item.positionSlots.delete.name"
+                                  v-if="item.positionSlots.delete"></slot>
+                            <slot name="delete" v-else>
+                                <da-icon class="da-icon delete" :name="icons.delete"
+                                         @click="isDelete(item)" v-if="item.options.isShowDelete">
+                                </da-icon>
+                            </slot>
+                        </div>
+
                     </div>
-
                 </div>
             </div>
 
@@ -59,39 +61,8 @@
             async init(val) {
                 this.initForm = val;
             },
-            async initForm(val) {
-                //重新初始化data
-                this.focusLineIndex = null;
-                this.requiredField = {};
-                const requiredField = {};
-
-                //筛选重复的字段  如果字段为空则报错
-                await this.filterAllField(val);
-
-                for (let i = 0, len = val.length; i < len; i++) {
-
-                    let item = val[i];
-
-                    //初始化属性
-                    item = await this.initAttributes(item);
-
-                    //避免首个autofocus导致placeholder会闪
-                    if (item.autofocus && utils.getDataType(this.focusLineIndex) === "null") {
-                        this.focusLineIndex = i;
-                    }
-
-                    //监听变化的字段
-                    this.watchValue(item, i);
-                    this.watchRuleResult(item, i);
-
-                    //筛选必填字段
-                    Object.assign(requiredField, await this.filterRequiredField(item));
-                }
-
-                this.requiredField = requiredField;
-
-                //显示form
-                this.isReady = true;
+            async initForm() {
+                this.restart();
             }
         },
         data() {
@@ -99,11 +70,11 @@
                 //表单初始化为不显示
                 isReady: false,
                 focusLineIndex: null,
-                initForm: [],
+                requiredField: new Map(),
+                initForm: this.init,
                 icons: {
                     delete: "feather-x"
                 },
-                requiredField: {}
             }
         },
         methods: {
@@ -130,37 +101,45 @@
                         item.value = newVal;
                         item.on.input({newVal, oldVal, source: item});
                         item.ruleResult = await this.checkValue(item);
+                        //监听ruleResult变化
+                        await this.watchRuleResult(item, index);
                     });
                 }
             },
             async watchRuleResult(item = {}, index = 0) {
-                //不知道啥子原因 无法监听到ruleResult变化  暂时用value替代
-                //避免重复复监听
-                if (!item._isWatchRuleResult) {
-                    item._isWatchRuleResult = true;
-                    this.$watch(async () => item.value, async () => {
-                        setTimeout(async () => {
-                            const newVal = await item.ruleResult;
-                            if (!newVal.isPass) {
-                                this.$emit("update:isPass", false);
-                            } else {
+                const newVal = await item.ruleResult;
+                if (!newVal.isPass) {
+                    this.$emit("update:isPass", false);
+                } else {
+                    let checkAllField = true;
+                    for (const i of this.requiredField) {
+                        if (!i[1].ruleResult.isPass) {
+                            this.$emit("update:isPass", false);
+                            return;
+                        }
+                        this.$emit("update:isPass", true);
+                    }
 
-                                const requiredField = Object.keys(this.requiredField);
-                                for (const i of requiredField) {
-                                    if (!this.requiredField[i].ruleResult.isPass) {
-                                        this.$emit("update:isPass", false);
-                                        break;
-                                    }
-                                    this.$emit("update:isPass", true);
-                                }
-
-                                //没有必填项 直接通过校验
-                                if (requiredField.length === 0) {
-                                    this.$emit("update:isPass", true);
-                                }
+                    for (let i of this.initForm) {
+                        if (i._calls.checkQuoteField) {
+                            checkAllField = await i._calls.checkQuoteField();
+                            if (!checkAllField) {
+                                break;
                             }
-                        }, 50);
-                    });
+                        }
+                        if (i._calls.checkExcludeField) {
+                            checkAllField = await i._calls.checkExcludeField();
+                            if (!checkAllField) {
+                                break;
+                            }
+                        }
+                    }
+
+                    if (checkAllField) {
+                        this.$emit("update:isPass", true);
+                    } else {
+                        this.$emit("update:isPass", false);
+                    }
                 }
             },
             async checkValue(item) {
@@ -183,24 +162,24 @@
 
                     //引用源 当前value必须与引用源的value相匹配
                     if (i.quoteField) {
-                        for (const _item of this.initForm) {
+                        utils.anyFor(this.initForm, async (_item, index) => {
                             if (_item.field === i.quoteField) {
                                 if (_item.value !== item.value) {
                                     isPass = false
                                 }
                             }
-                        }
+                        });
                     }
 
                     //排斥源 当前value必须与排斥源的value不匹配
                     if (i.excludeField) {
-                        for (const _item of this.initForm) {
+                        utils.anyFor(this.initForm, async (_item, index) => {
                             if (_item.field === i.excludeField) {
                                 if (_item.value === item.value) {
                                     isPass = false
                                 }
                             }
-                        }
+                        });
                     }
 
                     if (!isPass) {
@@ -208,39 +187,65 @@
                         break;
                     }
                 }
+
+                //检查所有字段规则
+                utils.anyFor(this.initForm, async (i, index) => {
+                    utils.anyFor(i.rules, async (i2, index2) => {
+                        if (i2.quoteField === item.field) {
+                            if (i.value !== item.value) {
+                                this.$set(i, "ruleResult", {isPass: false, message: "quoteField"});
+                                i._calls.checkQuoteField = async () => {
+                                    delete i._calls.checkQuoteField;
+                                    return false
+                                }
+                            }
+                        }
+                        if (i2.excludeField === item.field) {
+                            if (i.value === item.value) {
+                                this.$set(i, "ruleResult", {isPass: false, message: "excludeField"});
+                                i._calls.checkExcludeField = async () => {
+                                    delete i._calls.checkExcludeField;
+                                    return false
+                                }
+                            }
+                        }
+                    })
+                });
+
                 return {isPass, message};
             },
             async initAttributes(item) {
 
-                const itemKeys = Object.keys(item);
+                const itemKeys = [];
+                utils.anyFor(item, async (item, i) => itemKeys.push(i));
 
-                if (!itemKeys.includes("type") || item.type.length === 0) {
+                if (itemKeys.indexOf("type") <= -1 || item.type.length === 0) {
                     item.type = "input"
                 }
-                if (!itemKeys.includes("autofocus")) {
+                if (itemKeys.indexOf("autofocus") <= -1) {
                     item.autofocus = true
                 }
-                if (!itemKeys.includes("readonly")) {
+                if (itemKeys.indexOf("readonly") <= -1) {
                     item.readonly = false
                 }
-                if (!itemKeys.includes("trim")) {
+                if (itemKeys.indexOf("trim") <= -1) {
                     item.trim = true
                 }
-                if (!itemKeys.includes("rules")) {
+                if (itemKeys.indexOf("rules") <= -1) {
                     item.rules = [];
                 }
-                if (!itemKeys.includes("slots")) {
+                if (itemKeys.indexOf("slots") <= -1) {
                     item.slots = [];
                 }
                 //位置插槽
-                if (!itemKeys.includes("positionSlots")) {
+                if (itemKeys.indexOf("positionSlots") <= -1) {
                     item.positionSlots = {};
                 }
-                if (!itemKeys.includes("options")) {
+                if (itemKeys.indexOf("options") <= -1) {
                     item.options = {};
                 }
                 //不可修改  仅做内部数据处理
-                if (!itemKeys.includes("_calls")) {
+                if (itemKeys.indexOf("_calls") <= -1) {
                     item._calls = {};
                 }
 
@@ -255,7 +260,7 @@
 
 
                 //事件
-                if (!itemKeys.includes("on")) {
+                if (itemKeys.indexOf("on") <= -1) {
                     item.on = {};
                 }
 
@@ -267,22 +272,20 @@
                         return true
                     }
                 }, item.on);
-                return item;
             },
             async filterRequiredField(val) {
-                const fields = {};
+                let fields = null;
                 for (const i of val.rules) {
                     if (i.required) {
-                        fields[val.field] = val;
+                        fields = {key: val.field, value: val};
                         break;
                     }
                 }
                 return fields;
             },
-            async filterAllField(val = []) {
+            async loopAllField() {
                 const fields = {};
-                for (let i = 0, len = val.length; i < len; i++) {
-                    let item = val[i];
+                utils.anyFor(this.initForm, async (item, i) => {
 
                     if (!Object.keys(item).includes("field") || !Object.keys(item).includes("value")) {
                         throw {
@@ -303,11 +306,44 @@
                         };
                     }
 
-                }
+                })
+            },
+            async restart() {
+                const val = this.initForm;
+                //重新初始化data
+                this.focusLineIndex = null;
+                this.requiredField = new Map();
+
+                //检查重复的字段 和 value 是否正确
+                this.loopAllField(val);
+
+                utils.anyFor(val, async (item, i) => {
+
+                    //初始化属性
+                    await this.initAttributes(item);
+
+                    //避免首个autofocus导致placeholder会闪
+                    if (item.autofocus && utils.getDataType(this.focusLineIndex) === "null") {
+                        this.focusLineIndex = i;
+                    }
+
+                    //监听变化的字段
+                    this.watchValue(item, i);
+
+                    //筛选必填字段
+                    const filterRequiredField = await this.filterRequiredField(item);
+                    if (filterRequiredField) {
+                        this.requiredField.set(filterRequiredField.key, filterRequiredField.value);
+                    }
+
+                });
+
+                //显示form
+                this.isReady = true;
             }
         },
         created() {
-            this.initForm = this.init;
+            this.restart();
         }
     }
 </script>
@@ -328,53 +364,50 @@
                 position: relative;
 
                 &:last-child {
-                    &:after {
-                        display: none;
+
+                    .line-box {
+                        border-bottom: 0;
                     }
                 }
 
-                &:after {
-                    content: "";
-                    width: 93.5%;
-                    height: 1px;
-                    background-color: @border-bottom-color;
-                    position: absolute;
-                    bottom: 0;
-                }
-
-                label, .input-box {
+                .line-box {
+                    border-bottom: 1px solid @border-bottom-color;
                     height: 100%;
-                }
 
-                label {
-                    flex: 0.7;
-                    color: @label-color;
-                }
-
-                .input-box {
-                    flex: 2.6;
-                    position: relative;
-
-                    input {
-                        flex: auto;
+                    label, .input-box {
                         height: 100%;
-
-                        &::placeholder {
-                            color: @placeholder-color;
-                        }
                     }
 
-                    .slot-delete {
-                        flex: 0.25;
-                        justify-content: flex-end;
-                        height: 100%;
+                    label {
+                        flex: 0.7;
+                        color: @label-color;
+                    }
 
-                        .da-icon {
-                            font-size: 0.23rem;
-                            color: @da-icon-color;
+                    .input-box {
+                        flex: 2.6;
+                        position: relative;
 
-                            &.delete {
-                                right: -0.05rem;
+                        input {
+                            flex: auto;
+                            height: 100%;
+
+                            &::placeholder {
+                                color: @placeholder-color;
+                            }
+                        }
+
+                        .slot-delete {
+                            flex: 0.25;
+                            justify-content: flex-end;
+                            height: 100%;
+
+                            .da-icon {
+                                font-size: 0.23rem;
+                                color: @da-icon-color;
+
+                                &.delete {
+                                    right: -0.05rem;
+                                }
                             }
                         }
                     }

@@ -19,6 +19,7 @@
                         field: "username",
                         label: "真实姓名",
                         value: "",
+                        rules: [{required: "9999"}]
                     },
                     {
                         field: "username2",
@@ -38,7 +39,10 @@
                 console.log("init", this.init)
             }
         },
-        mounted() {
+        created() {
+            // for (let i = 0; i <= 100; i++) {
+            //     this.init[0][String(i) + "333"] = "ooooo"
+            // }
         }
     }
 </script>
