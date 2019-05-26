@@ -1,8 +1,9 @@
 import config from '../../package.json'
 import DaForm from "./da-form"
 import DaIcon from "./da-icon"
+import DaInput from "./da-input"
 
-const components = {DaForm, DaIcon};
+const components = {DaForm, DaIcon, DaInput};
 
 const option = {};
 
@@ -22,7 +23,7 @@ const data = {
 };
 
 export {
-    DaForm, DaIcon
+    DaForm, DaIcon, DaInput
 }
 
 export default data;
