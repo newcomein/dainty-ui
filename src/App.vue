@@ -20,7 +20,7 @@
                         label: "真实姓名",
                         value: "",
                         rules: [{required: "9999"}],
-                        placeholder:"1111"
+                        placeholder:"1111",
                     },
                     {
                         field: "username2",
