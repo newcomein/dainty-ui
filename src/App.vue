@@ -2,7 +2,7 @@
     <div id="app">
         <da-form :init="init" :isPass.sync="isPass">
         </da-form>
-        <!--        <da-input :options="init[0]"></da-input>-->
+<!--                <da-input :options="init[0]"></da-input>-->
         <button @click="getInit">获取init</button>
     </div>
 </template>

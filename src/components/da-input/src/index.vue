@@ -50,6 +50,7 @@
                 //初始化为不显示
                 isReady: false,
                 focusLineIndex: null,
+                parentVnode: {},//父组件
             }
         },
         watch: {
@@ -81,7 +82,26 @@
                     }
                 }
             },
+            async watchValue(item = {}, index = 0) {
+                //避免重复复监听
+                if (!item._isWatchValue) {
+                    item._isWatchValue = true;
+                    this.$watch(async () => item.value, async (newVal, oldVal) => {
+                        newVal = await newVal;
+                        oldVal = await oldVal;
+                        if (item.trim) {
+                            newVal = newVal.trim();
+                        }
+                        item.value = newVal;
+                        item.on.input({newVal, oldVal, source: item});
+                        item.ruleResult = await this.checkValue(item);
+                        //监听ruleResult变化
+                        await this.watchRuleResult(item, index);
+                    });
+                }
+            },
             async start() {
+                const isDaForm = this.parentVnode.componentOptions.tag === "da-form";
                 this.focusLineIndex = null;
                 await utils.loopInputAllField([this.options]);
                 this.options = await utils.initInputAttributes(this.options);
@@ -89,10 +109,15 @@
                 if (this.options.fixAutofocus) {
                     this.getAutofocus();
                 }
+                //如果外层不是da-form组件的话 则进行正则判断
+                if (!isDaForm) {
+                    this.watchValue();
+                }
                 this.isReady = true;
             },
         },
         created() {
+            this.parentVnode = this.$parent.$vnode;
             //储存当前注册的实例
             registerList.add(this);
             this.start();
