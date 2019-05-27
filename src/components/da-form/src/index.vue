@@ -177,10 +177,12 @@
             },
             async filterRequiredField(val) {
                 let fields = null;
-                for (const i of val.rules) {
-                    if (i.required) {
-                        fields = {key: val.field, value: val};
-                        break;
+                if (val.rules) {
+                    for (const i of val.rules) {
+                        if (i.required) {
+                            fields = {key: val.field, value: val};
+                            break;
+                        }
                     }
                 }
                 return fields;
@@ -191,7 +193,7 @@
                 this.requiredField = new Map();
 
                 //检查重要字段
-                await utils.loopInputAllField(this.initForm);
+                await utils.loopInputAllField(val);
 
                 utils.anyFor(val, async (item, i) => {
 
