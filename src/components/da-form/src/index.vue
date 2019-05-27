@@ -4,7 +4,8 @@
         <form class="flex">
 
             <!--普通输入框-->
-            <da-input :data-field="[item.field]" v-for="(item,index) of initForm" :key="item.field+'_'+index"
+            <da-input :data-field="[item.field]" :options="item" v-for="(item,index) of initForm"
+                      :key="index"
                       v-if="item.type==='input'">
             </da-input>
 
@@ -44,19 +45,11 @@
             return {
                 //表单初始化为不显示
                 isReady: false,
-                focusLineIndex: null,
                 requiredField: new Map(),
                 initForm: this.init,
-                icons: {
-                    delete: "feather-x"
-                },
             }
         },
         methods: {
-            async isDelete(item) {
-                item.value = "";
-                item.on.click({position: 'delete', source: item});
-            },
             async watchValue(item = {}, index = 0) {
                 //避免重复复监听
                 if (!item._isWatchValue) {
@@ -280,7 +273,6 @@
             async restart() {
                 const val = this.initForm;
                 //重新初始化data
-                this.focusLineIndex = null;
                 this.requiredField = new Map();
 
                 //检查重复的字段 和 value 是否正确
@@ -290,11 +282,6 @@
 
                     //初始化属性
                     await this.initAttributes(item);
-
-                    //避免首个autofocus导致placeholder会闪
-                    if (item.autofocus && utils.getDataType(this.focusLineIndex) === "null") {
-                        this.focusLineIndex = i;
-                    }
 
                     //监听变化的字段
                     this.watchValue(item, i);

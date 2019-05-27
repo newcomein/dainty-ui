@@ -5,10 +5,10 @@
                 <span>{{options.label}}</span>
             </label>
             <div class="flex flex-inline input-box">
-                <input v-model="options.value" type="text" @focus="focus(index)" @blur="blur(index)"
+                <input v-model="options.value" type="text" @focus="focus(options.field)" @blur="blur(options.field)"
                        :readonly="options.readonly"
                        :autofocus="options.autofocus"
-                       :placeholder="focusLineIndex===index?'':options.placeholder"
+                       :placeholder="focusLineIndex===options.field?'':options.placeholder"
                        @click.stop="options.on.click({position:'input-box',source:options})">
 
                 <!--delete位置插槽-->
@@ -16,7 +16,7 @@
                     <slot :name="options.positionSlots.delete.name"
                           v-if="options.positionSlots.delete"></slot>
                     <slot name="delete" v-else>
-                        <da-icon class="da-icon delete" :name="icons.delete"
+                        <da-icon class="da-icon delete" name="feather-x"
                                  @click="isDelete(options)" v-if="options.options.isShowDelete">
                         </da-icon>
                     </slot>
@@ -28,11 +28,21 @@
 </template>
 
 <script>
+    import "@/assets/style/common/index.less"
+    import DaIcon from "../../da-icon/src"
+
     export default {
         name: "da-input",
+        components: {DaIcon},
+        props: {
+            options: {
+                type: Object,
+                required: true
+            }
+        },
         data() {
             return {
-                focusLineIndex: 1
+                focusLineIndex: null
             }
         },
         methods: {
@@ -41,6 +51,10 @@
             },
             async focus(index = null) {
                 this.focusLineIndex = index;
+            },
+            async isDelete(item) {
+                item.value = "";
+                item.on.click({position: 'delete', source: item});
             },
         }
     }
