@@ -43,6 +43,11 @@
             options: {
                 type: Object,
                 required: true
+            },
+            isPass: {
+                type: Boolean,
+                required: false,
+                default: false
             }
         },
         data() {
@@ -100,6 +105,42 @@
                     });
                 }
             },
+            async checkValue(item) {
+                let isPass = true;
+                let message = "";
+
+                for (let i of item.rules) {
+                    //必填
+                    if (i.required && item.value.length === 0) {
+                        isPass = false;
+                    }
+                    //正则
+                    if (i.pattern && !i.pattern.test(item.value)) {
+                        isPass = false;
+                    }
+                    //非必填且存在正则,输入值为空的情况下,校正isPass结果为true
+                    if (i.pattern && !i.required && item.value.length === 0) {
+                        isPass = true;
+                    }
+
+                    //父组件不是da-form的时候 不具备 引用源 排斥源 功能
+
+                    if (!isPass) {
+                        message = i.message || "格式错误";
+                        break;
+                    }
+                }
+
+                return {isPass, message};
+            },
+            async watchRuleResult(item = {}, index = 0) {
+                const newVal = await item.ruleResult;
+                if (!newVal.isPass) {
+                    this.$emit("update:isPass", false);
+                } else {
+                    this.$emit("update:isPass", true);
+                }
+            },
             async start() {
                 const isDaForm = this.parentVnode.componentOptions.tag === "da-form";
                 this.focusLineIndex = null;
@@ -109,9 +150,9 @@
                 if (this.options.fixAutofocus) {
                     this.getAutofocus();
                 }
-                //如果外层不是da-form组件的话 则进行正则判断
+                //如果外层不是da-form组件的话 则进行正则判断机制
                 if (!isDaForm) {
-                    this.watchValue();
+                    this.watchValue(this.options);
                 }
                 this.isReady = true;
             },

@@ -1,8 +1,8 @@
 <template>
     <div id="app">
-        <da-form :init="init" :isPass.sync="isPass">
-        </da-form>
-<!--                <da-input :options="init[0]"></da-input>-->
+        <!--        <da-form :init="init" :isPass.sync="isPass">-->
+        <!--        </da-form>-->
+        <da-input :options="init[0]" :isPass="isPass"></da-input>
         <button @click="getInit">获取init</button>
     </div>
 </template>
@@ -21,7 +21,6 @@
                         field: "username",
                         label: "真实姓名",
                         value: "",
-                        rules: [{required: "9999"}],
                         type: "input",
                     },
                     {
