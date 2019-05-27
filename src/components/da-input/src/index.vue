@@ -1,6 +1,6 @@
 <template>
     <div ref="line" class="flex line" @click="options.on.click({position:'line',source:options})"
-         v-if="isReady&&options.type==='input'">
+         v-if="isReady">
         <div class="flex line-box">
             <label class="flex flex-inline">
                 <span>{{options.label}}</span>
@@ -33,6 +33,7 @@
     import DaIcon from "../../da-icon/src"
     import utils from "@/utils"
 
+    //实例注册存储
     let registerList = new Set();
 
     export default {
@@ -82,6 +83,7 @@
             },
             async start() {
                 this.focusLineIndex = null;
+                await utils.loopInputAllField([this.options]);
                 this.options = await utils.initInputAttributes(this.options);
                 //启动修正焦点模式
                 if (this.options.fixAutofocus) {

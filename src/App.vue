@@ -1,16 +1,18 @@
 <template>
     <div id="app">
-        <da-form :init="init" :isPass.sync="isPass">
-        </da-form>
+        <!--        <da-form :init="init" :isPass.sync="isPass">-->
+        <!--        </da-form>-->
+        <da-input :options="init[0]"></da-input>
         <button @click="getInit">获取init</button>
     </div>
 </template>
 
 <script>
     import {DaForm} from "@/components"
+    import {DaInput} from "@/components"
 
     export default {
-        components: {DaForm},
+        components: {DaForm, DaInput},
         data() {
             return {
                 isPass: false,
@@ -20,13 +22,13 @@
                         label: "真实姓名",
                         value: "",
                         rules: [{required: "9999"}],
-                        placeholder:"1111",
+                        placeholder: "1111",
                     },
                     {
                         field: "username2",
                         label: "真实姓名2",
                         value: "",
-                        placeholder:"1111"
+                        placeholder: "1111"
                     }
                 ]
             }

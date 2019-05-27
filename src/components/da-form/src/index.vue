@@ -5,7 +5,7 @@
 
             <!--普通输入框-->
             <da-input :data-field="[item.field]" :options.sync="item" v-for="(item,index) of initForm"
-                      :key="index">
+                      :key="index" v-if="item.type==='input'">
             </da-input>
 
 
@@ -185,38 +185,10 @@
                 }
                 return fields;
             },
-            async loopAllField() {
-                const fields = {};
-                utils.anyFor(this.initForm, async (item, i) => {
-
-                    if (!Object.keys(item).includes("field") || !Object.keys(item).includes("value")) {
-                        throw {
-                            message: "field,value不能为空",
-                            data: item
-                        };
-                    }
-
-                    if (!fields[item.field]) {
-                        fields[item.field] = 0;
-                    }
-
-                    fields[item.field]++;
-                    if (fields[item.field] > 1) {
-                        throw {
-                            message: `${item.field}不能重复`,
-                            data: item
-                        };
-                    }
-
-                })
-            },
             async start() {
                 const val = this.initForm;
                 //重新初始化data
                 this.requiredField = new Map();
-
-                //检查重复的字段 和 value 是否正确
-                this.loopAllField(val);
 
                 utils.anyFor(val, async (item, i) => {
 

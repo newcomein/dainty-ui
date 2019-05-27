@@ -4,15 +4,13 @@ export default async (item) => {
     const itemKeys = [];
     anyFor(item, async (item, i) => itemKeys.push(i));
 
-    if (itemKeys.indexOf("type") <= -1 || item.type.length === 0) {
-        item.type = "input"
-    }
+
     if (itemKeys.indexOf("autofocus") <= -1) {
         item.autofocus = true
     }
     //修正autofocus规则  w3c官方规则 只有输入字符的时候placeholder才会消失  启动修正模式  输入框获得聚焦即可让placeholder消失
     if (itemKeys.indexOf("fixAutofocus") <= -1) {
-        item.fixAutofocus = false
+        item.fixAutofocus = true
     }
     if (itemKeys.indexOf("readonly") <= -1) {
         item.readonly = false
