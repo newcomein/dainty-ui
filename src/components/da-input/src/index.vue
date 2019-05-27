@@ -34,7 +34,7 @@
     import utils from "@/utils"
 
     //实例注册存储
-    let registerList = new Set();
+    const registerList = new Set();
 
     export default {
         name: "da-input",

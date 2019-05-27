@@ -190,6 +190,9 @@
                 //重新初始化data
                 this.requiredField = new Map();
 
+                //检查重要字段
+                await utils.loopInputAllField(this.initForm);
+
                 utils.anyFor(val, async (item, i) => {
 
                     //监听变化的字段
