@@ -4,9 +4,8 @@
         <form class="flex">
 
             <!--普通输入框-->
-            <da-input :data-field="[item.field]" :options="item" v-for="(item,index) of initForm"
-                      :key="index"
-                      v-if="item.type==='input'">
+            <da-input :data-field="[item.field]" :options.sync="item" v-for="(item,index) of initForm"
+                      :key="index">
             </da-input>
 
 
@@ -38,12 +37,12 @@
                 this.initForm = val;
             },
             async initForm() {
-                this.restart();
+                this.start();
             }
         },
         data() {
             return {
-                //表单初始化为不显示
+                //初始化为不显示
                 isReady: false,
                 requiredField: new Map(),
                 initForm: this.init,
@@ -176,65 +175,6 @@
 
                 return {isPass, message};
             },
-            async initAttributes(item) {
-
-                const itemKeys = [];
-                utils.anyFor(item, async (item, i) => itemKeys.push(i));
-
-                if (itemKeys.indexOf("type") <= -1 || item.type.length === 0) {
-                    item.type = "input"
-                }
-                if (itemKeys.indexOf("autofocus") <= -1) {
-                    item.autofocus = true
-                }
-                if (itemKeys.indexOf("readonly") <= -1) {
-                    item.readonly = false
-                }
-                if (itemKeys.indexOf("trim") <= -1) {
-                    item.trim = true
-                }
-                if (itemKeys.indexOf("rules") <= -1) {
-                    item.rules = [];
-                }
-                if (itemKeys.indexOf("slots") <= -1) {
-                    item.slots = [];
-                }
-                //位置插槽
-                if (itemKeys.indexOf("positionSlots") <= -1) {
-                    item.positionSlots = {};
-                }
-                if (itemKeys.indexOf("options") <= -1) {
-                    item.options = {};
-                }
-                //不可修改  仅做内部数据处理
-                if (itemKeys.indexOf("_calls") <= -1) {
-                    item._calls = {};
-                }
-
-                //正则判断结果  父组件修改无效
-                item.ruleResult = {isPass: false, message: ""};
-
-
-                //选项
-                item.options = Object.assign({
-                    isShowDelete: true
-                }, item.options);
-
-
-                //事件
-                if (itemKeys.indexOf("on") <= -1) {
-                    item.on = {};
-                }
-
-                item.on = Object.assign({
-                    async input({newVal, oldVal, source}) {
-                        return true
-                    },
-                    async click({position, source}) {
-                        return true
-                    }
-                }, item.on);
-            },
             async filterRequiredField(val) {
                 let fields = null;
                 for (const i of val.rules) {
@@ -270,7 +210,7 @@
 
                 })
             },
-            async restart() {
+            async start() {
                 const val = this.initForm;
                 //重新初始化data
                 this.requiredField = new Map();
@@ -280,11 +220,8 @@
 
                 utils.anyFor(val, async (item, i) => {
 
-                    //初始化属性
-                    await this.initAttributes(item);
-
                     //监听变化的字段
-                    this.watchValue(item, i);
+                    await this.watchValue(item, i);
 
                     //筛选必填字段
                     const filterRequiredField = await this.filterRequiredField(item);
@@ -299,7 +236,7 @@
             }
         },
         created() {
-            this.restart();
+            this.start();
         }
     }
 </script>

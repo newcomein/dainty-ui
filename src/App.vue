@@ -19,12 +19,14 @@
                         field: "username",
                         label: "真实姓名",
                         value: "",
-                        rules: [{required: "9999"}]
+                        rules: [{required: "9999"}],
+                        placeholder:"1111"
                     },
                     {
                         field: "username2",
                         label: "真实姓名2",
                         value: "",
+                        placeholder:"1111"
                     }
                 ]
             }

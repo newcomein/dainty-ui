@@ -1,5 +1,6 @@
 <template>
-    <div class="flex line" @click="options.on.click({position:'line',source:options})">
+    <div class="flex line" @click="options.on.click({position:'line',source:options})"
+         v-if="isReady&&options.type==='input'">
         <div class="flex line-box">
             <label class="flex flex-inline">
                 <span>{{options.label}}</span>
@@ -30,6 +31,7 @@
 <script>
     import "@/assets/style/common/index.less"
     import DaIcon from "../../da-icon/src"
+    import utils from "@/utils"
 
     export default {
         name: "da-input",
@@ -42,7 +44,14 @@
         },
         data() {
             return {
-                focusLineIndex: null
+                //初始化为不显示
+                isReady: false,
+                focusLineIndex: null,
+            }
+        },
+        watch: {
+            async options() {
+                this.start();
             }
         },
         methods: {
@@ -56,6 +65,13 @@
                 item.value = "";
                 item.on.click({position: 'delete', source: item});
             },
+            async start() {
+                this.options = await utils.initInputAttributes(this.options);
+                this.isReady = true;
+            },
+        },
+        created() {
+            this.start()
         }
     }
 </script>
