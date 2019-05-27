@@ -14,7 +14,6 @@
 </template>
 
 <script>
-    import "@/assets/style/common/index.less"
     import DaInput from "../../da-input/src";
     import utils from "@/utils"
 
@@ -219,10 +218,5 @@
 </script>
 
 <style lang="less" scoped>
-
-    .da-form {
-        form {
-
-        }
-    }
+    @import "../../../assets/style/common/index.less";
 </style>

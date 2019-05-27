@@ -9,8 +9,6 @@
 </template>
 
 <script>
-    import "@/assets/style/common/index.less"
-    import "@/assets/style/animations/index.less"
     import {icons} from "feather-icons"
 
     export default {
@@ -67,6 +65,9 @@
 </script>
 
 <style lang="less" scoped>
+    @import "../../../assets/style/common/index.less";
+    @import "../../../assets/style/animations/index.less";
+
     .da-icon {
         position: relative;
         justify-content: center;
