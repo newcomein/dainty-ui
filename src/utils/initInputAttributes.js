@@ -12,6 +12,9 @@ export default async (item) => {
     if (itemKeys.indexOf("fixAutofocus") <= -1) {
         item.fixAutofocus = true
     }
+    if (itemKeys.indexOf("placeholder") <= -1) {
+        item.placeholder = "";
+    }
     if (itemKeys.indexOf("readonly") <= -1) {
         item.readonly = false
     }

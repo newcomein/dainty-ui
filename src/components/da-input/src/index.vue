@@ -1,5 +1,5 @@
 <template>
-    <div ref="line" class="flex line" @click="options.on.click({position:'line',source:options})"
+    <div ref="da-input" class="flex da-input" @click="options.on.click({position:'line',source:options})"
          v-if="isReady">
         <div class="flex line-box">
             <label class="flex flex-inline">
@@ -166,5 +166,5 @@
 </script>
 
 <style lang="less" scoped>
-    @import "../../../assets/style/components/form.less";
+    @import "../../../assets/style/components/da-input.less";
 </style>

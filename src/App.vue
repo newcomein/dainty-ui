@@ -2,7 +2,7 @@
     <div id="app">
         <!--        <da-form :init="init" :isPass.sync="isPass">-->
         <!--        </da-form>-->
-        <da-input :options="init[0]" :isPass="isPass"></da-input>
+        <da-input :options="init[0]" :isPass.sync="isPass"></da-input>
         <button @click="getInit">获取init</button>
     </div>
 </template>
@@ -22,12 +22,15 @@
                         label: "真实姓名",
                         value: "",
                         type: "input",
+                        rules: [{required: true}],
+                        placeholder: "1"
                     },
                     {
                         field: "username2",
                         label: "真实姓名2",
                         value: "",
-                        type: "input"
+                        type: "input",
+                        placeholder: "222222"
                     }
                 ]
             }
