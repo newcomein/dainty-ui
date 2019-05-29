@@ -166,6 +166,5 @@
 </script>
 
 <style lang="less" scoped>
-    @import "../../../assets/style/common/index.less";
     @import "../../../assets/style/components/form.less";
 </style>

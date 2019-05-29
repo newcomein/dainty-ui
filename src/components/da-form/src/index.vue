@@ -218,5 +218,4 @@
 </script>
 
 <style lang="less" scoped>
-    @import "../../../assets/style/common/index.less";
 </style>

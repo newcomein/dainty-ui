@@ -51,5 +51,5 @@
 </script>
 
 <style lang="less">
-
+    @import "./assets/style/common/index.less";
 </style>

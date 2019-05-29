@@ -65,25 +65,5 @@
 </script>
 
 <style lang="less" scoped>
-    @import "../../../assets/style/common/index.less";
     @import "../../../assets/style/animations/index.less";
-
-    .da-icon {
-        position: relative;
-        justify-content: center;
-
-        svg {
-            width: 1em;
-            height: 1em;
-            overflow: hidden;
-        }
-
-        [class*=feather-] {
-            stroke: currentColor;
-            stroke-width: 1;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            fill: none;
-        }
-    }
 </style>
