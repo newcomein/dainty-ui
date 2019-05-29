@@ -218,4 +218,5 @@
 </script>
 
 <style lang="less" scoped>
+    @import "../../../assets/style/components/da-form.less";
 </style>
