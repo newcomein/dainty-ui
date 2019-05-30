@@ -1,8 +1,8 @@
 <template>
     <div id="app">
-        <!--        <da-form :init="init" :isPass.sync="isPass">-->
-        <!--        </da-form>-->
-        <da-input :options="init[0]" :isPass.sync="isPass"></da-input>
+                <da-form :init="init" :isPass.sync="isPass">
+                </da-form>
+<!--        <da-input :options="init[0]" :isPass.sync="isPass"></da-input>-->
         <button @click="getInit">获取init</button>
     </div>
 </template>
@@ -23,7 +23,7 @@
                         value: "",
                         type: "input",
                         rules: [{required: true}],
-                        placeholder: "1"
+                        placeholder: "1",
                     },
                     {
                         field: "username2",
