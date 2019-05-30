@@ -24,9 +24,11 @@
                     </slot>
                 </div>
 
-                <div class="flex error-message" v-if="!ruleResult.isPass">
-                    <p>{{ruleResult.message}}</p>
-                </div>
+                <transition enter-active-class="animated faster fadeIn" leave-active-class="animated faster fadeOut">
+                    <div class="flex error-message" v-if="!ruleResult.isPass">
+                        <p>{{ruleResult.message}}</p>
+                    </div>
+                </transition>
 
             </div>
         </div>
@@ -66,7 +68,7 @@
         watch: {
             async options() {
                 this.start();
-            },
+            }
         },
         methods: {
             async blur() {
@@ -159,6 +161,13 @@
                 //如果外层不是da-form组件的话 则进行正则判断机制
                 if (!isDaForm) {
                     this.watchValue(this.options);
+                } else {
+                    //bug: 仅做更新ruleResult
+                    this.$watch(async () => this.options.value, async () => {
+                        setTimeout(() => {
+                            this.ruleResult = this.options.ruleResult;
+                        }, 30);
+                    })
                 }
                 this.ruleResult = this.options.ruleResult;
                 this.isReady = true;
