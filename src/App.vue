@@ -28,7 +28,8 @@
                         label: "密码",
                         value: "",
                         mode: "input",
-                        placeholder: "222222"
+                        placeholder: "222222",
+                        type: "captcha"
                     }
                 ]
             }
