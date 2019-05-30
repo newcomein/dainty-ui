@@ -8,7 +8,6 @@
 
 <script>
     import DaForm from "@/components/da-form"
-    import DaInput from "@/components/da-input"
 
     export default {
         components: {DaForm},
