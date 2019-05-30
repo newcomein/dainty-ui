@@ -55,9 +55,13 @@
                     this.$watch(async () => item.value, async (newVal, oldVal) => {
                         newVal = await newVal;
                         oldVal = await oldVal;
-                        if (item.trim) {
-                            newVal = newVal.trim();
+
+                        if (utils.getDataType(newVal) === "string") {
+                            if (item.trim) {
+                                newVal = newVal.trim();
+                            }
                         }
+
                         item.value = newVal;
                         item.on.input({newVal, oldVal, source: item});
                         this.$set(item, "ruleResult", await this.checkValue(item));

@@ -25,7 +25,7 @@
                 </div>
 
                 <transition enter-active-class="animated faster fadeIn" leave-active-class="animated faster fadeOut">
-                    <div class="flex error-message" v-if="!ruleResult.isPass">
+                    <div class="flex error-message" v-if="!ruleResult.isPass&&ruleResult.message.length>0">
                         <p>{{ruleResult.message}}</p>
                     </div>
                 </transition>
@@ -75,6 +75,14 @@
                 if (this.options.fixAutofocus) {
                     this.focusLineIndex = null;
                 }
+
+                //检查正则
+                this.$set(this.options, "ruleResult", await this.checkValue(this.options));
+                this.ruleResult = this.options.ruleResult;
+
+
+                //监听ruleResult变化
+                await this.watchRuleResult(this.options);
             },
             async focus() {
                 if (this.options.fixAutofocus) {
@@ -101,9 +109,13 @@
                     this.$watch(async () => item.value, async (newVal, oldVal) => {
                         newVal = await newVal;
                         oldVal = await oldVal;
-                        if (item.trim) {
-                            newVal = newVal.trim();
+
+                        if (utils.getDataType(newVal) === "string") {
+                            if (item.trim) {
+                                newVal = newVal.trim();
+                            }
                         }
+
                         item.value = newVal;
                         item.on.input({newVal, oldVal, source: item});
                         this.$set(item, "ruleResult", await this.checkValue(item));
