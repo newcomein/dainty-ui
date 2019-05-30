@@ -1,3 +1,4 @@
+import "../../assets/style"
 import index from "./src"
 
 index.install = async function (Vue) {

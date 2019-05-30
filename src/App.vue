@@ -8,8 +8,8 @@
 </template>
 
 <script>
-    import {DaForm} from "@/components"
-    import {DaInput} from "@/components"
+    import DaForm from "@/components/da-form"
+    import DaInput from "@/components/da-input"
 
     export default {
         components: {DaForm, DaInput},
@@ -52,7 +52,3 @@
         }
     }
 </script>
-
-<style lang="less">
-    @import "./assets/style/common/index.less";
-</style>

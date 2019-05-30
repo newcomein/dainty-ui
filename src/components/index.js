@@ -1,3 +1,5 @@
+import "../assets/style"
+
 import config from '../../package.json'
 import DaForm from "./da-form"
 import DaIcon from "./da-icon"

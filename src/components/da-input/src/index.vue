@@ -164,7 +164,3 @@
         }
     }
 </script>
-
-<style lang="less" scoped>
-    @import "../../../assets/style/components/da-input.less";
-</style>

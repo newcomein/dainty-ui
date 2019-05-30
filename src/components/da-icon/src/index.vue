@@ -63,8 +63,3 @@
         }
     }
 </script>
-
-<style lang="less" scoped>
-    @import "../../../assets/style/animations/index.less";
-    @import "../../../assets/style/components/da-icon.less";
-</style>
