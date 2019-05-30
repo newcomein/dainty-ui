@@ -60,7 +60,7 @@
                         }
                         item.value = newVal;
                         item.on.input({newVal, oldVal, source: item});
-                        item.ruleResult = await this.checkValue(item);
+                        this.$set(item, "ruleResult", await this.checkValue(item));
                         //监听ruleResult变化
                         await this.watchRuleResult(item, index);
                     });

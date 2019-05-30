@@ -18,9 +18,14 @@
                           v-if="options.positionSlots.delete"></slot>
                     <slot name="delete" v-else>
                         <da-icon class="da-icon delete" name="feather-x"
-                                 @click="isDelete(options)" v-if="options.options.isShowDelete">
+                                 @click="isDelete(options)"
+                                 v-show="options.options.isShowDelete&&options.value.length!==0">
                         </da-icon>
                     </slot>
+                </div>
+
+                <div class="flex error-message">
+                    <p>{{options.ruleResult.message}}</p>
                 </div>
 
             </div>
@@ -98,7 +103,7 @@
                         }
                         item.value = newVal;
                         item.on.input({newVal, oldVal, source: item});
-                        item.ruleResult = await this.checkValue(item);
+                        this.$set(item, "ruleResult", await this.checkValue(item));
                         //监听ruleResult变化
                         await this.watchRuleResult(item, index);
                     });

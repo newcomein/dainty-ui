@@ -32,6 +32,16 @@
       flex: 2.6;
       position: relative;
 
+      .error-message {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        font-size: 0.12rem;
+        color: red;
+        line-height: 1.15;
+      }
+
       input {
         flex: auto;
         height: 100%;
@@ -48,6 +58,7 @@
 
         .da-icon {
           font-size: 0.23rem;
+          width: 0.23rem;
           color: @da-icon-color;
 
           &.delete {
