@@ -24,8 +24,8 @@
                     </slot>
                 </div>
 
-                <div class="flex error-message">
-                    <p>{{options.ruleResult.message}}</p>
+                <div class="flex error-message" v-if="!ruleResult.isPass">
+                    <p>{{ruleResult.message}}</p>
                 </div>
 
             </div>
@@ -60,12 +60,13 @@
                 isReady: false,
                 focusLineIndex: null,
                 parentVnode: {},//父组件
+                ruleResult: {isPass: false, message: ""}
             }
         },
         watch: {
             async options() {
                 this.start();
-            }
+            },
         },
         methods: {
             async blur() {
@@ -104,6 +105,7 @@
                         item.value = newVal;
                         item.on.input({newVal, oldVal, source: item});
                         this.$set(item, "ruleResult", await this.checkValue(item));
+                        this.ruleResult = item.ruleResult;
                         //监听ruleResult变化
                         await this.watchRuleResult(item, index);
                     });
@@ -158,6 +160,7 @@
                 if (!isDaForm) {
                     this.watchValue(this.options);
                 }
+                this.ruleResult = this.options.ruleResult;
                 this.isReady = true;
             },
         },
