@@ -5,7 +5,7 @@
 
             <!--普通输入框-->
             <da-input :data-field="[item.field]" :options.sync="item" v-for="(item,index) of initForm"
-                      :key="index" v-if="item.type==='input'">
+                      :key="index" v-if="item.mode==='input'">
             </da-input>
 
 

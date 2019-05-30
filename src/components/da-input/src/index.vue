@@ -6,7 +6,7 @@
                 <span>{{options.label}}</span>
             </label>
             <div class="flex flex-inline input-box">
-                <input v-model="options.value" type="text" @focus="focus" @blur="blur"
+                <input v-model="options.value" :type="options.type" @focus="focus" @blur="blur"
                        :readonly="options.readonly"
                        :autofocus="options.autofocus"
                        :placeholder="focusLineIndex===options.field?'':options.placeholder"

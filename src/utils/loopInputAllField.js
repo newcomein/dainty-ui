@@ -4,9 +4,9 @@ export default async (list = []) => {
     const fields = {};
     anyFor(list, async (item, i) => {
 
-        if (!Object.keys(item).includes("field") || !Object.keys(item).includes("value"), !Object.keys(item).includes("type")) {
+        if (!Object.keys(item).includes("field") || !Object.keys(item).includes("value"), !Object.keys(item).includes("mode")) {
             throw {
-                message: "type,field,value不能为空",
+                message: "mode,field,value不能为空",
                 data: item
             };
         }

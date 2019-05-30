@@ -4,7 +4,9 @@ export default async (item) => {
     const itemKeys = [];
     anyFor(item, async (item, i) => itemKeys.push(i));
 
-
+    if (itemKeys.indexOf("type") <= -1) {
+        item.type = "text"
+    }
     if (itemKeys.indexOf("autofocus") <= -1) {
         item.autofocus = true
     }

@@ -1,8 +1,7 @@
 <template>
     <div id="app">
-<!--        <da-form :init="init" :isPass.sync="isPass">-->
-<!--        </da-form>-->
-                <da-input :options="init[0]" :isPass.sync="isPass"></da-input>
+        <da-form :init="init" :isPass.sync="isPass">
+        </da-form>
         <button @click="getInit">获取init</button>
     </div>
 </template>
@@ -12,7 +11,7 @@
     import DaInput from "@/components/da-input"
 
     export default {
-        components: {DaForm, DaInput},
+        components: {DaForm},
         data() {
             return {
                 isPass: false,
@@ -21,7 +20,7 @@
                         field: "username",
                         label: "真实姓名",
                         value: "",
-                        type: "input",
+                        mode: "input",
                         rules: [{required: true}],
                         placeholder: "1",
                     },
@@ -29,7 +28,7 @@
                         field: "password",
                         label: "密码",
                         value: "",
-                        type: "input",
+                        mode: "input",
                         placeholder: "222222"
                     }
                 ]
