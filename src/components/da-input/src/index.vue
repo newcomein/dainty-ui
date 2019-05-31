@@ -106,7 +106,7 @@
                 //避免重复复监听
                 if (!item._isWatchValue) {
                     item._isWatchValue = true;
-                    const throttle = utils.throttle(100);
+                    const throttle = utils.throttle(80);
                     this.$watch(async () => item.value, async (newVal, oldVal) => throttle(async () => {
                         newVal = await newVal;
                         oldVal = await oldVal;
