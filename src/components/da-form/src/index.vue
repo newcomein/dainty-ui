@@ -4,9 +4,10 @@
         <form class="flex">
 
             <!--普通输入框-->
-            <da-input :data-field="[item.field]" :options.sync="item" v-for="(item,index) of initForm"
-                      :key="index" v-if="item.mode==='input'">
-            </da-input>
+            <template v-for="(item,index) of initForm">
+                <da-input :data-field="[item.field]" :options.sync="item" v-if="item.mode==='input'">
+                </da-input>
+            </template>
 
 
         </form>
@@ -52,7 +53,7 @@
                 //避免重复复监听
                 if (!item._isWatchValue) {
                     item._isWatchValue = true;
-                    const throttle = utils.throttle(80);
+                    const throttle = utils.throttle(100);
                     this.$watch(async () => item.value, async (newVal, oldVal) => throttle(async () => {
                         newVal = await newVal;
                         oldVal = await oldVal;
