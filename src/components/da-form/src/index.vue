@@ -52,7 +52,8 @@
                 //避免重复复监听
                 if (!item._isWatchValue) {
                     item._isWatchValue = true;
-                    this.$watch(async () => item.value, async (newVal, oldVal) => {
+                    const throttle = utils.throttle(100);
+                    this.$watch(async () => item.value, async (newVal, oldVal) => throttle(async () => {
                         newVal = await newVal;
                         oldVal = await oldVal;
 
@@ -67,7 +68,7 @@
                         this.$set(item, "ruleResult", await this.checkValue(item));
                         //监听ruleResult变化
                         await this.watchRuleResult(item, index);
-                    });
+                    }));
                 }
             },
             async watchRuleResult(item = {}, index = 0) {

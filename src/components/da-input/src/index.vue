@@ -19,7 +19,7 @@
                     <slot name="delete" v-else>
                         <da-icon class="da-icon delete" name="feather-x"
                                  @click="isDelete(options)"
-                                 v-show="options.options.isShowDelete&&options.value.length!==0">
+                                 v-show="options.options.isShowDelete && options.value.length !== 0">
                         </da-icon>
                     </slot>
                 </div>
@@ -62,7 +62,7 @@
                 isReady: false,
                 focusLineIndex: null,
                 parentVnode: {},//父组件
-                ruleResult: {isPass: false, message: ""}
+                ruleResult: {isPass: false, message: ""},
             }
         },
         watch: {
@@ -106,7 +106,8 @@
                 //避免重复复监听
                 if (!item._isWatchValue) {
                     item._isWatchValue = true;
-                    this.$watch(async () => item.value, async (newVal, oldVal) => {
+                    const throttle = utils.throttle(100);
+                    this.$watch(async () => item.value, async (newVal, oldVal) => throttle(async () => {
                         newVal = await newVal;
                         oldVal = await oldVal;
 
@@ -122,7 +123,7 @@
                         this.ruleResult = item.ruleResult;
                         //监听ruleResult变化
                         await this.watchRuleResult(item, index);
-                    });
+                    }));
                 }
             },
             async checkValue(item) {
