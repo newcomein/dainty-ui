@@ -47,7 +47,8 @@ export default async (item) => {
 
     //选项
     item.options = Object.assign({
-        isShowDelete: true
+        isShowDelete: true,
+        captchaCallBack: async () => true,//验证码发送回调
     }, item.options);
 
 

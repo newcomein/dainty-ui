@@ -12,16 +12,29 @@
                        :placeholder="focusLineIndex===options.field?'':options.placeholder"
                        @click.stop="options.on.click({position:'input-box',source:options})">
 
-                <!--delete位置插槽-->
-                <div class="flex flex-inline slot-delete">
-                    <slot :name="options.positionSlots.delete.name"
-                          v-if="options.positionSlots.delete"></slot>
-                    <slot name="delete" v-else>
+                <!--位置插槽 right -->
+                <div class="flex flex-inline positionSlots-right">
+
+                    <slot :name="options.positionSlots.right.name"
+                          v-if="options.positionSlots.right"></slot>
+
+                    <slot name="right" v-else>
+
                         <da-icon class="da-icon delete" name="feather-x"
                                  @click="isDelete(options)"
-                                 v-show="options.options.isShowDelete && options.value.length !== 0">
+                                 v-show="!options.type.match(/captcha/)&&options.options.isShowDelete && options.value.length !== 0">
                         </da-icon>
+
+                        <div class="flex flex-inline captcha" v-if="options.type==='captcha'">
+
+                            <span @click="sendCaptcha" v-if="captchaText==='获取验证码'"
+                                  class="sendCaptcha">{{captchaText}}</span>
+                            <span v-else>{{captchaText}}</span>
+
+                        </div>
+
                     </slot>
+
                 </div>
 
                 <transition enter-active-class="animated faster fadeIn" leave-active-class="animated faster fadeOut">
@@ -63,12 +76,24 @@
                 focusLineIndex: null,
                 parentVnode: {},//父组件
                 ruleResult: {isPass: false, message: ""},
+                captchaCount: 60,
+                captchaText: "获取验证码"
             }
         },
         watch: {
             async options() {
                 this.start();
-            }
+            },
+            async captchaCount(val) {
+                if (val === 60 || val <= 0) {
+                    this.captchaText = "获取验证码";
+                    setTimeout(() => {
+                        this.captchaCount = 60;//重置计时器
+                    }, 1500);
+                } else {
+                    this.captchaText = `${val}s后重新发送`
+                }
+            },
         },
         methods: {
             async blur() {
@@ -92,6 +117,20 @@
             async isDelete(item) {
                 item.value = "";
                 item.on.click({position: 'delete', source: item});
+            },
+            async sendCaptcha() {
+                const captchaCallBack = await this.options.options.captchaCallBack();
+                if (captchaCallBack) {
+                    const countTime = () => {
+                        this.captchaCount--;
+                        setTimeout(() => {
+                            if (this.captchaCount > 0) {
+                                countTime();
+                            }
+                        }, 1000)
+                    };
+                    countTime();
+                }
             },
             async getAutofocus() {
                 //当前组件首个获得聚焦 清除placeholder
