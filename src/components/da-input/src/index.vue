@@ -27,9 +27,11 @@
 
                         <div class="flex flex-inline captcha" v-if="options.type==='captcha'">
 
-                            <span @click="sendCaptcha" v-if="captchaText==='获取验证码'"
-                                  class="sendCaptcha">{{captchaText}}</span>
-                            <span v-else>{{captchaText}}</span>
+                            <transition enter-active-class="animated faster fadeIn" leave-active-class="animated faster fadeOut">
+                                <span key="sendCaptcha" @click="sendCaptcha" v-if="captchaText==='获取验证码'"
+                                      class="flex flex-inline sendCaptcha">{{captchaText}}</span>
+                                <span key="captchaText" class="flex flex-inline" v-else>{{captchaText}}</span>
+                            </transition>
 
                         </div>
 
