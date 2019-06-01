@@ -9,6 +9,7 @@
                 <input v-model="options.value" :type="options.type" @focus="focus" @blur="blur"
                        :readonly="options.readonly"
                        :autofocus="options.autofocus"
+                       :disabled="options.disabled"
                        :placeholder="focusLineIndex===options.field?'':options.placeholder"
                        @click.stop="options.on.click({position:'input-box',source:options})">
 
@@ -27,7 +28,8 @@
 
                         <div class="flex flex-inline captcha" v-if="options.type==='captcha'">
 
-                            <transition enter-active-class="animated faster fadeIn" leave-active-class="animated faster fadeOut">
+                            <transition enter-active-class="animated faster fadeIn"
+                                        leave-active-class="animated faster fadeOut">
                                 <span key="sendCaptcha" @click="sendCaptcha" v-if="captchaText==='获取验证码'"
                                       class="flex flex-inline sendCaptcha">{{captchaText}}</span>
                                 <span key="captchaText" class="flex flex-inline" v-else>{{captchaText}}</span>
@@ -103,17 +105,33 @@
                     this.focusLineIndex = null;
                 }
 
-                //检查正则
-                this.$set(this.options, "ruleResult", await this.checkValue(this.options));
-                this.ruleResult = this.options.ruleResult;
+                //失去焦点校验正则
+                if (this.options.options.ruleTrigger.blur) {
+                    //检查正则
+                    this.$set(this.options, "ruleResult", await this.checkValue(this.options));
+                    this.ruleResult = this.options.ruleResult;
 
 
-                //监听ruleResult变化
-                await this.watchRuleResult(this.options);
+                    //监听ruleResult变化
+                    await this.watchRuleResult(this.options);
+                }
             },
             async focus() {
                 if (this.options.fixAutofocus) {
                     this.focusLineIndex = this.options.field;
+                } else {
+                    //木有启动修正焦点模式 则当前placeholder正常
+                    this.focusLineIndex = null
+                }
+                //获得焦点校验正则
+                if (this.options.options.ruleTrigger.focus) {
+                    //检查正则
+                    this.$set(this.options, "ruleResult", await this.checkValue(this.options));
+                    this.ruleResult = this.options.ruleResult;
+
+
+                    //监听ruleResult变化
+                    await this.watchRuleResult(this.options);
                 }
             },
             async isDelete(item) {
@@ -160,10 +178,12 @@
 
                         item.value = newVal;
                         item.on.input({newVal, oldVal, source: item});
-                        this.$set(item, "ruleResult", await this.checkValue(item));
-                        this.ruleResult = item.ruleResult;
-                        //监听ruleResult变化
-                        await this.watchRuleResult(item, index);
+                        if (item.ruleTrigger.change) {
+                            this.$set(item, "ruleResult", await this.checkValue(item));
+                            this.ruleResult = item.ruleResult;
+                            //监听ruleResult变化
+                            await this.watchRuleResult(item, index);
+                        }
                     }));
                 }
             },

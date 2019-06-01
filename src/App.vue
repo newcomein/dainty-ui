@@ -21,7 +21,7 @@
                         value: "",
                         mode: "input",
                         rules: [{required: true}],
-                        placeholder: "1",
+                        placeholder: "fsdfsdf",
                     },
                     {
                         field: "password",
@@ -29,7 +29,7 @@
                         value: "",
                         mode: "input",
                         placeholder: "222222",
-                        type: "captcha"
+                        type: "captcha",
                     }
                 ]
             }
