@@ -64,11 +64,14 @@
                             }
                         }
 
-                        item.value = newVal;
-                        item.on.input({newVal, oldVal, source: item});
-                        this.$set(item, "ruleResult", await this.checkValue(item));
-                        //监听ruleResult变化
-                        await this.watchRuleResult(item, index);
+                        if (item.options.ruleTrigger.change) {
+                            item.value = newVal;
+                            item.on.input({newVal, oldVal, source: item});
+                            this.$set(item, "ruleResult", await this.checkValue(item));
+                            //监听ruleResult变化
+                            await this.watchRuleResult(item, index);
+                        }
+
                     }));
                 }
             },

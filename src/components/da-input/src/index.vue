@@ -178,7 +178,7 @@
 
                         item.value = newVal;
                         item.on.input({newVal, oldVal, source: item});
-                        if (item.ruleTrigger.change) {
+                        if (item.options.ruleTrigger.change) {
                             this.$set(item, "ruleResult", await this.checkValue(item));
                             this.ruleResult = item.ruleResult;
                             //监听ruleResult变化

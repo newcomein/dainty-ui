@@ -22,6 +22,7 @@
                         mode: "input",
                         rules: [{required: true}],
                         placeholder: "fsdfsdf",
+
                     },
                     {
                         field: "password",
