@@ -1,7 +1,6 @@
 <template>
     <div id="app">
         <da-form :init="init" :isPass.sync="isPass">
-            <span slot="leftleftleft">gddfgdfgdgd</span>
         </da-form>
         <button @click="getInit">获取init</button>
     </div>
@@ -23,11 +22,6 @@
                         mode: "input",
                         rules: [{required: true}],
                         placeholder: "fsdfsdf",
-                        positionSlots: {
-                            left: {
-                                name: "leftleftleft"
-                            }
-                        }
 
                     },
                     {
