@@ -2,10 +2,21 @@
     <div class="flex da-form" v-if="isReady">
 
         <form class="flex">
-
             <!--普通输入框-->
             <template v-for="(item,index) of initForm">
                 <da-input :data-field="[item.field]" :options.sync="item" v-if="item.mode==='input'">
+                    <template slot="left">
+                        <slot name="left"></slot>
+                    </template>
+                    <template v-if="item.positionSlots&&item.positionSlots.left" :slot="item.positionSlots.left.name">
+                        <slot :name="item.positionSlots.left.name"></slot>
+                    </template>
+                    <template slot="right">
+                        <slot name="right"></slot>
+                    </template>
+                    <template v-if="item.positionSlots&&item.positionSlots.right" :slot="item.positionSlots.right.name">
+                        <slot :name="item.positionSlots.right.name"></slot>
+                    </template>
                 </da-input>
             </template>
 

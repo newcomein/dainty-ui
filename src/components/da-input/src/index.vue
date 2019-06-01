@@ -2,8 +2,12 @@
     <div ref="da-input" class="flex da-input" @click="options.on.click({position:'line',source:options})"
          v-if="isReady">
         <div class="flex line-box">
-            <label class="flex flex-inline">
-                <span>{{options.label}}</span>
+            <label class="flex flex-inline positionSlots-left">
+                <slot :name="options.positionSlots.left.name"
+                      v-if="options.positionSlots.left"></slot>
+                <slot name="left" v-else>
+                    <span>{{options.label}}</span>
+                </slot>
             </label>
             <div class="flex flex-inline input-box">
                 <input v-model="options.value" :type="options.type" @focus="focus" @blur="blur"
