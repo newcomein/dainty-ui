@@ -1,54 +1,23 @@
 <template>
     <div id="app">
-        <da-form :init="init" :isPass.sync="isPass">
-        </da-form>
-        <button @click="getInit">获取init</button>
+        <da-radio :options="options"></da-radio>
     </div>
 </template>
 
 <script>
-    import DaForm from "@/components/da-form"
+    import DaRadio from "@/components/da-radio"
 
     export default {
-        components: {DaForm},
+        components: {DaRadio},
         data() {
             return {
-                isPass: false,
-                init: [
-                    {
-                        field: "username",
-                        label: "真实姓名",
-                        value: "",
-                        mode: "input",
-                        rules: [{required: true}],
-                        placeholder: "fsdfsdf",
-
-                    },
-                    {
-                        field: "password",
-                        label: "密码",
-                        value: "",
-                        mode: "input",
-                        placeholder: "222222",
-                        type: "captcha",
-                    }
-                ]
+                options: {
+                    field: "1",
+                    label: "选项1"
+                }
             }
         },
-        watch: {
-            async isPass(val) {
-                console.log("通过状态:", val)
-            }
-        },
-        methods: {
-            async getInit() {
-                console.log("init", this.init)
-            }
-        },
-        created() {
-            // for (let i = 0; i <= 100; i++) {
-            //     this.init[0][String(i) + "333"] = "ooooo"
-            // }
-        }
+        watch: {},
+        methods: {}
     }
 </script>
