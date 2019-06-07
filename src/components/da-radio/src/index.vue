@@ -26,3 +26,7 @@
         },
     }
 </script>
+
+<style lang="less" scoped>
+    @import "../../../assets/style/index.less";
+</style>
