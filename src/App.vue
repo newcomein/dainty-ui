@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <da-radio :options="init[0]"></da-radio>
+        <da-radio-group :init="init"></da-radio-group>
     </div>
 </template>
 
