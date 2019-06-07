@@ -1,6 +1,6 @@
 <template>
     <div ref="da-radio" class="flex flex-inline da-radio">
-        <div class="flex flex-inline input-box" @click="$set(options,'checked',!options.checked)">
+        <div class="flex flex-inline input-box">
             <span class="flex flex-inline radio" :class="[{checked:options.checked}]"></span>
         </div>
         <label class="flex flex-inline">
@@ -19,6 +19,9 @@
                 required: true
             }
         },
+        mounted() {
+            console.log("yes")
+        }
     }
 </script>
 

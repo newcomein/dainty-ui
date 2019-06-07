@@ -1,22 +1,24 @@
 <template>
     <div id="app">
-        <da-radio :options="options"></da-radio>
+        <da-radio :options="init[0]"></da-radio>
     </div>
 </template>
 
 <script>
+    import DaRadioGroup from "@/components/da-radio-group"
     import DaRadio from "@/components/da-radio"
-    import DaForm from "@/components/da-form"
 
     export default {
-        components: {DaRadio, DaForm},
+        components: {DaRadioGroup, DaRadio},
         data() {
             return {
-                options: {
-                    field: "sex",
-                    label: "性别dcsdcs",
-                    checked: true
-                }
+                init: [
+                    {
+                        field: "sex",
+                        label: "性别dcsdcs",
+                        checked: true
+                    }
+                ]
             }
         },
         watch: {},

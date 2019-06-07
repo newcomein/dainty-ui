@@ -26,7 +26,7 @@
 </template>
 
 <script>
-    import DaInput from "../../da-input/src";
+    import DaInput from "../../da-input";
     import utils from "@/utils"
 
     export default {
