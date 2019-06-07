@@ -1,7 +1,6 @@
 <template>
     <div id="app">
-        <da-form :init="init"></da-form>
-        <!--        <da-radio :options="options"></da-radio>-->
+        <da-radio :options="options"></da-radio>
     </div>
 </template>
 
@@ -14,17 +13,10 @@
         data() {
             return {
                 options: {
-                    field: "1",
-                    label: "选项1"
-                },
-                init: [
-                    {
-                        field: "test",
-                        value: "",
-                        mode: "input",
-                        label: "测试"
-                    }
-                ]
+                    field: "sex",
+                    label: "性别dcsdcs",
+                    checked: true
+                }
             }
         },
         watch: {},

@@ -1,3 +1,50 @@
 .da-radio {
+  height: 0.56rem;
 
+  label {
+    color: @label-color;
+    padding-right: 0.1rem;
+
+    span {
+      height: 100%;
+    }
+  }
+
+  .input-box {
+    position: relative;
+    height: 100%;
+    padding: 0 0.1rem;
+
+    .radio {
+      border-radius: 10rem;
+      width: 1em;
+      height: 1em;
+      border: 1px solid @radio-init-color;
+      position: relative;
+
+      @keyframes checked {
+        0% {
+          border: 0.07rem solid @radio-checked-color;
+        }
+        100% {
+          border: 0.05rem solid @radio-checked-color;
+        }
+      }
+
+      &.checked {
+        border: none;
+
+        &:after {
+          border-radius: inherit;
+          content: "";
+          position: absolute;
+          width: inherit;
+          height: inherit;
+          border: 0 solid @radio-checked-color;
+          animation: checked 0.3s;
+          animation-fill-mode: both;
+        }
+      }
+    }
+  }
 }

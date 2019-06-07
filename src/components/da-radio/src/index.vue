@@ -1,11 +1,11 @@
 <template>
     <div ref="da-radio" class="flex flex-inline da-radio">
-        <label>
+        <div class="flex flex-inline input-box" @click="$set(options,'checked',!options.checked)">
+            <span class="flex flex-inline radio" :class="[{checked:options.checked}]"></span>
+        </div>
+        <label class="flex flex-inline">
             <span>{{options.label}}</span>
         </label>
-        <div class="flex flex-inline input-box">
-
-        </div>
     </div>
 </template>
 
@@ -17,11 +17,6 @@
             options: {
                 type: Object,
                 required: true
-            },
-            selectId: {
-                type: Boolean,
-                required: false,
-                default: false
             }
         },
     }
