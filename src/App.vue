@@ -15,7 +15,6 @@
                 init: [
                     {
                         field: "sex",
-                        label: "性别dcsdcs",
                         checked: true
                     }
                 ]
