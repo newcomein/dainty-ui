@@ -15,6 +15,11 @@
                 init: [
                     {
                         field: "sex",
+                        checked: true,
+                        lable:"dfsdf"
+                    },
+                    {
+                        field: "sex",
                         checked: true
                     }
                 ]

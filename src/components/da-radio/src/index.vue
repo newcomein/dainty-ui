@@ -3,7 +3,7 @@
         <div class="flex flex-inline input-box">
             <span class="flex flex-inline radio" :class="[{checked:options.checked}]"></span>
         </div>
-        <label class="flex flex-inline" v-if="">
+        <label class="flex flex-inline" v-if="options.label">
             <span>{{options.label}}</span>
         </label>
     </div>
