@@ -18,9 +18,6 @@
                 type: Object,
                 required: true
             }
-        },
-        mounted() {
-            console.log("yes")
         }
     }
 </script>
