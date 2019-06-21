@@ -31,18 +31,29 @@
         }
       }
 
+      &:after {
+        border-radius: inherit;
+        content: "";
+        position: absolute;
+        width: inherit;
+        height: inherit;
+        border: 0 solid @radio-checked-color;
+        animation: checked 0.25s;
+        animation-fill-mode: both;
+        display: none;
+      }
+
       &.checked {
         border: none;
 
         &:after {
-          border-radius: inherit;
-          content: "";
-          position: absolute;
-          width: inherit;
-          height: inherit;
-          border: 0 solid @radio-checked-color;
-          animation: checked 0.3s;
-          animation-fill-mode: both;
+          display: unset;
+        }
+      }
+
+      &.isFirstTime {
+        &:after {
+          animation-duration: 0s;
         }
       }
     }

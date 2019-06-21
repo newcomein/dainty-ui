@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <da-radio-group :init="init"></da-radio-group>
+        <da-radio-group :init="init" :isSingle="true"></da-radio-group>
     </div>
 </template>
 
@@ -16,11 +16,12 @@
                     {
                         field: "sex",
                         checked: true,
-                        lable:"dfsdf"
+                        label:"dfsdf"
                     },
                     {
-                        field: "sex",
-                        checked: true
+                        field: "sex2",
+                        checked: false,
+                        label:"dfsdf"
                     }
                 ]
             }

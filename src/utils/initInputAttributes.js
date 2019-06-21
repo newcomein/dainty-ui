@@ -13,7 +13,7 @@ export default async (item) => {
     if (itemKeys.indexOf("disabled") <= -1) {
         item.disabled = false
     }
-    //修正autofocus规则  w3c官方规则 只有输入字符的时候placeholder才会消失  启动修正模式  输入框获得聚焦即可让placeholder消失
+    //修正autofocus规则  w3c规则 只有输入字符的时候placeholder才会消失  启动修正模式  输入框获得聚焦即可让placeholder消失
     if (itemKeys.indexOf("fixAutofocus") <= -1) {
         item.fixAutofocus = true
     }
