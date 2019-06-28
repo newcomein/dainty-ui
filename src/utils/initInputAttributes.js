@@ -7,6 +7,9 @@ export default async (item) => {
     if (itemKeys.indexOf("type") <= -1) {
         item.type = "text"
     }
+    if (itemKeys.indexOf("label") <= -1) {
+        item.label = ""
+    }
     if (itemKeys.indexOf("autofocus") <= -1) {
         item.autofocus = true
     }

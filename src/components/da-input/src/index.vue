@@ -2,7 +2,7 @@
     <div ref="da-input" class="flex da-input" @click="options.on.click({position:'line',source:options})"
          v-if="isReady">
         <div class="flex line-box">
-            <label class="flex flex-inline positionSlots-left">
+            <label class="flex flex-inline positionSlots-left" v-if="options.label.length!==0">
                 <slot :name="options.positionSlots.left.name"
                       v-if="options.positionSlots.left"></slot>
                 <slot name="left" v-else>
@@ -259,6 +259,3 @@
         }
     }
 </script>
-<style lang="less" scoped>
-    @import "../../../assets/style/index.less";
-</style>
