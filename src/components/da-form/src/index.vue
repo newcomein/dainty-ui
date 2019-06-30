@@ -69,6 +69,11 @@
                         newVal = await newVal;
                         oldVal = await oldVal;
 
+                        if (newVal !== oldVal) {
+                            //value改变次数
+                            item.valueChangeCount++;
+                        }
+
                         if (utils.getDataType(newVal) === "string") {
                             if (item.trim) {
                                 newVal = newVal.trim();

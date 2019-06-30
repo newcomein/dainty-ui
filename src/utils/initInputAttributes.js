@@ -42,6 +42,10 @@ export default async (item) => {
     if (itemKeys.indexOf("options") <= -1) {
         item.options = {};
     }
+    //是否首次改变
+    if (itemKeys.indexOf("valueChangeCount") <= -1) {
+        item.valueChangeCount = 0;
+    }
     //不可修改  仅做内部数据处理
     if (itemKeys.indexOf("_calls") <= -1) {
         item._calls = {};
