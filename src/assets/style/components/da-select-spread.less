@@ -1,0 +1,45 @@
+.da-select-spread {
+  .line {
+    padding: 0 0.12rem;
+    height: 0.56rem;
+
+    .left, .right {
+      width: 0.2rem;
+      height: 100%;
+    }
+
+    .center {
+      flex: 1;
+      height: 100%;
+    }
+
+    .right {
+      width: 0.5rem;
+      justify-content: flex-end;
+
+      .select-box {
+        width: 0.2rem;
+        height: 0.2rem;
+        font-size: 0.1rem;
+        border-radius: 100rem;
+        color: white;
+        border: 1px solid #cccccc;
+        overflow: hidden;
+        transition: all 0.3s;
+
+        .da-icon {
+          width: 100%;
+          height: 100%;
+        }
+
+        &.selected {
+          border-color: #07b0a9;
+
+          .da-icon {
+            background-color: #07b0a9;
+          }
+        }
+      }
+    }
+  }
+}

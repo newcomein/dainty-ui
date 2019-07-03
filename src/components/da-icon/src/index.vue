@@ -1,7 +1,8 @@
 <template>
     <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-        <div class="flex flex-inline da-icon" v-if="name&&iconMeta.type" @click.stop="$emit('click')">
-            <svg v-if="iconMeta.svg.contents" v-html="iconMeta.svg.contents" :class="[name,iconMeta.class]"
+        <div class="flex flex-inline da-icon" v-if="name&&iconMeta.type">
+            <svg v-if="iconMeta.svg.contents" v-html="iconMeta.svg.contents" :style="[{strokeWidth:size}]"
+                 :class="[name,iconMeta.class]"
                  :viewBox="iconMeta.svg.attrs.viewBox">
             </svg>
         </div>
@@ -16,6 +17,9 @@
         props: {
             name: {
                 type: String
+            },
+            size: {
+                type: String,
             }
         },
         data() {

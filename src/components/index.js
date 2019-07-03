@@ -3,8 +3,9 @@ import "../assets/style/index.less"
 import DaForm from "./da-form"
 import DaIcon from "./da-icon"
 import DaInput from "./da-input"
+import DaSelectSpread from "./da-select-spread"
 
-const components = {DaForm, DaIcon, DaInput};
+const components = {DaForm, DaIcon, DaInput, DaSelectSpread};
 
 const option = {};
 
@@ -24,7 +25,7 @@ const data = {
 };
 
 export {
-    DaForm, DaIcon, DaInput
+    DaForm, DaIcon, DaInput, DaSelectSpread
 }
 
 export default data;
