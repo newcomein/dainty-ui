@@ -4,8 +4,9 @@ import DaForm from "./da-form"
 import DaIcon from "./da-icon"
 import DaInput from "./da-input"
 import DaSelectSpread from "./da-select-spread"
+import DaRenderNode from "./da-render-node"
 
-const components = {DaForm, DaIcon, DaInput, DaSelectSpread};
+const components = {DaForm, DaIcon, DaInput, DaSelectSpread, DaRenderNode};
 
 const option = {};
 
@@ -25,7 +26,7 @@ const data = {
 };
 
 export {
-    DaForm, DaIcon, DaInput, DaSelectSpread
+    DaForm, DaIcon, DaInput, DaSelectSpread, DaRenderNode
 }
 
 export default data;

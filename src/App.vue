@@ -8,7 +8,17 @@
     export default {
         data() {
             return {
-                init: [{icon: '', title: 'fsdfsdfad', isSelect: false}]
+                init: [
+                    {
+                        title: 'fsdfsdfad',
+                        isSelect: false,
+                        render: {
+                            left: {
+                                template: `<div class="flex">fdsfsdf</div>`
+                            }
+                        }
+                    }
+                ]
             }
         },
         watch: {},

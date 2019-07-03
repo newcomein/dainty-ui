@@ -1,8 +1,8 @@
 <template>
     <div ref="da-select-spread" class="flex flex-center da-select-spread">
         <div class="flex flex-center line" v-for="(item,index) of init">
-            <div class="flex flex-inline left">
-
+            <div class="flex flex-inline left" ref="left" v-if="item.render.left">
+                <da-render-node></da-render-node>
             </div>
             <div class="flex flex-inline center">
                 <span>银联扫码</span>
@@ -17,9 +17,11 @@
 </template>
 
 <script>
+    import DaRenderNode from "../../da-render-node"
 
     export default {
         name: "da-select-spread",
+        components: {DaRenderNode},
         props: {
             init: {
                 type: Array,
