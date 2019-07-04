@@ -1,16 +1,19 @@
 <template>
     <div ref="da-select-spread" class="flex flex-center da-select-spread">
-        <div class="flex flex-center line" v-for="(item,index) of init">
-            <div class="flex flex-inline left" ref="left" v-if="item.render.left">
-                <da-render-node></da-render-node>
+        <div class="flex flex-center line" v-for="(item,index) of init" @click="changeSelectStatus(index)">
+            <div class="flex flex-inline left" ref="left" v-if="item.render&&item.render.left">
+                <da-render-node :init="item.render.left"></da-render-node>
             </div>
             <div class="flex flex-inline center">
-                <span>银联扫码</span>
+                <span v-if="item.title">{{item.title}}</span>
+                <da-render-node v-if="item.render&&item.render.center" :init="item.render.center"></da-render-node>
             </div>
-            <div class="flex flex-inline right" @click="changeSelectStatus(index)">
-                <div class="flex flex-inline flex-center select-box" :class="[{selected:item.isSelect}]">
-                    <da-icon class="da-icon" name="feather-check" size="4" v-show="item.isSelect"></da-icon>
+            <div class="flex flex-inline right">
+                <div v-if="item.isShowSelectBox===undefined||item.isShowSelectBox"
+                     class="flex flex-inline flex-center select-box" :class="[{selected:item.isSelect}]">
+                    <da-icon class="da-icon" name="feather-check" size="4" v-if="item.isSelect"></da-icon>
                 </div>
+                <da-render-node v-if="item.render&&item.render.right" :init="item.render.right"></da-render-node>
             </div>
         </div>
     </div>
@@ -22,20 +25,44 @@
     export default {
         name: "da-select-spread",
         components: {DaRenderNode},
+        data() {
+            return {
+                selectedIds: []
+            }
+        },
         props: {
             init: {
                 type: Array,
                 required: true
             }
         },
+        watch: {
+            async selectedIds() {
+                this.$emit("update:selectedIds", this.selectedIds);
+            }
+        },
         methods: {
             async changeSelectStatus(index) {
                 const item = this.init[index];
                 this.$set(item, "isSelect", !item.isSelect);
+                this.addIds();
+            },
+            async addIds() {
+                let selectedIds = JSON.parse(JSON.stringify(this.selectedIds));
+                for (const item of this.init) {
+                    if (item.isSelect) {
+                        selectedIds.push(item.id);
+                    } else {
+                        selectedIds = selectedIds.filter(value => value !== item.id);
+                    }
+                }
+                this.selectedIds = [...new Set(selectedIds)];
             }
         },
-        created() {
-
+        mounted() {
+            this.$nextTick(() => {
+                this.addIds();
+            })
         }
     }
 </script>

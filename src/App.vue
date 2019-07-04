@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <da-select-spread :init="init"></da-select-spread>
+        <da-select-spread :init="init" :selectedIds.sync="selectedIds"></da-select-spread>
     </div>
 </template>
 
@@ -8,20 +8,32 @@
     export default {
         data() {
             return {
+                selectedIds: [],
                 init: [
                     {
-                        title: 'fsdfsdfad',
+                        id: "aaaa",
                         isSelect: false,
                         render: {
-                            left: {
-                                template: `<div class="flex">fdsfsdf</div>`
+                            left: (createElement, context) => {
+                                return createElement("div", {
+                                    class: "flex"
+                                })
+                            },
+                            center: (createElement) => {
+                                return createElement("div", "fadfaf", {
+                                    class: "flex"
+                                })
                             }
                         }
                     }
                 ]
             }
         },
-        watch: {},
+        watch: {
+            async selectedIds() {
+                console.log(this.selectedIds)
+            }
+        },
         methods: {}
     }
 </script>

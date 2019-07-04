@@ -1,14 +1,18 @@
 <script>
     export default {
         name: "da-render-node",
-        render: function (createElement) {
-            var func = function () {
-                return {
-                    template: '<div>哈哈哈哈哈</div>'
-                }
+        props: {
+            init: {
+                type: Function,
+                required: true
             }
-            console.log(createElement)
-            return createElement(func())
+        },
+        render(createElement, context) {
+            return this.init(createElement, context);
         }
     }
 </script>
+
+<style lang="less" scoped>
+
+</style>
