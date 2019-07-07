@@ -49,6 +49,9 @@
                 if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
                     this.$emit("update:selectedIds", this.selectedIds);
                 }
+            },
+            async init() {
+                this.checkIds();
             }
         },
         methods: {
