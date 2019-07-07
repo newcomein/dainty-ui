@@ -1,6 +1,6 @@
 <template>
     <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-        <div class="flex flex-inline da-icon" v-if="name&&iconMeta.type">
+        <div class="flex flex-inline da-icon" v-if="name&&iconMeta.type==='svg'">
             <svg v-if="iconMeta.svg.contents" v-html="iconMeta.svg.contents" :style="[{strokeWidth:size}]"
                  :class="[name,iconMeta.class]"
                  :viewBox="iconMeta.svg.attrs.viewBox">
@@ -55,6 +55,13 @@
                     case "feather":
                         this.iconMeta.type = "svg";
                         this.iconMeta.svg = icons[iconName];
+                        break;
+                    case "iconfont":
+                        this.iconMeta.type = "svg";
+                        this.iconMeta.svg = {
+                            contents: `<use xlink:href="#${this.name}"></use>`,
+                            attrs: {}
+                        };
                         break;
                     default:
                         break;
