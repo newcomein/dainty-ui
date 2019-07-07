@@ -25,6 +25,22 @@
                                 })
                             }
                         }
+                    },
+                    {
+                        id: "aaaa1",
+                        isSelect: true,
+                        render: {
+                            left: (createElement, context) => {
+                                return createElement("div", {
+                                    class: "flex"
+                                })
+                            },
+                            center: (createElement) => {
+                                return createElement("div", "fadfaf", {
+                                    class: "flex"
+                                })
+                            }
+                        }
                     }
                 ]
             }
