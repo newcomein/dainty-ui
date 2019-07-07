@@ -9,40 +9,7 @@
         data() {
             return {
                 selectedIds: [],
-                init: [
-                    {
-                        id: "aaaa",
-                        isSelect: false,
-                        render: {
-                            left: (createElement, context) => {
-                                return createElement("div", {
-                                    class: "flex"
-                                })
-                            },
-                            center: (createElement) => {
-                                return createElement("div", "fadfaf", {
-                                    class: "flex"
-                                })
-                            }
-                        }
-                    },
-                    {
-                        id: "aaaa1",
-                        isSelect: true,
-                        render: {
-                            left: (createElement, context) => {
-                                return createElement("div", {
-                                    class: "flex"
-                                })
-                            },
-                            center: (createElement) => {
-                                return createElement("div", "fadfaf", {
-                                    class: "flex"
-                                })
-                            }
-                        }
-                    }
-                ]
+                init: []
             }
         },
         watch: {
@@ -50,7 +17,17 @@
                 console.log(this.selectedIds)
             }
         },
-        methods: {}
+        methods: {},
+        created() {
+            this.init.push({
+                id: "aaaa",
+                isSelect: false
+            })
+            this.init.push({
+                id: "aaaa2",
+                isSelect: true
+            })
+        }
     }
 </script>
 <style lang="less">
