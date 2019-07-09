@@ -1,5 +1,4 @@
 import config from "../../package.json"
-import "../assets/style/index.less"
 import DaForm from "./da-form"
 import DaIcon from "./da-icon"
 import DaInput from "./da-input"

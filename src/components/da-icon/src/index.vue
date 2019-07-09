@@ -1,25 +1,37 @@
 <template>
-    <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-        <div class="flex flex-inline da-icon" v-if="name&&iconMeta.type==='svg'">
-            <svg v-if="iconMeta.svg.contents" v-html="iconMeta.svg.contents" :style="[{strokeWidth:size}]"
-                 :class="[name,iconMeta.class]"
-                 :viewBox="iconMeta.svg.attrs.viewBox">
-            </svg>
-        </div>
-    </transition>
+    <div class="flex flex-inline da-icon">
+        <transition mode="out-in" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+            <div class="flex flex-inline da-icon-inline" v-if="render">
+                <da-render-node :init="render"></da-render-node>
+            </div>
+            <div class="flex flex-inline da-icon-inline" v-else-if="name&&iconMeta.type==='svg'">
+                <svg aria-hidden="true" v-if="iconMeta.svg.contents" v-html="iconMeta.svg.contents"
+                     :style="[{strokeWidth:size}]"
+                     :class="[name,iconMeta.class]"
+                     :viewBox="iconMeta.svg.attrs.viewBox">
+                </svg>
+            </div>
+        </transition>
+    </div>
 </template>
 
 <script>
     import {icons} from "feather-icons"
+    import DaRenderNode from "../../da-render-node"
 
     export default {
         name: "da-icon",
+        components: {DaRenderNode},
         props: {
             name: {
                 type: String
             },
             size: {
                 type: String,
+            },
+            render: {
+                type: Function,
+                required: false
             }
         },
         data() {

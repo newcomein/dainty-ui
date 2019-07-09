@@ -11,9 +11,9 @@
             <div class="flex flex-inline right">
                 <div v-if="item.isShowSelectBox===undefined||item.isShowSelectBox"
                      class="flex flex-inline flex-center select-box"
-                     :class="[{selected:selectedIds.includes(item.id)}]">
+                     :class="[{selected:selectedIdList.includes(item.id)}]">
                     <da-icon class="da-icon" name="feather-check" size="4"
-                             v-if="selectedIds.includes(item.id)"></da-icon>
+                             v-if="selectedIdList.includes(item.id)"></da-icon>
                 </div>
                 <da-render-node v-if="item.render&&item.render.right" :init="item.render.right"></da-render-node>
             </div>
@@ -29,7 +29,7 @@
         components: {DaRenderNode},
         data() {
             return {
-                selectedIds: []
+                selectedIdList: []
             }
         },
         props: {
@@ -42,12 +42,18 @@
                 type: Boolean,
                 required: false,
                 default: true
+            },
+            //选择的id
+            selectedIds: {
+                type: Array,
+                required: false,
+                default: () => []
             }
         },
         watch: {
-            async selectedIds(newVal, oldVal) {
+            async selectedIdList(newVal, oldVal) {
                 if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
-                    this.$emit("update:selectedIds", this.selectedIds);
+                    this.$emit("update:selectedIds", this.selectedIdList);
                 }
             },
             async init() {
@@ -63,23 +69,23 @@
             async addIds(curr_id) {
                 //单选
                 if (this.isSingle) {
-                    this.selectedIds = [];
-                    this.selectedIds.push(curr_id);
+                    this.selectedIdList = [];
+                    this.selectedIdList.push(curr_id);
                 } else {
                     this.checkIds();
                 }
 
             },
             async checkIds() {
-                let selectedIds = JSON.parse(JSON.stringify(this.selectedIds));
+                let selectedIdList = JSON.parse(JSON.stringify(this.selectedIdList));
                 for (const item of this.init) {
                     if (item.isSelect) {
-                        selectedIds.push(item.id);
+                        selectedIdList.push(item.id);
                     } else {
-                        selectedIds = selectedIds.filter(value => value !== item.id);
+                        selectedIdList = selectedIdList.filter(value => value !== item.id);
                     }
                 }
-                this.selectedIds = [...new Set(selectedIds)];
+                this.selectedIdList = [...new Set(selectedIdList)];
             }
         },
         mounted() {

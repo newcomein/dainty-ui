@@ -1,11 +1,13 @@
 <template>
     <div id="app">
-<!--        <da-select-spread :init="init" :selectedIds.sync="selectedIds"></da-select-spread>-->
-        <da-icon name="iconfont-ic_unionpay"></da-icon>
+        <da-select-spread :init="init" :selectedIds.sync="selectedIds"></da-select-spread>
+        <da-icon name="iconfont-ic_unionpay" :render="aaaaa"></da-icon>
     </div>
 </template>
 
 <script>
+    // import DaIcon from "./components/da-icon"
+
     export default {
         data() {
             return {
@@ -13,19 +15,26 @@
                 init: []
             }
         },
+        // components: {DaIcon},
         watch: {
             async selectedIds() {
                 console.log(this.selectedIds)
             }
         },
-        methods: {},
+        methods: {
+            aaaaa(createElement) {
+                return createElement("div","图标");
+            }
+        },
         created() {
             this.init.push({
                 id: "aaaa",
+                title: "dasda",
                 isSelect: false
             })
             this.init.push({
                 id: "aaaa2",
+                title: "dasda",
                 isSelect: true
             })
         }

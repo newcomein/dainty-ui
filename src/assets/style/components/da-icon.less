@@ -1,19 +1,29 @@
 .da-icon {
   position: relative;
   justify-content: center;
-  will-change: auto;
 
-  svg {
-    width: 1em;
-    height: 1em;
-    overflow: hidden;
+  .da-icon-inline {
+    position: relative;
+    justify-content: center;
+
+    svg {
+      width: 1em;
+      height: 1em;
+      stroke-width: 1;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke: currentColor;
+      fill: none;
+      overflow: hidden;
+    }
+
+    //[class*=feather-] {
+    //  stroke: currentColor;
+    //  stroke-width: 1;
+    //  stroke-linecap: round;
+    //  stroke-linejoin: round;
+    //  fill: none;
+    //}
   }
 
-  [class*=feather-] {
-    stroke: currentColor;
-    stroke-width: 1;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    fill: none;
-  }
 }
