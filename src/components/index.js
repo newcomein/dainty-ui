@@ -6,8 +6,9 @@ import DaSelectSpread from "./da-select-spread"
 import DaRenderNode from "./da-render-node"
 import DaRadio from "./da-radio"
 import DaRadioGroup from "./da-radio-group"
+import DaDialog from "./da-dialog"
 
-const components = {DaForm, DaIcon, DaInput, DaSelectSpread, DaRenderNode, DaRadio, DaRadioGroup};
+const components = {DaForm, DaIcon, DaInput, DaSelectSpread, DaRenderNode, DaRadio, DaRadioGroup, DaDialog};
 
 const option = {};
 
@@ -27,7 +28,7 @@ const data = {
 };
 
 export {
-    DaForm, DaIcon, DaInput, DaSelectSpread, DaRenderNode, DaRadio, DaRadioGroup
+    DaForm, DaIcon, DaInput, DaSelectSpread, DaRenderNode, DaRadio, DaRadioGroup, DaDialog
 }
 
 export default data;
