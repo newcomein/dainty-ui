@@ -1,7 +1,7 @@
 <template>
     <div ref="da-input" class="da-flex da-input" @click="options.on.click({position:'line',source:options})"
          v-if="isReady">
-        <div class="da-flex line-box">
+        <div class="da-flex da-line-box">
             <label class="da-flex da-flex-inline positionSlots-left" v-if="options.label.length!==0">
                 <slot :name="options.positionSlots.left.name"
                       v-if="options.positionSlots.left"></slot>
@@ -9,16 +9,16 @@
                     <span>{{options.label}}</span>
                 </slot>
             </label>
-            <div class="da-flex da-flex-inline input-box">
+            <div class="da-flex da-flex-inline da-input-box">
                 <input v-model="options.value" :type="options.type" @focus="focus" @blur="blur"
                        :readonly="options.readonly"
                        :autofocus="options.autofocus"
                        :disabled="options.disabled"
                        :placeholder="focusLineIndex===options.field?'':options.placeholder"
-                       @click.stop="options.on.click({position:'input-box',source:options})">
+                       @click.stop="options.on.click({position:'da-input-box',source:options})">
 
                 <!--位置插槽 right -->
-                <div class="da-flex da-flex-inline positionSlots-right">
+                <div class="da-flex da-flex-inline da-positionSlots-right">
 
                     <slot :name="options.positionSlots.right.name"
                           v-if="options.positionSlots.right"></slot>
@@ -34,12 +34,12 @@
                             </da-icon>
                         </transition>
 
-                        <div class="da-flex da-flex-inline captcha" v-if="options.type==='captcha'">
+                        <div class="da-flex da-flex-inline da-captcha" v-if="options.type==='captcha'">
 
                             <transition mode="out-in" enter-active-class="animated faster fadeIn"
                                         leave-active-class="animated faster fadeOut">
                                 <span key="sendCaptcha" @click="sendCaptcha" v-if="captchaText==='获取验证码'"
-                                      class="da-flex da-flex-inline sendCaptcha">{{captchaText}}</span>
+                                      class="da-flex da-flex-inline da-sendCaptcha">{{captchaText}}</span>
                                 <span key="captchaText" class="da-flex da-flex-inline" v-else>{{captchaText}}</span>
                             </transition>
 
@@ -50,7 +50,7 @@
                 </div>
 
                 <transition enter-active-class="animated faster fadeIn" leave-active-class="animated faster fadeOut">
-                    <div class="da-flex error-message" v-if="!ruleResult.isPass&&ruleResult.message.length>0">
+                    <div class="da-flex da-error-message" v-if="!ruleResult.isPass&&ruleResult.message.length>0">
                         <p>{{ruleResult.message}}</p>
                     </div>
                 </transition>

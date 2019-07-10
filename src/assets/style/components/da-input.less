@@ -6,16 +6,16 @@
 
   &:nth-last-of-type(1) {
 
-    .line-box {
+    .da-line-box {
       border-bottom: 0;
     }
   }
 
-  .line-box {
+  .da-line-box {
     border-bottom: 1px solid @line-color;
     height: 100%;
 
-    label, .input-box {
+    label, .da-input-box {
       height: 100%;
     }
 
@@ -24,11 +24,11 @@
       color: @label-text-color;
     }
 
-    .input-box {
+    .da-input-box {
       flex: 2.6;
       position: relative;
 
-      .error-message {
+      .da-error-message {
         position: absolute;
         left: 0;
         right: 0;
@@ -47,11 +47,11 @@
         }
       }
 
-      .positionSlots-right {
+      .da-positionSlots-right {
         justify-content: flex-end;
         height: 100%;
 
-        .captcha {
+        .da-captcha {
           color: @placeholder-color;
           position: relative;
           width: 1rem;
@@ -66,7 +66,7 @@
             height: 100%;
           }
 
-          .sendCaptcha {
+          .da-sendCaptcha {
             color: black;
           }
         }

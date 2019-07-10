@@ -1,13 +1,13 @@
 .da-radio {
   height: 0.56rem;
 
-  &.checked {
+  &.da-checked {
     label {
       color: @selected-color;
     }
 
-    .input-box {
-      .radio {
+    .da-input-box {
+      .da-radio-icon {
         border: none;
 
         &:after {
@@ -20,18 +20,19 @@
   label {
     color: @label-text-color;
     padding-right: 0.1rem;
+    transition: all 0.25s;
 
     span {
       height: 100%;
     }
   }
 
-  .input-box {
+  .da-input-box {
     position: relative;
     height: 100%;
     padding: 0 0.1rem;
 
-    .radio {
+    .da-radio-icon {
       border-radius: 10rem;
       width: 1em;
       height: 1em;
@@ -59,7 +60,7 @@
         display: none;
       }
 
-      &.isFirstTime {
+      &.da-isFirstTime {
         &:after {
           animation-duration: 0s;
         }
