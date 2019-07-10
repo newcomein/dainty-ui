@@ -1,3 +1,4 @@
+//配色
 @color-level-0: rgba(0, 0, 0, 0);
 
 @color-level-1: #48466d;
@@ -14,19 +15,30 @@
 @color-level-10: #311d3f;
 @color-level-11: #f5f5f5;
 @color-level-12: #d3d4d8;
+@color-level-13: #000000;
+@color-level-14: #ffffff;
 
+//颜色搭配
 
+//背景
+@background-pure-color: @color-level-14;
+
+//文字
 @text-strong: @color-level-10;
-@text-general: @color-level-12;
-@text-weak: @color-level-11;
+@text-general: @color-level-13;
+@text-weak: @color-level-12;
+@text-pure-color: @color-level-14;
 
-
-@border-bottom-color: @color-level-11;
+//输入框
+@border-color: @color-level-12;
 @label-text-color: @text-strong;
-@placeholder-color: #999999;
+@placeholder-color: @color-level-12;
 
-@radio-init-color: @label-color;
-@radio-checked-color: rgba(0, 0, 0, 0.7);
+//选择器
+@radio-init-color: @label-text-color;
+@radio-checked-color: @color-level-10;
+
+@selected-color: @color-level-3;
 
 
-@da-icon-color: @label-color;
+@da-icon-color: @label-text-color;

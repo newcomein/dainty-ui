@@ -2,7 +2,7 @@
   .line {
     padding: 0 0.12rem;
     height: 0.56rem;
-    background-color: white;
+    background-color: @background-pure-color;
 
     .left, .right {
       width: 0.2rem;
@@ -26,8 +26,8 @@
         height: 0.2rem;
         font-size: 0.1rem;
         border-radius: 100rem;
-        color: white;
-        border: 1px solid #cccccc;
+        color: @text-pure-color;
+        border: 1px solid @border-color;
         overflow: hidden;
         transition: all 0.3s;
 
@@ -37,11 +37,11 @@
         }
 
         &.selected {
-          border-color: #07b0a9;
+          border-color: @selected-color;
 
           .da-icon {
             .da-icon-inline {
-              background-color: #07b0a9;
+              background-color: @selected-color;
             }
           }
         }

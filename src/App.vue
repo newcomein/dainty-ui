@@ -2,6 +2,7 @@
     <div id="app">
         <da-select-spread :init="init" :selectedIds.sync="selectedIds"></da-select-spread>
         <da-icon name="iconfont-ic_unionpay"></da-icon>
+        <da-radio-group :init="radios"></da-radio-group>
     </div>
 </template>
 
@@ -12,7 +13,13 @@
         data() {
             return {
                 selectedIds: [],
-                init: []
+                init: [],
+                radios: [
+                    {
+                        label: "label",
+                        checked: false
+                    }
+                ]
             }
         },
         // components: {DaIcon},
@@ -23,7 +30,7 @@
         },
         methods: {
             aaaaa(createElement) {
-                return createElement("div","图标");
+                return createElement("div", "图标");
             }
         },
         created() {
