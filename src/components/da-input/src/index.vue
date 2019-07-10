@@ -25,14 +25,18 @@
 
                     <slot name="right" v-else>
 
-                        <da-icon class="da-icon delete" name="feather-x"
-                                 @click="isDelete(options)"
-                                 v-show="!options.type.match(/captcha/)&&options.options.isShowDelete && options.value.length !== 0">
-                        </da-icon>
+                        <transition mode="out-in" enter-active-class="animated faster fadeIn"
+                                    leave-active-class="animated faster fadeOut">
+                            <da-icon class="da-icon delete" name="feather-x"
+                                     :animationClass="{}"
+                                     @click.native="isDelete(options)"
+                                     v-if="!options.type.match(/captcha/)&&options.options.isShowDelete && options.value.length !== 0">
+                            </da-icon>
+                        </transition>
 
                         <div class="da-flex da-flex-inline captcha" v-if="options.type==='captcha'">
 
-                            <transition enter-active-class="animated faster fadeIn"
+                            <transition mode="out-in" enter-active-class="animated faster fadeIn"
                                         leave-active-class="animated faster fadeOut">
                                 <span key="sendCaptcha" @click="sendCaptcha" v-if="captchaText==='获取验证码'"
                                       class="da-flex da-flex-inline sendCaptcha">{{captchaText}}</span>

@@ -1,6 +1,7 @@
 <template>
     <div class="da-flex da-flex-inline da-icon">
-        <transition mode="out-in" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+        <transition mode="out-in" :enter-active-class="animationClass.enterActive"
+                    :leave-active-class="animationClass.leaveActive">
             <div class="da-flex da-flex-inline da-icon-inline" v-if="render">
                 <da-render-node :init="render"></da-render-node>
             </div>
@@ -32,6 +33,16 @@
             render: {
                 type: Function,
                 required: false
+            },
+            animationClass: {
+                type: Object,
+                required: false,
+                default: () => {
+                    return {
+                        enterActive: "animated fadeIn",
+                        leaveActive: "animated fadeOut"
+                    }
+                }
             }
         },
         data() {

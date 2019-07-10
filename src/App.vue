@@ -8,7 +8,6 @@
 </template>
 
 <script>
-    // import DaIcon from "./components/da-icon"
 
     export default {
         data() {
