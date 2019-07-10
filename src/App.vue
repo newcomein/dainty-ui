@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <da-select-spread :init="init" :selectedIds.sync="selectedIds"></da-select-spread>
-        <da-icon name="iconfont-ic_unionpay" :render="aaaaa"></da-icon>
+        <da-icon name="iconfont-ic_unionpay"></da-icon>
     </div>
 </template>
 
