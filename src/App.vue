@@ -13,6 +13,7 @@
         <da-icon name="iconfont-ic_unionpay"></da-icon>
         <da-radio-group :init="radios"></da-radio-group>
         <da-form :init="aform"></da-form>
+
         <da-select-spread :init="init" :selectedIds.sync="selectedIds"></da-select-spread>
         <da-icon name="iconfont-ic_unionpay"></da-icon>
         <da-radio-group :init="radios"></da-radio-group>
