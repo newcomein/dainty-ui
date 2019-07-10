@@ -1,9 +1,9 @@
 <template>
-    <div ref="da-radio" class="flex flex-inline da-radio">
-        <div class="flex flex-inline input-box" @click="options.checked=!options.checked">
-            <span class="flex flex-inline radio" :class="[{checked:options.checked},{isFirstTime}]"></span>
+    <div ref="da-radio" class="da-flex da-flex-inline da-radio">
+        <div class="da-flex da-flex-inline input-box" @click="options.checked=!options.checked">
+            <span class="da-flex da-flex-inline radio" :class="[{checked:options.checked},{isFirstTime}]"></span>
         </div>
-        <label class="flex flex-inline" v-if="options.label">
+        <label class="da-flex da-flex-inline" v-if="options.label">
             <span>{{options.label}}</span>
         </label>
     </div>

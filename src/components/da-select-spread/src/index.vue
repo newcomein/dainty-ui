@@ -1,16 +1,16 @@
 <template>
-    <div ref="da-select-spread" class="flex flex-center da-select-spread">
-        <div class="flex flex-center line" v-for="(item,index) of init" @click="changeSelectStatus(index)">
-            <div class="flex flex-inline left" ref="left" v-if="item.render&&item.render.left">
+    <div ref="da-select-spread" class="da-flex da-flex-center da-select-spread">
+        <div class="da-flex da-flex-center line" v-for="(item,index) of init" @click="changeSelectStatus(index)">
+            <div class="da-flex da-flex-inline left" ref="left" v-if="item.render&&item.render.left">
                 <da-render-node :init="item.render.left"></da-render-node>
             </div>
-            <div class="flex flex-inline center">
+            <div class="da-flex da-flex-inline center">
                 <span v-if="item.title">{{item.title}}</span>
                 <da-render-node v-if="item.render&&item.render.center" :init="item.render.center"></da-render-node>
             </div>
-            <div class="flex flex-inline right">
+            <div class="da-flex da-flex-inline right">
                 <div v-if="item.isShowSelectBox===undefined||item.isShowSelectBox"
-                     class="flex flex-inline flex-center select-box"
+                     class="da-flex da-flex-inline da-flex-center select-box"
                      :class="[{selected:selectedIdList.includes(item.id)}]">
                     <da-icon class="da-icon" name="feather-check" size="4"
                              v-if="selectedIdList.includes(item.id)"></da-icon>

@@ -6,7 +6,7 @@
   .loop(@className, @i - 1);
 }
 
-.flex {
+.da-flex {
   box-sizing: border-box;
   width: 100%;
   display: flex;
@@ -15,31 +15,31 @@
   justify-items: center;
   flex-flow: wrap;
 
-  .loop(item, 100);
+  .loop(da-flex-item, 100);
 
-  .flex-inline, &.flex-inline {
+  .da-flex-inline, &.da-flex-inline {
     display: inline-flex;
     width: auto;
   }
 
-  .flex-center, &.flex-center {
+  .da-flex-center, &.da-flex-center {
     justify-content: center;
   }
 
-  .flex-column, &.flex-column {
+  .da-flex-column, &.da-flex-column {
     flex-flow: column;
   }
 
-  .flex-fixed, &.flex-fixed {
+  .da-flex-fixed, &.da-flex-fixed {
     position: fixed;
     left: 0;
     right: 0;
 
-    .flex-fixed-top, &.flex-fixed-top {
+    .da-flex-fixed-top, &.da-flex-fixed-top {
       top: 0;
     }
 
-    .flex-fixed-bottom, &.flex-fixed-bottom {
+    .da-flex-fixed-bottom, &.da-flex-fixed-bottom {
       bottom: 0;
     }
   }

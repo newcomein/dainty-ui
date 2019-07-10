@@ -1,10 +1,10 @@
 <template>
-    <div class="flex flex-inline da-icon">
+    <div class="da-flex da-flex-inline da-icon">
         <transition mode="out-in" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-            <div class="flex flex-inline da-icon-inline" v-if="render">
+            <div class="da-flex da-flex-inline da-icon-inline" v-if="render">
                 <da-render-node :init="render"></da-render-node>
             </div>
-            <div class="flex flex-inline da-icon-inline" v-else-if="name&&iconMeta.type==='svg'">
+            <div class="da-flex da-flex-inline da-icon-inline" v-else-if="name&&iconMeta.type==='svg'">
                 <svg aria-hidden="true" v-if="iconMeta.svg.contents" v-html="iconMeta.svg.contents"
                      :style="[{strokeWidth:size}]"
                      :class="[name,iconMeta.class]"

@@ -1,5 +1,5 @@
 <template>
-    <div ref="da-radio" class="flex flex-inline da-radio">
+    <div ref="da-radio" class="da-flex da-flex-inline da-radio">
         <template v-for="(item,index) of init">
             <da-radio :options="item" :key="index"></da-radio>
         </template>

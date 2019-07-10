@@ -1,7 +1,7 @@
 <template>
-    <div class="flex da-form" v-if="isReady">
+    <div class="da-flex da-form" v-if="isReady">
 
-        <form class="flex">
+        <form class="da-flex">
             <!--普通输入框-->
             <template v-for="(item,index) of initForm">
                 <da-input :data-field="[item.field]" :options.sync="item" v-if="item.mode==='input'">
