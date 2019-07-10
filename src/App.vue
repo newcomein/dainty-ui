@@ -52,7 +52,16 @@
             this.init.push({
                 id: "aaaa",
                 title: "dasda",
-                isSelect: false
+                isSelect: false,
+                render: {
+                    left: (createElement, context) => {
+                        return createElement("da-icon", {
+                            props: {
+                                name: "iconfont-ic_unionpay"
+                            },
+                        })
+                    }
+                }
             })
             this.init.push({
                 id: "aaaa2",
