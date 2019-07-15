@@ -232,6 +232,8 @@
                 }
             },
             async start() {
+                //重置监听状态
+                delete this.options._isWatchValue;
                 const isDaForm = this.parentVnode.componentOptions.tag === "da-form";
                 this.focusLineIndex = null;
                 await utils.loopInputAllField([this.options]);
