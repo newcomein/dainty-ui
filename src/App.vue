@@ -19,7 +19,7 @@
         <da-radio-group :init="radios"></da-radio-group>
         <da-form :init="aform"></da-form>
 
-        <da-dialog :isShow.sync="isShow">cdwvcwdvwfv</da-dialog>
+        <!--        <da-dialog :isShow.sync="isShow">cdwvcwdvwfv</da-dialog>-->
     </div>
 </template>
 
