@@ -19,7 +19,7 @@
         <da-radio-group :init="radios"></da-radio-group>
         <da-form :init="aform"></da-form>
 
-        <da-dialog>cdwvcwdvwfv</da-dialog>
+        <da-dialog :isShow.sync="isShow">cdwvcwdvwfv</da-dialog>
     </div>
 </template>
 
@@ -28,6 +28,7 @@
     export default {
         data() {
             return {
+                isShow: false,
                 selectedIds: [],
                 init: [],
                 radios: [
@@ -69,6 +70,7 @@
             }
         },
         created() {
+            setTimeout(() => this.isShow = true, 3000)
             this.init.push({
                 id: "aaaa",
                 title: "dasda",

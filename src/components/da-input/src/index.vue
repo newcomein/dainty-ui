@@ -109,6 +109,9 @@
         },
         methods: {
             async blur() {
+
+                const isDaForm = this.parentVnode.componentOptions.tag === "da-form";
+
                 if (this.options.fixAutofocus) {
                     this.focusLineIndex = null;
                 }
@@ -116,7 +119,14 @@
                 //失去焦点校验正则
                 if (this.options.options.ruleTrigger.blur) {
                     //检查正则
-                    this.$set(this.options, "ruleResult", await this.checkValue(this.options));
+
+                    //如果是在DaForm父组件下  则调用父组件的checkValue
+                    if (isDaForm) {
+                        this.$set(this.options, "ruleResult", await this.parentVnode.componentInstance.checkValue(this.options));
+                    } else {
+                        this.$set(this.options, "ruleResult", await this.checkValue(this.options));
+                    }
+
                     this.ruleResult = this.options.ruleResult;
 
 
@@ -125,6 +135,7 @@
                 }
             },
             async focus() {
+                const isDaForm = this.parentVnode.componentOptions.tag === "da-form";
                 if (this.options.fixAutofocus) {
                     this.focusLineIndex = this.options.field;
                 } else {
@@ -134,7 +145,12 @@
                 //获得焦点校验正则
                 if (this.options.options.ruleTrigger.focus) {
                     //检查正则
-                    this.$set(this.options, "ruleResult", await this.checkValue(this.options));
+                    //如果是在DaForm父组件下  则调用父组件的checkValue
+                    if (isDaForm) {
+                        this.$set(this.options, "ruleResult", await this.parentVnode.componentInstance.checkValue(this.options));
+                    } else {
+                        this.$set(this.options, "ruleResult", await this.checkValue(this.options));
+                    }
                     this.ruleResult = this.options.ruleResult;
 
 
