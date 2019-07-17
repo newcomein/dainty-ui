@@ -70,7 +70,10 @@
             }
         },
         created() {
-            setTimeout(() => this.isShow = true, 3000)
+            setTimeout(() => {
+                this.isShow = true;
+                this.$daToast();
+            }, 3000)
             this.init.push({
                 id: "aaaa",
                 title: "dasda",
