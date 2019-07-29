@@ -4,6 +4,7 @@
                     :leave-active-class="animationClass.leaveActive">
             <div class="da-flex da-flex-inline da-icon-inline" v-if="render">
                 <da-render-node :init="render"></da-render-node>
+                <slot></slot>
             </div>
             <div class="da-flex da-flex-inline da-icon-inline" v-else-if="iconMeta.type==='svg'">
                 <svg aria-hidden="true" v-if="iconMeta.svg.contents" v-html="iconMeta.svg.contents"
@@ -11,11 +12,13 @@
                      :class="[name,iconMeta.class]"
                      :viewBox="iconMeta.svg.attrs.viewBox">
                 </svg>
+                <slot></slot>
             </div>
             <div class="da-flex da-flex-inline da-icon-inline" v-else-if="iconMeta.type==='file'">
                 <img :src="iconMeta.img.contents||iconMeta.svg.contents"
                      v-if="iconMeta.img.contents||iconMeta.svg.contents" :style="[{width,height}]"
                      :class="[name,iconMeta.class]">
+                <slot></slot>
             </div>
         </transition>
     </div>
