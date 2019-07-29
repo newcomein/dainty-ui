@@ -25,13 +25,6 @@
     import {icons} from "feather-icons"
     import DaRenderNode from "../../da-render-node"
 
-    const iconMetaValue = {
-        type: "",
-        svg: "",
-        class: "",
-        img: ""
-    };
-
     export default {
         name: "da-icon",
         components: {DaRenderNode},
@@ -71,16 +64,31 @@
         },
         data() {
             return {
-                iconMeta: iconMetaValue,
+                iconMeta: {
+                    type: "",
+                    svg: "",
+                    class: "",
+                    img: ""
+                },
             }
         },
         watch: {
             async name() {
-                this.iconMeta = iconMetaValue;
+                this.iconMeta = {
+                    type: "",
+                    svg: "",
+                    class: "",
+                    img: ""
+                };
                 this.matchIcon();
             },
             async file() {
-                this.iconMeta = iconMetaValue;
+                this.iconMeta = {
+                    type: "",
+                    svg: "",
+                    class: "",
+                    img: ""
+                };
                 this.matchFile();
             },
             async "iconMeta.svg"(val) {

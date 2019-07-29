@@ -1,7 +1,7 @@
 import "../../assets/style/index.less"
 import index from "./src"
 
-index.install = function (Vue) {
+index.install = async function (Vue) {
     Vue.component(index.name, index);
 };
 
