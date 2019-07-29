@@ -12,6 +12,10 @@
                      :viewBox="iconMeta.svg.attrs.viewBox">
                 </svg>
             </div>
+            <div class="da-flex da-flex-inline da-icon-inline" v-else-if="url&&iconMeta.type==='img'">
+                <img :src="iconMeta.img.contents" v-if="iconMeta.img.contents" :style="[{width,height}]"
+                     :class="[iconMeta.class]">
+            </div>
         </transition>
     </div>
 </template>
@@ -27,7 +31,16 @@
             name: {
                 type: String
             },
+            url: {
+                type: String
+            },
             size: {
+                type: String,
+            },
+            width: {
+                type: String,
+            },
+            height: {
                 type: String,
             },
             render: {
@@ -50,13 +63,29 @@
                 iconMeta: {
                     type: "",
                     svg: "",
-                    class: ""
+                    class: "",
+                    img: ""
                 }
             }
         },
         watch: {
             async name() {
+                this.iconMeta = {
+                    type: "",
+                    svg: "",
+                    class: "",
+                    img: ""
+                };
                 this.matchIcon();
+            },
+            async url() {
+                this.iconMeta = {
+                    type: "",
+                    svg: "",
+                    class: "",
+                    img: ""
+                };
+                this.matchImg();
             },
             async "iconMeta.svg"(val) {
                 if (!val) {
@@ -65,9 +94,19 @@
             }
         },
         methods: {
+            async matchImg() {
+                if (!this.url || this.url.length === 0 || this.name.length && this.url.length) {
+                    return;
+                }
+                this.iconMeta.type = "img";
+                this.iconMeta.img = {
+                    contents: require(this.url),
+                    attrs: {}
+                };
+            },
             async matchIcon() {
 
-                if (!this.name || this.name.length === 0) {
+                if (!this.name || this.name.length === 0 || this.name.length && this.url.length) {
                     return;
                 }
 
