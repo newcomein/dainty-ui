@@ -5,16 +5,16 @@
             <div class="da-flex da-flex-inline da-icon-inline" v-if="render">
                 <da-render-node :init="render"></da-render-node>
             </div>
-            <div class="da-flex da-flex-inline da-icon-inline" v-else-if="name&&iconMeta.type==='svg'">
+            <div class="da-flex da-flex-inline da-icon-inline" v-else-if="iconMeta.type==='svg'">
                 <svg aria-hidden="true" v-if="iconMeta.svg.contents" v-html="iconMeta.svg.contents"
                      :style="[{strokeWidth:size}]"
                      :class="[name,iconMeta.class]"
                      :viewBox="iconMeta.svg.attrs.viewBox">
                 </svg>
             </div>
-            <div class="da-flex da-flex-inline da-icon-inline" v-else-if="url&&iconMeta.type==='img'">
+            <div class="da-flex da-flex-inline da-icon-inline" v-else-if="iconMeta.type==='img'">
                 <img :src="iconMeta.img.contents" v-if="iconMeta.img.contents" :style="[{width,height}]"
-                     :class="[iconMeta.class]">
+                     :class="[name,iconMeta.class]">
             </div>
         </transition>
     </div>
@@ -85,7 +85,7 @@
                     class: "",
                     img: ""
                 };
-                this.matchImg();
+                this.matchFile();
             },
             async "iconMeta.svg"(val) {
                 if (!val) {
@@ -94,19 +94,29 @@
             }
         },
         methods: {
-            async matchImg() {
-                if (!this.url || this.url.length === 0 || this.name.length && this.url.length) {
+            async matchFile() {
+                if (!this.url || this.url.length === 0) {
                     return;
                 }
                 this.iconMeta.type = "img";
                 this.iconMeta.img = {
-                    contents: require(this.url),
+                    contents: await this.loadImg(this.url),
                     attrs: {}
                 };
             },
+            async loadImg(url = "") {
+                let data = "";
+                try {
+                    data = require(`${url}`);
+                } catch (e) {
+                    console.error(url);
+                    throw "没有找到文件"
+                }
+                return data
+            },
             async matchIcon() {
 
-                if (!this.name || this.name.length === 0 || this.name.length && this.url.length) {
+                if (!this.name || this.name.length === 0) {
                     return;
                 }
 
@@ -132,7 +142,8 @@
             }
         },
         mounted() {
-            this.matchIcon()
+            this.matchIcon();
+            this.matchFile();
         }
     }
 </script>
