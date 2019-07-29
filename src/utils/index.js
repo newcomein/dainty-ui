@@ -5,5 +5,15 @@ import loopInputAllField from "./loopInputAllField"
 import debounce from "./debounce"
 import throttle from "./throttle"
 import initRadioAttributes from "./initRadioAttributes"
+import loadImg from "./loadImg"
 
-export default {getDataType, anyFor, initInputAttributes, loopInputAllField, debounce, throttle, initRadioAttributes}
+export default {
+    getDataType,
+    anyFor,
+    initInputAttributes,
+    loopInputAllField,
+    debounce,
+    throttle,
+    initRadioAttributes,
+    loadImg
+}

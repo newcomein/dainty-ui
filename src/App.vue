@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <da-icon url="@/assets/img_aggame.png"></da-icon>
+        <da-icon :file="require('@/assets/ic_today_hov.svg')" fileType="svg"></da-icon>
 <!--        <da-select-spread :init="init" :selectedIds.sync="selectedIds"></da-select-spread>-->
 <!--        <da-icon name="iconfont-ic_unionpay"></da-icon>-->
 <!--        <da-radio-group :init="radios"></da-radio-group>-->
