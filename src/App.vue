@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <da-icon :file="require('@/assets/ic_today_hov.svg')" fileType="svg"></da-icon>
+                <da-icon color="red" name="iconfont-cwtytubiao_qiandao"></da-icon>
 <!--        <da-select-spread :init="init" :selectedIds.sync="selectedIds"></da-select-spread>-->
 <!--        <da-icon name="iconfont-ic_unionpay"></da-icon>-->
 <!--        <da-radio-group :init="radios"></da-radio-group>-->
@@ -60,41 +60,41 @@
             }
         },
         // components: {DaIcon},
-        watch: {
-            async selectedIds() {
-                console.log(this.selectedIds)
-            }
-        },
-        methods: {
-            aaaaa(createElement) {
-                return createElement("div", "图标");
-            }
-        },
-        created() {
-            setTimeout(() => {
-                this.isShow = true;
-                this.$daToast();
-            }, 3000)
-            this.init.push({
-                id: "aaaa",
-                title: "dasda",
-                isSelect: false,
-                render: {
-                    left: (createElement, context) => {
-                        return createElement("da-icon", {
-                            props: {
-                                name: "iconfont-ic_unionpay"
-                            },
-                        })
-                    }
-                }
-            })
-            this.init.push({
-                id: "aaaa2",
-                title: "dasda",
-                isSelect: true
-            })
-        }
+        // watch: {
+        //     async selectedIds() {
+        //         console.log(this.selectedIds)
+        //     }
+        // },
+        // methods: {
+        //     aaaaa(createElement) {
+        //         return createElement("div", "图标");
+        //     }
+        // },
+        // created() {
+        //     setTimeout(() => {
+        //         this.isShow = true;
+        //         this.$daToast();
+        //     }, 3000)
+        //     this.init.push({
+        //         id: "aaaa",
+        //         title: "dasda",
+        //         isSelect: false,
+        //         render: {
+        //             left: (createElement, context) => {
+        //                 return createElement("da-icon", {
+        //                     props: {
+        //                         name: "iconfont-ic_unionpay"
+        //                     },
+        //                 })
+        //             }
+        //         }
+        //     })
+        //     this.init.push({
+        //         id: "aaaa2",
+        //         title: "dasda",
+        //         isSelect: true
+        //     })
+        // }
     }
 </script>
 <style lang="less">

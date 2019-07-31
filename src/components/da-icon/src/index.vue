@@ -1,5 +1,5 @@
 <template>
-    <div class="da-flex da-flex-inline da-icon">
+    <div class="da-flex da-flex-inline da-icon" :style="[{color,fontSize}]">
         <transition mode="out-in" :enter-active-class="animationClass.enterActive"
                     :leave-active-class="animationClass.leaveActive">
             <div class="da-flex da-flex-inline da-icon-inline" v-if="render">
@@ -7,15 +7,15 @@
                 <slot></slot>
             </div>
             <div class="da-flex da-flex-inline da-icon-inline" v-else-if="iconMeta.type==='svg'">
-                <svg aria-hidden="true" v-if="iconMeta.svg.contents" v-html="iconMeta.svg.contents"
-                     :style="[{strokeWidth:size}]"
+                <svg ref="icon" aria-hidden="true" v-if="iconMeta.svg.contents" v-html="iconMeta.svg.contents"
+                     :style="[{strokeWidth},{width,height}]"
                      :class="[name,iconMeta.class]"
                      :viewBox="iconMeta.svg.attrs.viewBox">
                 </svg>
                 <slot></slot>
             </div>
             <div class="da-flex da-flex-inline da-icon-inline" v-else-if="iconMeta.type==='file'">
-                <img :src="iconMeta.img.contents||iconMeta.svg.contents"
+                <img ref="icon" :src="iconMeta.img.contents||iconMeta.svg.contents"
                      v-if="iconMeta.img.contents||iconMeta.svg.contents" :style="[{width,height}]"
                      :class="[name,iconMeta.class]">
                 <slot></slot>
@@ -41,7 +41,7 @@
             fileType: {
                 type: String
             },
-            size: {
+            strokeWidth: {
                 type: String,
             },
             width: {
@@ -53,6 +53,12 @@
             render: {
                 type: Function,
                 required: false
+            },
+            color: {
+                type: String,
+            },
+            fontSize: {
+                type: String,
             },
             animationClass: {
                 type: Object,
@@ -69,17 +75,26 @@
             return {
                 iconMeta: {
                     type: "",
-                    svg: "",
+                    svg: {
+                        contents: "",
+                        attrs: {}
+                    },
                     class: "",
                     img: ""
                 },
+                initialize: {
+                    color: null
+                }
             }
         },
         watch: {
             async name() {
                 this.iconMeta = {
                     type: "",
-                    svg: "",
+                    svg: {
+                        contents: "",
+                        attrs: {}
+                    },
                     class: "",
                     img: ""
                 };
@@ -88,7 +103,10 @@
             async file() {
                 this.iconMeta = {
                     type: "",
-                    svg: "",
+                    svg: {
+                        contents: "",
+                        attrs: {}
+                    },
                     class: "",
                     img: ""
                 };
@@ -98,6 +116,9 @@
                 if (!val) {
                     this.iconMeta.svg = {};
                 }
+            },
+            async color() {
+                this.rebuildColor();
             }
         },
         methods: {
@@ -126,16 +147,40 @@
                         this.iconMeta.svg = icons[iconName];
                         break;
                     case "iconfont":
-                        this.iconMeta.type = "svg";
-                        this.iconMeta.svg = {
-                            contents: `<use xlink:href="#${this.name}"></use>`,
-                            attrs: {}
-                        };
+                        setTimeout(async () => {
+                            const svg = document.querySelector(`#${this.name}`);
+                            if (!svg) {
+                                return new Error(`该图标不存在:#${this.name}`);
+                            }
+                            this.iconMeta.type = "svg";
+                            this.iconMeta.svg = {
+                                contents: svg.innerHTML,
+                                attrs: {viewBox: svg.attributes.viewBox.value}
+                            };
+                            this.$nextTick(async () => {
+                                this.rebuildColor();
+                            });
+                        }, 5);
                         break;
                     default:
                         break;
                 }
 
+            },
+            async rebuildColor() {
+                const iconDom = this.$refs.icon;
+                const color = this.color || this.initialize.color;
+                if (!iconDom || !color) {
+                    return;
+                }
+                for (let i of iconDom.children) {
+                    if (i.nodeName === "path") {
+                        if (!this.initialize.color) {
+                            this.initialize.color = i.attributes.fill.value;
+                        }
+                        i.setAttribute("fill", color);
+                    }
+                }
             }
         },
         mounted() {
