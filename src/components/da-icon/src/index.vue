@@ -167,9 +167,8 @@
                 }
 
             },
-            async rebuildColor() {
+            async rebuildColor(color = this.color || this.initialize.color) {
                 const iconDom = this.$refs.icon;
-                const color = this.color || this.initialize.color;
                 if (!iconDom || !color) {
                     return;
                 }

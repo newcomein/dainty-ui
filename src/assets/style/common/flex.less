@@ -23,11 +23,15 @@
   }
 
   .da-flex-start, &.da-flex-start {
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .da-flex-center, &.da-flex-center {
     justify-content: center;
+  }
+
+  .da-flex-end, &.da-flex-end {
+    justify-content: flex-end;
   }
 
   .da-flex-column, &.da-flex-column {
@@ -44,6 +48,20 @@
     }
 
     .da-flex-fixed-bottom, &.da-flex-fixed-bottom {
+      bottom: 0;
+    }
+  }
+
+  .da-flex-abs, &.da-flex-abs {
+    position: absolute;
+    left: 0;
+    right: 0;
+
+    .da-flex-abs-top, &.da-flex-abs-top {
+      top: 0;
+    }
+
+    .da-flex-abs-bottom, &.da-flex-abs-bottom {
       bottom: 0;
     }
   }
