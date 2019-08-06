@@ -1,24 +1,25 @@
 <template>
     <div id="app">
-                <da-icon color="red" name="iconfont-cwtytubiao_qiandao"></da-icon>
-<!--        <da-select-spread :init="init" :selectedIds.sync="selectedIds"></da-select-spread>-->
-<!--        <da-icon name="iconfont-ic_unionpay"></da-icon>-->
-<!--        <da-radio-group :init="radios"></da-radio-group>-->
-<!--        <da-form :init="aform"></da-form>-->
-<!--        <da-select-spread :init="init" :selectedIds.sync="selectedIds"></da-select-spread>-->
-<!--        <da-icon name="iconfont-ic_unionpay"></da-icon>-->
-<!--        <da-radio-group :init="radios"></da-radio-group>-->
-<!--        <da-form :init="aform"></da-form>-->
+        <da-icon font-size="100px" :color="color" name="iconfont-ic_unionpay"
+                 file-type="svg"></da-icon>
+        <!--        <da-select-spread :init="init" :selectedIds.sync="selectedIds"></da-select-spread>-->
+        <!--        <da-icon name="iconfont-ic_unionpay"></da-icon>-->
+        <!--        <da-radio-group :init="radios"></da-radio-group>-->
+        <!--        <da-form :init="aform"></da-form>-->
+        <!--        <da-select-spread :init="init" :selectedIds.sync="selectedIds"></da-select-spread>-->
+        <!--        <da-icon name="iconfont-ic_unionpay"></da-icon>-->
+        <!--        <da-radio-group :init="radios"></da-radio-group>-->
+        <!--        <da-form :init="aform"></da-form>-->
 
-<!--        <da-select-spread :init="init" :selectedIds.sync="selectedIds"></da-select-spread>-->
-<!--        <da-icon name="iconfont-ic_unionpay"></da-icon>-->
-<!--        <da-radio-group :init="radios"></da-radio-group>-->
-<!--        <da-form :init="aform"></da-form>-->
+        <!--        <da-select-spread :init="init" :selectedIds.sync="selectedIds"></da-select-spread>-->
+        <!--        <da-icon name="iconfont-ic_unionpay"></da-icon>-->
+        <!--        <da-radio-group :init="radios"></da-radio-group>-->
+        <!--        <da-form :init="aform"></da-form>-->
 
-<!--        <da-select-spread :init="init" :selectedIds.sync="selectedIds"></da-select-spread>-->
-<!--        <da-icon name="iconfont-ic_unionpay"></da-icon>-->
-<!--        <da-radio-group :init="radios"></da-radio-group>-->
-<!--        <da-form :init="aform"></da-form>-->
+        <!--        <da-select-spread :init="init" :selectedIds.sync="selectedIds"></da-select-spread>-->
+        <!--        <da-icon name="iconfont-ic_unionpay"></da-icon>-->
+        <!--        <da-radio-group :init="radios"></da-radio-group>-->
+        <!--        <da-form :init="aform"></da-form>-->
 
         <!--        <da-dialog :isShow.sync="isShow">cdwvcwdvwfv</da-dialog>-->
     </div>
@@ -29,6 +30,7 @@
     export default {
         data() {
             return {
+                color: "",
                 isShow: false,
                 selectedIds: [],
                 init: [],
@@ -59,6 +61,14 @@
                 ]
             }
         },
+        mounted() {
+            setTimeout(() => {
+                this.color = "red"
+                setTimeout(() => {
+                    this.color = null
+                }, 2000)
+            }, 2000)
+        }
         // components: {DaIcon},
         // watch: {
         //     async selectedIds() {
