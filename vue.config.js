@@ -1,5 +1,7 @@
 const MinifyPlugin = require("babel-minify-webpack-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 module.exports = {
     productionSourceMap: false,
     configureWebpack: (config) => {
@@ -8,12 +10,19 @@ module.exports = {
 
             _config = {
                 optimization: {
-                    minimizer: [new UglifyJsPlugin({
-                        cache: true,
-                        parallel: true
-                    })]
+                    minimizer: [
+                        new UglifyJsPlugin({
+                            cache: true,
+                            parallel: true
+                        }),
+                        new TerserPlugin({
+                            cache: true,
+                            parallel: true,
+                            extractComments: true
+                        })
+                    ]
                 },
-                plugins: [new MinifyPlugin()],
+                plugins: [new MinifyPlugin(), new MiniCssExtractPlugin()],
             }
 
         }

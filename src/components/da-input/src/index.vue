@@ -236,6 +236,10 @@
                     if (i["==="] && !(i["==="] === item.value)) {
                         isPass = false;
                     }
+                    //等于
+                    if (i["=="] && !(i["=="] === item.value)) {
+                        isPass = false;
+                    }
                     //小于
                     if (i["<"] && !(i["<"] < item.value)) {
                         isPass = false;
