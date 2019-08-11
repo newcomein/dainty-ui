@@ -1,7 +1,7 @@
 const MinifyPlugin = require("babel-minify-webpack-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
+const WebpackDeepScopeAnalysisPlugin = require('webpack-deep-scope-plugin').default;
 module.exports = {
     productionSourceMap: false,
     configureWebpack: (config) => {
@@ -11,18 +11,18 @@ module.exports = {
             _config = {
                 optimization: {
                     minimizer: [
+                        new TerserPlugin({
+                            cache: true,
+                            parallel: true,
+                            extractComments: true,
+                        }),
                         new UglifyJsPlugin({
                             cache: true,
                             parallel: true
                         }),
-                        new TerserPlugin({
-                            cache: true,
-                            parallel: true,
-                            extractComments: true
-                        })
                     ]
                 },
-                plugins: [new MinifyPlugin(), new MiniCssExtractPlugin()],
+                plugins: [new WebpackDeepScopeAnalysisPlugin(), new MinifyPlugin()],
             }
 
         }
