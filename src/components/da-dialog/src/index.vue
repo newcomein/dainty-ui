@@ -10,7 +10,7 @@
                  @click="$emit('update:isShow',!isShow)">
                 <div class="da-flex da-flex-center da-outsideBox">
                     <div class="da-flex da-flex-center da-flex-column da-block">
-                        <div class="da-flex da-content" @click.stop="">
+                        <div class="da-flex da-content" @click.stop="" @touchmove.stop="" @mousewheel.stop="">
                             <div class="da-flex da-top">
                                 <slot name="top" v-if="$slots.top"></slot>
                             </div>
