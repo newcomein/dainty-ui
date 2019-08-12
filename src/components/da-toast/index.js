@@ -3,13 +3,13 @@ import index from "./src"
 
 index.install = async function (Vue) {
     Vue.component(index.name, index);
-    Vue.prototype.$daToast = async () => {
-        const a = Vue.extend(index);
-        const b = new a({
-            el: document.createElement('div'),
+    Vue.prototype.$daToast = async ({message = "", type = "info", render = null, timeOutClose = 3000}) => {
+        const toastComponent = Vue.extend(index);
+        const toastComponentDOM = new toastComponent({
+            el: document.createElement("div"),
+            data: {message, type, render, timeOutClose}
         });
-        console.log(b);
-        document.body.appendChild(b.$el);
+        document.body.appendChild(toastComponentDOM.$el);
     };
 };
 

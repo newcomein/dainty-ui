@@ -4,16 +4,19 @@
                     leave-active-class="animated fadeOut">
             <div class="da-flex da-shadow-background" v-if="isShow"></div>
         </transition>
-        <transition mode="in-out" enter-active-class="animated flipInY"
-                    leave-active-class="animated faster flipOutY">
+        <transition mode="in-out" enter-active-class="animated fadeIn"
+                    leave-active-class="animated faster fadeOut">
             <div v-if="isShow" class="da-flex da-flex-center da-dialog-box" @touchmove.prevent="" @mousewheel.prevent=""
                  @click="$emit('update:isShow',!isShow)">
                 <div class="da-flex da-flex-center da-outsideBox">
                     <div class="da-flex da-flex-center da-flex-column da-block">
-                        <div class="da-flex da-insideBox" @click.stop="">
+                        <div class="da-flex da-content" @click.stop="">
+                            <div class="da-flex da-top">
+                                <slot name="top" v-if="$slots.top"></slot>
+                            </div>
                             <slot></slot>
                         </div>
-                        <div class="da-flex da-flex-inline da-flex-center da-flex-column da-close">
+                        <div class="da-flex da-flex-center da-flex-column da-bottom">
                             <slot name="bottom" v-if="$slots.bottom"></slot>
                             <da-icon name="feather-x-circle" v-else></da-icon>
                         </div>
