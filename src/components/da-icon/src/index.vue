@@ -15,8 +15,14 @@
                 <slot></slot>
             </div>
             <div class="da-flex da-flex-inline da-icon-inline" v-else-if="iconMeta.type==='file'">
+                <svg ref="icon" aria-hidden="true" v-if="fileType==='svg'&&iconMeta.svg.contents"
+                     v-html="iconMeta.svg.contents"
+                     :style="[{strokeWidth},{width,height}]"
+                     :class="[name,iconMeta.class]"
+                     :viewBox="iconMeta.svg.attrs.viewBox">
+                </svg>
                 <img ref="icon" :src="iconMeta.img.contents||iconMeta.svg.contents"
-                     v-if="iconMeta.img.contents||iconMeta.svg.contents" :style="[{width,height}]"
+                     v-else-if="fileType==='img'&&iconMeta.img.contents" :style="[{width,height}]"
                      :class="[name,iconMeta.class]">
                 <slot></slot>
             </div>
@@ -27,6 +33,7 @@
 <script>
     import {icons} from "feather-icons"
     import DaRenderNode from "../../da-render-node"
+    import fly from "flyio"
 
     export default {
         name: "da-icon",
@@ -126,11 +133,28 @@
                 if (!this.file || this.file.length === 0 || this.name && this.file) {
                     return;
                 }
+                let fileData;
+                let contents;
+                let attrs = {};
+                let parseDOM;
+                if (this.fileType === "svg") {
+                    fileData = (await fly.get(this.file)).data;
+                    parseDOM = new DOMParser().parseFromString(fileData, "image/svg+xml").firstChild;
+                    attrs = {viewBox: parseDOM.attributes.viewBox.value};
+                    this.iconMeta.class = "unset-stroke";
+                    contents = parseDOM.innerHTML;
+                } else {
+                    fileData = this.file;
+                    contents = fileData;
+                }
                 this.iconMeta.type = "file";
                 this.iconMeta[this.fileType] = {
-                    contents: this.file,
-                    attrs: {}
+                    contents,
+                    attrs
                 };
+                this.$nextTick(async () => {
+                    this.rebuildColor();
+                });
             },
             async matchIcon() {
 
@@ -167,19 +191,22 @@
                 }
 
             },
+            async loopChangeColor(dom = {}, color = "") {
+                for (let i of dom.children) {
+                    if (i.nodeName === "path") {
+                        i.style.fill = color;
+                    }
+                }
+            },
             async rebuildColor(color = this.color || this.initialize.color) {
                 const iconDom = this.$refs.icon;
                 if (!iconDom || !color) {
+                    if (!color) {
+                        this.loopChangeColor(iconDom, "");
+                    }
                     return;
                 }
-                for (let i of iconDom.children) {
-                    if (i.nodeName === "path") {
-                        if (!this.initialize.color) {
-                            this.initialize.color = i.attributes.fill.value;
-                        }
-                        i.setAttribute("fill", color);
-                    }
-                }
+                this.loopChangeColor(iconDom, color);
             }
         },
         mounted() {

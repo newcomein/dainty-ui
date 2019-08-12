@@ -1,7 +1,11 @@
 <template>
     <div id="app">
-        <da-icon font-size="100px" :color="color" name="iconfont-ic_unionpay"
-                 file-type="svg"></da-icon>
+<!--        <da-icon font-size="100px" :color="color" :file="require('@/assets/img_aggame.png')"-->
+<!--                 file-type="img"></da-icon>-->
+<!--                <da-icon font-size="100px" :color="color" name="iconfont-ic_unionpay"-->
+<!--                         file-type="svg"></da-icon>-->
+<!--                <da-icon font-size="100px" :color="color" :file="require('@/assets/ic_today_hov.svg')"-->
+<!--                         file-type="svg"></da-icon>-->
         <!--        <da-select-spread :init="init" :selectedIds.sync="selectedIds"></da-select-spread>-->
         <!--        <da-icon name="iconfont-ic_unionpay"></da-icon>-->
         <!--        <da-radio-group :init="radios"></da-radio-group>-->
@@ -21,7 +25,7 @@
         <!--        <da-radio-group :init="radios"></da-radio-group>-->
         <!--        <da-form :init="aform"></da-form>-->
 
-        <!--        <da-dialog :isShow.sync="isShow">cdwvcwdvwfv</da-dialog>-->
+                <da-dialog :isShow.sync="isShow">cdwvcwdvwfv</da-dialog>
     </div>
 </template>
 
@@ -66,6 +70,9 @@
                 this.color = "red"
                 setTimeout(() => {
                     this.color = null
+                    setTimeout(() => {
+                        this.color = "red"
+                    }, 2000)
                 }, 2000)
             }, 2000)
         }
