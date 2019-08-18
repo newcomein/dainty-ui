@@ -135,6 +135,19 @@
                     if (i.pattern && !i.pattern.test(item.value)) {
                         isPass = false;
                     }
+
+
+                    //必填
+                    if (i.required && item.value.length === 0) {
+                        isPass = false;
+                    }
+                    //正则
+                    if (i.pattern && !i.pattern.test(item.value)) {
+                        isPass = false;
+                    }
+
+                    //运算符
+
                     //大于等于
                     if (i[">="] && !(i[">="] >= item.value)) {
                         isPass = false;
@@ -148,7 +161,15 @@
                         isPass = false;
                     }
                     //等于
-                    if (i["=="] && !(i["=="] === item.value)) {
+                    if (i["=="] && !(i["=="] == item.value)) {
+                        isPass = false;
+                    }
+                    //不等于
+                    if (i["!="] && !(i["!="] != item.value)) {
+                        isPass = false;
+                    }
+                    //不全等于
+                    if (i["!=="] && !(i["!=="] !== item.value)) {
                         isPass = false;
                     }
                     //小于
@@ -159,6 +180,8 @@
                     if (i["<="] && !(i["<="] <= item.value)) {
                         isPass = false;
                     }
+
+
                     //非必填且存在正则,输入值为空的情况下,校正isPass结果为true
                     if (i.pattern && !i.required && item.value.length === 0) {
                         isPass = true;
