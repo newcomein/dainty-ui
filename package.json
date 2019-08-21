@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "animate.css": "^3.7.2",
+    "feather-icons": "^4.24.0",
     "magic.css": "^1.4.1",
     "normalize.css": "^8.0.1",
     "vue": "^2.6.10"

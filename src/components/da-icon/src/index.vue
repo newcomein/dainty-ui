@@ -25,7 +25,7 @@
 </template>
 
 <script>
-    // import {icons} from "feather-icons"
+    import {icons} from "feather-icons"
     import DaRenderNode from "../../da-render-node"
     export default {
         name: "da-icon",
@@ -138,10 +138,10 @@
                 const iconType = this.name.slice(0, this.name.indexOf("-"));
                 const iconName = this.name.replace(iconType + "-", "");
                 switch (iconType) {
-                    // case "feather":
-                    //     this.iconMeta.type = "svg";
-                    //     this.iconMeta.svg = icons[iconName];
-                    //     break;
+                    case "feather":
+                        this.iconMeta.type = "svg";
+                        this.iconMeta.svg = icons[iconName];
+                        break;
                     case "iconfont":
                         setTimeout(async () => {
                             const svg = document.querySelector(`#${this.name}`);
