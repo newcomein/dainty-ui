@@ -1,5 +1,5 @@
 <template>
-    <div class="da-flex da-flex-inline da-icon" :style="[{color,fontSize}]">
+    <div class="da-flex da-flex-inline da-icon" :style="[{color,fontSize}]" @click="$emit('click')">
         <transition mode="out-in" :enter-active-class="animationClass.enterActive"
                     :leave-active-class="animationClass.leaveActive">
             <div class="da-flex da-flex-inline da-icon-inline" v-if="render">
@@ -27,6 +27,7 @@
 <script>
     import {icons} from "feather-icons"
     import DaRenderNode from "../../da-render-node"
+
     export default {
         name: "da-icon",
         components: {DaRenderNode},
