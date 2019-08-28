@@ -1,4 +1,7 @@
-._keyframes {
+.da-ani {
+  animation-duration: 250ms;
+  animation-fill-mode: both;
+
   .slideInDownFadeIn {
     from {
       transform: translate3d(0, -100%, 0);
@@ -20,28 +23,21 @@
       transform: translate3d(0, 0, 0);
     }
   }
-}
 
-.da-ani {
-  animation-duration: 0.25s;
-  animation-fill-mode: both;
-
-  &:extend(._keyframes);
-
-  &.da-ani-0.3s {
-    animation-duration: 0.3s;
+  &.da-ani-300ms {
+    animation-duration: 300ms;
   }
 
-  &.da-ani-0.4s {
-    animation-duration: 0.4s;
+  &.da-ani-400ms {
+    animation-duration: 400ms;
   }
 
-  &.da-ani-0.5s {
-    animation-duration: 0.5s;
+  &.da-ani-500ms {
+    animation-duration: 500ms;
   }
 
-  &.da-ani-1s {
-    animation-duration: 1s;
+  &.da-ani-1000s {
+    animation-duration: 1000ms;
   }
 
   &.da-ani-hover {
