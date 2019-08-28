@@ -1,4 +1,49 @@
+._keyframes {
+  .slideInDownFadeIn {
+    from {
+      transform: translate3d(0, -100%, 0);
+      visibility: visible;
+    }
+
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .slideOutUpFadeOut {
+    from {
+      transform: translate3d(0, 100%, 0);
+      visibility: visible;
+    }
+
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+}
+
 .da-ani {
+  animation-duration: 0.25s;
+  animation-fill-mode: both;
+
+  &:extend(._keyframes);
+
+  &.da-ani-0.3s {
+    animation-duration: 0.3s;
+  }
+
+  &.da-ani-0.4s {
+    animation-duration: 0.4s;
+  }
+
+  &.da-ani-0.5s {
+    animation-duration: 0.5s;
+  }
+
+  &.da-ani-1s {
+    animation-duration: 1s;
+  }
+
   &.da-ani-hover {
     .da-ani-hover-opacity {
       transition: opacity 0.5s ease 0s;
@@ -8,5 +53,13 @@
         opacity: 1;
       }
     }
+  }
+
+  &.slideOutUpFadeOut {
+    animation-name: slideOutUpFadeOut;
+  }
+
+  &.slideInDownFadeIn {
+    animation-name: slideInDownFadeIn;
   }
 }
