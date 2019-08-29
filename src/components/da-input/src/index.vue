@@ -1,6 +1,6 @@
 <template>
     <div ref="da-input" class="da-flex da-input" @click="options.on.click({position:'line',source:options})"
-         v-if="isReady">
+         v-if="isReady" :class="{isError:!ruleResult.isPass&&ruleResult.message.length>0}">
         <div class="da-flex da-line-box">
             <label class="da-flex da-flex-inline positionSlots-left" v-if="options.label.length!==0">
                 <slot :name="options.positionSlots.left.name"
