@@ -15,6 +15,7 @@
                        :autofocus="options.autofocus"
                        :disabled="options.disabled"
                        :placeholder="focusLineIndex===options.field?'':options.placeholder"
+                       @keyup.enter="$emit('keyup','enter')"
                        @click.stop="options.on.click({position:'da-input-box',source:options})">
 
                 <!--位置插槽 right -->
