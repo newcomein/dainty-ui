@@ -63,6 +63,11 @@ export default async (item) => {
         delete item.options.ruleTrigger;
     }
 
+    //label 前缀 采用da-render-node组件
+    if (!item.options.prefixRender) {
+        item.options.prefixRender = null
+    }
+
 
     //选项
     item.options = Object.assign({

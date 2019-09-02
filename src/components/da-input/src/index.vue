@@ -1,12 +1,16 @@
 <template>
     <div ref="da-input" class="da-flex da-input" @click="options.on.click({position:'line',source:options})"
-         v-if="isReady" :class="{isError:!ruleResult.isPass&&ruleResult.message.length>0}">
+         v-if="isReady"
+         :class="{isError:!ruleResult.isPass&&ruleResult.message.length>0,isSuccess:(!ruleResult.isPass&&ruleResult.message.length>0)&&options.value.length>0}">
         <div class="da-flex da-line-box">
             <label class="da-flex da-flex-inline positionSlots-left" v-if="options.label.length!==0">
                 <slot :name="options.positionSlots.left.name"
                       v-if="options.positionSlots.left"></slot>
                 <slot name="left" v-else>
-                    <span>{{options.label}}</span>
+                    <span>
+                        <da-render-node v-if="options.options.prefixRender" :init="options.options.prefixRender"></da-render-node>
+                            {{options.label}}
+                    </span>
                 </slot>
             </label>
             <div class="da-flex da-flex-inline da-input-box">
