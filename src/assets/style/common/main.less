@@ -3,7 +3,7 @@
   flex-shrink: 0;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
-  font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
+  font-family: SourceSansProRegular, Helvetica Neue, Helvetica, Arial, Microsoft Yahei, Hiragino Sans GB, Heiti SC, WenQuanYi Micro Hei, sans-serif;
 
   &::before, &::after {
     margin: 0;
@@ -12,32 +12,24 @@
     outline: none;
     box-shadow: none;
     border-radius: 0;
-    font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
+    font-family: SourceSansProRegular, Helvetica Neue, Helvetica, Arial, Microsoft Yahei, Hiragino Sans GB, Heiti SC, WenQuanYi Micro Hei, sans-serif;
     font-weight: inherit;
     box-sizing: border-box;
     flex-shrink: 0;
   }
+}
 
+@font-face {
+  font-family: 'SourceSansProRegular';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('../../../../src/assets/fonts/SourceSansProRegular.ttf.woff2') format('woff2');
 }
 
 html {
   line-height: 1;
   font-size: 26.6666666666vw; // 设计稿为宽度375
-
-  -webkit-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-}
-
-
-body {
-  width: 100vw;
-  height: 100vh;
-  font-size: 0.14rem;
-  position: relative;
-  color: @text-general;
-  background-color: @color-level-11;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -48,6 +40,24 @@ body {
   -ms-text-size-adjust: 100%;
   text-size-adjust: 100%;
 
+  -webkit-text-stroke: 0.1px;
+  -moz-text-stroke: 0.1px;
+  -ms-text-stroke: 0.1px;
+  text-stroke: 0.1px;
+
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+body {
+  width: 100vw;
+  height: 100vh;
+  font-size: 0.14rem;
+  position: relative;
+  color: @text-general;
+  background-color: @color-level-11;
 }
 
 img {
