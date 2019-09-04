@@ -10,7 +10,7 @@
                 <svg ref="icon" aria-hidden="true" v-if="iconMeta.svg.contents" v-html="iconMeta.svg.contents"
                      :style="[{strokeWidth},{width,height}]"
                      :class="[name,iconMeta.class]"
-                     :id="[name,iconMeta.class]"
+                     :id="[name]"
                      :viewBox="iconMeta.svg.attrs.viewBox">
                 </svg>
                 <slot></slot>
