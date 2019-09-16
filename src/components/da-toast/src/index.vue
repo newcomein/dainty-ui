@@ -1,6 +1,6 @@
 <template>
     <transition mode="in-out" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-        <div v-if="isShow" class="da-flex da-flex-inline da-toast">
+        <div v-if="isShow" class="da-flex da-flex-inline da-toast" :class="[className]" :style="[style]">
             <div class="da-flex da-flex-center da-box">
                 <div class="da-flex da-flex-inline da-insideBox">
                     <div class="da-flex da-flex-inline da-content">
@@ -21,7 +21,9 @@
                 type: "",
                 render: "",
                 isShow: false,
-                timeOutClose: 3000
+                timeOutClose: 3000,
+                style: {},
+                className: []
             }
         },
         methods: {
