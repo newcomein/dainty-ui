@@ -16,7 +16,7 @@
                 <slot></slot>
             </div>
             <div class="da-flex da-flex-inline da-icon-inline" v-else-if="iconMeta.type==='file'">
-                <img ref="icon" :src="iconMeta.img.contents||iconMeta.svg.contents"
+                <img @error="$emit('error')" ref="icon" :src="iconMeta.img.contents||iconMeta.svg.contents"
                      v-if="iconMeta.img.contents||iconMeta.svg.contents" :style="[{width,height}]"
                      :class="[name,iconMeta.class]">
                 <slot></slot>
