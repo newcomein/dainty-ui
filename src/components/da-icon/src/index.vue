@@ -100,6 +100,9 @@
                     img: ""
                 };
                 this.matchIcon();
+                if ((this.name.length === 0) && (this.file.length === 0)) {
+                    this.$emit('error');
+                }
             },
             async file() {
                 this.iconMeta = {
@@ -112,6 +115,9 @@
                     img: ""
                 };
                 this.matchFile();
+                if ((this.name.length === 0) && (this.file.length === 0)) {
+                    this.$emit('error');
+                }
             },
             async "iconMeta.svg"(val) {
                 if (!val) {
