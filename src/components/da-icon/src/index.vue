@@ -100,7 +100,7 @@
                     img: ""
                 };
                 this.matchIcon();
-                if ((this.name.length === 0) && (this.file.length === 0)) {
+                if ((!this.name || this.name.length === 0) && (!this.file || this.file.length === 0)) {
                     this.$emit('error');
                 }
             },
@@ -115,7 +115,7 @@
                     img: ""
                 };
                 this.matchFile();
-                if ((this.name.length === 0) && (this.file.length === 0)) {
+                if ((!this.name || this.name.length === 0) && (!this.file || this.file.length === 0)) {
                     this.$emit('error');
                 }
             },
