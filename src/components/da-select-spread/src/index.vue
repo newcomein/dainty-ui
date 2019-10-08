@@ -4,11 +4,16 @@
             <div class="da-flex da-flex-inline da-left" ref="left" v-if="item.render&&item.render.left">
                 <da-render-node :init="item.render.left"></da-render-node>
             </div>
+            <div class="da-flex da-flex-inline da-left" ref="left" v-if="item.slots&&item.slots.left">
+                <slot :name="item.slots.left"></slot>
+            </div>
             <div class="da-flex da-flex-inline da-center">
                 <span v-if="item.title">{{item.title}}</span>
                 <da-render-node v-if="item.render&&item.render.center" :init="item.render.center"></da-render-node>
+                <slot v-if="item.slots&&item.slots.center" :name="item.slots.center"></slot>
             </div>
             <div class="da-flex da-flex-inline da-right">
+                <!--TODO 欠缺一个初始化所有属性的utils  避免isShowSelectBox未定义的时候 不做undefined判断导致box状态显示错误-->
                 <div v-if="item.isShowSelectBox===undefined||item.isShowSelectBox"
                      class="da-flex da-flex-inline da-flex-center da-select-box"
                      :class="[{'da-selected':selectedIdList.includes(item.id)}]">
@@ -16,6 +21,7 @@
                              v-if="selectedIdList.includes(item.id)"></da-icon>
                 </div>
                 <da-render-node v-if="item.render&&item.render.right" :init="item.render.right"></da-render-node>
+                <slot v-if="item.slots&&item.slots.right" :name="item.slots.right"></slot>
             </div>
         </div>
     </div>
