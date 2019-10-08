@@ -1,5 +1,9 @@
 <template>
     <div id="app">
+        <da-select-spread :init="init">
+            vsgdvsw
+            <template slot="fsdfsdfsdf">vdsgwr</template>
+        </da-select-spread>
         <!--        <da-icon font-size="100px" :color="color" :file="require('@/assets/img_aggame.png')"-->
         <!--                 file-type="img"></da-icon>-->
         <!--                <da-icon font-size="100px" :color="color" name="iconfont-ic_unionpay"-->
@@ -91,6 +95,8 @@
         //     }
         // },
         created() {
+            this.init.push({title:'fsdfsdf',slots:{right:'fsdfsdfsdf'}})
+            console.log(this.init)
             this.$daToast({message: "测试toast"});
             setTimeout(() => {
                 this.isShow = true;

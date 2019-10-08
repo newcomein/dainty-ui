@@ -1,6 +1,7 @@
 <template>
     <div ref="da-select-spread" class="da-flex da-flex-center da-select-spread">
-        <div class="da-flex da-flex-center da-line" v-for="(item,index) of init" @click="changeSelectStatus(index)">
+        <div class="da-flex da-flex-center da-line" v-for="(item,index) of init" :key="index"
+             @click="changeSelectStatus(index)">
             <div class="da-flex da-flex-inline da-left" ref="left" v-if="item.render&&item.render.left">
                 <da-render-node :init="item.render.left"></da-render-node>
             </div>
@@ -8,6 +9,7 @@
                 <slot :name="item.slots.left"></slot>
             </div>
             <div class="da-flex da-flex-inline da-center">
+                <slot></slot>
                 <span v-if="item.title">{{item.title}}</span>
                 <da-render-node v-if="item.render&&item.render.center" :init="item.render.center"></da-render-node>
                 <slot v-if="item.slots&&item.slots.center" :name="item.slots.center"></slot>
