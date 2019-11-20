@@ -16,7 +16,8 @@
                 <slot></slot>
             </div>
             <div class="da-flex da-flex-inline da-icon-inline" v-else-if="iconMeta.type==='file'">
-                <img @error="$emit('error')" ref="icon" :src="iconMeta.img.contents||iconMeta.svg.contents"
+                <img @error="$emit('error')" @load="loadHandle" ref="icon"
+                     :src="iconMeta.img.contents||iconMeta.svg.contents"
                      v-if="iconMeta.img.contents||iconMeta.svg.contents" :style="[{width,height}]"
                      :class="[name,iconMeta.class]">
                 <slot></slot>
@@ -182,6 +183,13 @@
                         }
                         i.setAttribute("fill", color);
                     }
+                }
+            },
+            async loadHandle() {
+                const iconDom = this.$refs.icon;
+                this.$emit("load");
+                if (iconDom.complete) {
+                    this.$emit("complete");
                 }
             }
         },
