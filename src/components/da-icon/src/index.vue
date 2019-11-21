@@ -188,7 +188,7 @@
             async loadHandle() {
                 const iconDom = this.$refs.icon;
                 this.$emit("load");
-                if (iconDom.complete) {
+                if (iconDom && iconDom.complete) {
                     this.$emit("complete");
                 }
             }
