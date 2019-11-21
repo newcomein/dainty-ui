@@ -7,13 +7,16 @@
 }
 
 .da-flex {
-  box-sizing: border-box;
   width: 100%;
   display: flex;
   align-items: center;
   align-content: center;
   justify-items: center;
   flex-flow: wrap;
+
+  &, * {
+    box-sizing: border-box;
+  }
 
   .loop(da-flex-item, 100);
 
@@ -24,14 +27,17 @@
 
   .da-flex-start, &.da-flex-start {
     justify-content: flex-start;
+    justify-items: flex-start;
   }
 
   .da-flex-center, &.da-flex-center {
     justify-content: center;
+    justify-items: center;
   }
 
   .da-flex-end, &.da-flex-end {
     justify-content: flex-end;
+    justify-items: flex-end;
   }
 
   .da-flex-column, &.da-flex-column {
