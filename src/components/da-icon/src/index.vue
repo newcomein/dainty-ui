@@ -62,6 +62,11 @@
             fontSize: {
                 type: String,
             },
+            //recycleChildrenNodesHandle 循环层级  默认两层
+            cycleTimes: {
+                type: Number,
+                default: 4
+            },
             animationClass: {
                 type: Object,
                 required: false,
@@ -117,7 +122,7 @@
                 };
                 this.matchFile();
                 if ((!this.name || this.name.length === 0) && (!this.file || this.file.length === 0)) {
-                    this.$emit('error');
+                    this.$emit("error");
                 }
             },
             async "iconMeta.svg"(val) {
@@ -172,20 +177,22 @@
                 }
             },
             async recycleChildrenNodesHandle(options = {dom: {children: []}, fun: null}) {
-                console.log("fsgsgs")
                 const {dom, fun} = options;
-                if (dom && dom.children) {
-                    for (let i of dom.children) {
-                        if (!fun) {
-                            break;
-                        } else {
-                            fun(i);
-                            if (i && i.children) {
-                                this.recycleChildrenNodesHandle({dom: i, fun})
+                let times = 0;
+                const process = async (innerDom) => {
+                    times++;
+                    if (innerDom && innerDom.children) {
+                        for (let i of innerDom.children) {
+                            if (fun) {
+                                fun(i);
+                                if (times < this.cycleTimes) {
+                                    process(i);
+                                }
                             }
                         }
                     }
-                }
+                };
+                process(dom);
             },
             async rebuildColor(color = this.color || this.initialize.color) {
                 const iconDom = this.$refs.icon;
@@ -194,13 +201,7 @@
                 }
                 this.recycleChildrenNodesHandle({
                     dom: iconDom, fun: (i) => {
-                        // if (i.nodeName === "path") {
-                        //     if (!this.initialize.color) {
-                        //         this.initialize.color = i.attributes.fill.value;
-                        //     }
-                        //     i.setAttribute("fill", color);
-                        // }
-                        if (!this.initialize.color) {
+                        if (!this.initialize.color && i.attributes.fill) {
                             this.initialize.color = i.attributes.fill.value;
                         }
                         i.setAttribute("fill", color);
