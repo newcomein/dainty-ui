@@ -171,19 +171,41 @@
                         break;
                 }
             },
+            async recycleChildrenNodesHandle(options = {dom: {children: []}, fun: null}) {
+                console.log("fsgsgs")
+                const {dom, fun} = options;
+                if (dom && dom.children) {
+                    for (let i of dom.children) {
+                        if (!fun) {
+                            break;
+                        } else {
+                            fun(i);
+                            if (i && i.children) {
+                                this.recycleChildrenNodesHandle({dom: i, fun})
+                            }
+                        }
+                    }
+                }
+            },
             async rebuildColor(color = this.color || this.initialize.color) {
                 const iconDom = this.$refs.icon;
                 if (!iconDom || !color) {
                     return;
                 }
-                for (let i of iconDom.children) {
-                    if (i.nodeName === "path") {
+                this.recycleChildrenNodesHandle({
+                    dom: iconDom, fun: (i) => {
+                        // if (i.nodeName === "path") {
+                        //     if (!this.initialize.color) {
+                        //         this.initialize.color = i.attributes.fill.value;
+                        //     }
+                        //     i.setAttribute("fill", color);
+                        // }
                         if (!this.initialize.color) {
                             this.initialize.color = i.attributes.fill.value;
                         }
                         i.setAttribute("fill", color);
                     }
-                }
+                });
             },
             async loadHandle() {
                 const iconDom = this.$refs.icon;

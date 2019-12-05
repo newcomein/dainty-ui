@@ -1,5 +1,7 @@
 <template>
     <div id="app">
+        <da-icon font-size="100px" color="red" name="iconfont-ic_unionpay"
+                 file-type="svg"></da-icon>
         <da-select-spread :init="init">
             vsgdvsw
             <template slot="fsdfsdfsdf">vdsgwr</template>
