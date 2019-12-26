@@ -67,6 +67,11 @@
                 type: Number,
                 default: 4
             },
+            //排除的修改颜色的tag
+            colorExcludeTag: {
+                type: Array,
+                default: () => []
+            },
             animationClass: {
                 type: Object,
                 required: false,
@@ -201,6 +206,7 @@
                 }
                 this.recycleChildrenNodesHandle({
                     dom: iconDom, fun: (i) => {
+                        if (this.colorExcludeTag.includes(i.tagName)) return;
                         if (!this.initialize.color && i.attributes.fill) {
                             this.initialize.color = i.attributes.fill.value;
                         }
