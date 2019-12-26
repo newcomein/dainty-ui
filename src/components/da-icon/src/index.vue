@@ -205,6 +205,7 @@
                             this.initialize.color = i.attributes.fill.value;
                         }
                         i.setAttribute("fill", color);
+                        i.style.fill = color;
                     }
                 });
             },
