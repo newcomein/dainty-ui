@@ -12,6 +12,7 @@
   align-items: center;
   align-content: center;
   justify-items: center;
+  justify-content: center;
   flex-flow: wrap;
 
   &.da-reset-css {
@@ -25,19 +26,34 @@
     width: auto;
   }
 
-  .da-flex-start, &.da-flex-start {
+  .da-flex-justify-start, .da-flex-start, &.da-flex-start {
     justify-content: flex-start;
     justify-items: flex-start;
   }
 
-  .da-flex-center, &.da-flex-center {
+  .da-flex-justify-center, .da-flex-center, &.da-flex-center {
     justify-content: center;
     justify-items: center;
   }
 
-  .da-flex-end, &.da-flex-end {
+  .da-flex-justify-end, .da-flex-end, &.da-flex-end {
     justify-content: flex-end;
     justify-items: flex-end;
+  }
+
+  .da-flex-align-start, .da-flex-start, &.da-flex-start {
+    align-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .da-flex-align-center, .da-flex-center, &.da-flex-center {
+    align-content: center;
+    align-items: center;
+  }
+
+  .da-flex-align-end, .da-flex-end, &.da-flex-end {
+    align-content: flex-end;
+    align-items: flex-end;
   }
 
   .da-flex-column, &.da-flex-column {
